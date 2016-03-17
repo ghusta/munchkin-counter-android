@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Munchkin Level Counter</string>
+    <string name="menu.statistics">Statistics</string>
+</resources>
