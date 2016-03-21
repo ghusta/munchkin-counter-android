@@ -21,40 +21,46 @@
             android:background="@color/card_corner"
             android:layout_height="match_parent">
 
-            <FrameLayout
+            <fragment
+                class="com.datarockets.mnchkn.fragments.players.PlayerFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_gravity="center"
-                    android:textColor="@color/white"
-                    android:text="0"
-                    android:textSize="80sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </TextView>
-            </FrameLayout>
+                android:layout_height="match_parent"/>
 
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/viewB"
             android:layout_weight="0.5"
             android:layout_width="match_parent"
             android:background="@color/card_background"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-        </LinearLayout>
+            <ListView
+                android:id="@+id/rv_player_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/btn_next_step"
+                android:layout_alignParentTop="true" />
+
+            <Button
+                android:id="@+id/btn_next_step"
+                android:layout_alignParentBottom="true"
+                android:text="@string/button.next_step"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_button"
+        android:id="@+id/fab_dice_roll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:clickable="true"
-        android:src="@drawable/ic_casino_black_24px"
+        android:src="@drawable/ic_dice"
         app:layout_anchor="@id/viewA"
         app:layout_anchorGravity="bottom|right|end"/>
 

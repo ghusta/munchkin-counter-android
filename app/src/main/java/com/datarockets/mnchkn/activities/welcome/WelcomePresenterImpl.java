@@ -11,6 +11,11 @@ public class WelcomePresenterImpl implements WelcomePresenter {
     }
 
     @Override
+    public void onDestroy() {
+        welcomeView = null;
+    }
+
+    @Override
     public boolean validateCredentials(String username, String password) {
         return !(username.length() == 0 || password.length() == 0);
     }

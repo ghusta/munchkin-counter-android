@@ -2,13 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/statistics"
-        android:icon="@drawable/ic_casino_black_24px"
+        android:id="@+id/item_finish_game"
+        android:icon="@drawable/ic_checkerboard"
         app:showAsAction="ifRoom"
-        android:title="@string/menu.statistics"/>
+        android:title="@string/menu.finish"/>
     <item
-        android:id="@+id/finish"
-        android:icon="@drawable/ic_casino_black_24px"
-        app:showAsAction="ifRoom"
-        android:title="@string/menu.statistics"/>
+        android:id="@+id/item_settings"
+        app:showAsAction="collapseActionView"
+        android:title="@string/menu.settings"/>
 </menu>

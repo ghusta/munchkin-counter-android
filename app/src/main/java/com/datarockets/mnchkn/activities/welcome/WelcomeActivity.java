@@ -5,7 +5,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.datarockets.mnchkn.utils.LogUtil;
+
 public class WelcomeActivity extends AppCompatActivity implements WelcomeView, View.OnClickListener  {
+
+    public static final String TAG = LogUtil.makeLogTag(WelcomeActivity.class);
 
     WelcomePresenter presenter;
 
