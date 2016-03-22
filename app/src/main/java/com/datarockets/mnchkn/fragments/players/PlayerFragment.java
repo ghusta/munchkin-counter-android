@@ -1,6 +1,7 @@
 package com.datarockets.mnchkn.fragments.players;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,15 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.datarockets.mnchkn.R;
 import com.datarockets.mnchkn.activities.dashboard.DashboardView;
+import com.datarockets.mnchkn.views.fonts.MunchkinTextView;
+
+import static android.widget.Toast.makeText;
 
 public class PlayerFragment extends Fragment implements PlayerView, View.OnClickListener {
 
     View currentPlayerView;
     ImageButton btnLevelScoreUp, btnLevelScoreDown, btnStrengthScoreUp, btnStrengthScoreDown;
-    TextView tvLevelScore, tvStrengthScore, tvSummaryScore;
+    MunchkinTextView tvLevelScore, tvStrengthScore;
 
     DashboardView dashboardView;
 
@@ -33,9 +38,8 @@ public class PlayerFragment extends Fragment implements PlayerView, View.OnClick
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         currentPlayerView = inflater.inflate(R.layout.fragment_player, container, false);
-        tvLevelScore = (TextView) currentPlayerView.findViewById(R.id.tv_level_score);
-        tvStrengthScore = (TextView) currentPlayerView.findViewById(R.id.tv_strength_score);
-        tvSummaryScore = (TextView) currentPlayerView.findViewById(R.id.tv_summary_score);
+        tvLevelScore = (MunchkinTextView) currentPlayerView.findViewById(R.id.tv_level_score);
+        tvStrengthScore = (MunchkinTextView) currentPlayerView.findViewById(R.id.tv_strength_score);
         btnLevelScoreUp = (ImageButton) currentPlayerView.findViewById(R.id.btn_level_score_up);
         btnLevelScoreUp.setOnClickListener(this);
         btnLevelScoreDown = (ImageButton) currentPlayerView.findViewById(R.id.btn_level_score_down);
@@ -47,6 +51,11 @@ public class PlayerFragment extends Fragment implements PlayerView, View.OnClick
         return currentPlayerView;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+    }
 
     @Override
     public void onClick(View v) {
@@ -72,6 +81,11 @@ public class PlayerFragment extends Fragment implements PlayerView, View.OnClick
             default:
                 break;
         }
+    }
+
+    @Override
+    public void showToastWithMessage(CharSequence message) {
+        makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
 }

@@ -33,7 +33,6 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
 
     DashboardPresenter presenter;
     Toolbar toolbar;
-    FloatingActionButton fabDiceRoll;
     ListView lvPlayerList;
     PlayerListAdapter lvPlayerListAdapter;
     Button btnNextStep;
@@ -46,8 +45,6 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
         setContentView(R.layout.activity_dashboard);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        fabDiceRoll = (FloatingActionButton) findViewById(R.id.fab_dice_roll);
-        fabDiceRoll.setOnClickListener(this);
         btnNextStep = (Button) findViewById(R.id.btn_next_step);
         btnNextStep.setOnClickListener(this);
         lvPlayerList = (ListView) findViewById(R.id.lv_player_list);
@@ -130,9 +127,6 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.fab_dice_roll:
-                showDiceRollResultDialog();
-                break;
             case R.id.btn_add_new_player:
                 showAddNewPlayerDialog();
                 break;
@@ -166,7 +160,6 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         lvPlayerList.setItemChecked(position, true);
-        lvPlayerList.setSelection(position);
     }
 
 }
