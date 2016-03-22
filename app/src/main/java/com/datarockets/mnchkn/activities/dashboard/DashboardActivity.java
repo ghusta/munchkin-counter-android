@@ -34,8 +34,8 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     DashboardPresenter presenter;
     Toolbar toolbar;
     FloatingActionButton fabDiceRoll;
-    ListView rvPlayerList;
-    PlayerListAdapter rvPlayerListAdapter;
+    ListView lvPlayerList;
+    PlayerListAdapter lvPlayerListAdapter;
     Button btnNextStep;
     DiceRollResultFragment diceRollResultFragment;
 
@@ -49,10 +49,11 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
         fabDiceRoll = (FloatingActionButton) findViewById(R.id.fab_dice_roll);
         fabDiceRoll.setOnClickListener(this);
         btnNextStep = (Button) findViewById(R.id.btn_next_step);
-        rvPlayerList = (ListView) findViewById(R.id.rv_player_list);
-        rvPlayerList.setOnItemClickListener(this);
-        rvPlayerList.setOnItemLongClickListener(this);
-        rvPlayerList.setAdapter(rvPlayerListAdapter);
+        btnNextStep.setOnClickListener(this);
+        lvPlayerList = (ListView) findViewById(R.id.lv_player_list);
+        lvPlayerList.setOnItemClickListener(this);
+        lvPlayerList.setOnItemLongClickListener(this);
+        lvPlayerList.setAdapter(lvPlayerListAdapter);
     }
 
     @Override
@@ -96,7 +97,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
 
     @Override
     public void setItems(ArrayList<Player> players) {
-        rvPlayerList.setAdapter(new PlayerListAdapter(this, players));
+        lvPlayerList.setAdapter(new PlayerListAdapter(this, players));
     }
 
     @Override
@@ -135,7 +136,9 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
             case R.id.btn_add_new_player:
                 showAddNewPlayerDialog();
                 break;
-            default:
+            case R.id.btn_next_step:
+                lvPlayerList.setItemChecked(lvPlayerList.getCheckedItemPosition() + 1, true);
+                lvPlayerList.setSelection(lvPlayerList.getCheckedItemPosition());
                 break;
         }
     }
@@ -162,7 +165,8 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        lvPlayerList.setItemChecked(position, true);
+        lvPlayerList.setSelection(position);
     }
 
 }
