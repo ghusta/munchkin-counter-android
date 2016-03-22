@@ -12,5 +12,6 @@ public interface DashboardInteractor {
     }
 
     void loadPlayersList(OnLoadPlayerListener listener);
+    void addPlayer(String name, OnLoadPlayerListener listener);
     void deletePlayer(int index, OnLoadPlayerListener listener);
 }

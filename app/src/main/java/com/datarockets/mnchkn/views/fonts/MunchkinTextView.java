@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 public class MunchkinTextView extends TextView {
 
+    public static final String FONT_NAME = "buccaner.ttf";
+
     public MunchkinTextView(Context context) {
         super(context);
         init(context);
@@ -23,7 +25,7 @@ public class MunchkinTextView extends TextView {
     }
 
     private void init(Context context) {
-        Typeface munchkinFont = FontCache.getTypeface("buccaner.ttf", context);
+        Typeface munchkinFont = FontCache.getTypeface(FONT_NAME, context);
         setTypeface(munchkinFont);
     }
 

@@ -2,7 +2,7 @@ package com.datarockets.mnchkn.activities.dashboard;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +19,6 @@ import com.datarockets.mnchkn.activities.result.GameResultActivity;
 import com.datarockets.mnchkn.activities.settings.SettingsActivity;
 import com.datarockets.mnchkn.adapters.PlayerListAdapter;
 import com.datarockets.mnchkn.fragments.dialogs.AddNewPlayerFragment;
-import com.datarockets.mnchkn.fragments.dialogs.DiceRollResultFragment;
 import com.datarockets.mnchkn.models.Player;
 import com.datarockets.mnchkn.utils.LogUtil;
 
@@ -34,9 +33,9 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     DashboardPresenter presenter;
     Toolbar toolbar;
     ListView lvPlayerList;
+    View lvPlayerListFooterView;
     PlayerListAdapter lvPlayerListAdapter;
-    Button btnNextStep;
-    DiceRollResultFragment diceRollResultFragment;
+    Button btnNextStep, btnAddNewPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +47,10 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
         btnNextStep = (Button) findViewById(R.id.btn_next_step);
         btnNextStep.setOnClickListener(this);
         lvPlayerList = (ListView) findViewById(R.id.lv_player_list);
+        lvPlayerListFooterView = getLayoutInflater().inflate(R.layout.player_add_list_item, null);
+        lvPlayerList.addFooterView(lvPlayerListFooterView);
+        btnAddNewPlayer = (Button) lvPlayerListFooterView.findViewById(R.id.btn_add_new_player);
+        btnAddNewPlayer.setOnClickListener(this);
         lvPlayerList.setOnItemClickListener(this);
         lvPlayerList.setOnItemLongClickListener(this);
         lvPlayerList.setAdapter(lvPlayerListAdapter);
@@ -57,6 +60,12 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     protected void onResume() {
         super.onResume();
         presenter.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
     }
 
     @Override
@@ -79,11 +88,10 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
-    public void showDiceRollResultDialog() {
-        diceRollResultFragment = new DiceRollResultFragment();
-        diceRollResultFragment.show(getSupportFragmentManager(), TAG);
+    public void forbidToNextStep() {
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction().replace(R.id.viewA, new Fragment()).commit();
     }
 
     @Override
@@ -139,6 +147,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
 
     @Override
     public void onFinishEditDialog(String inputName) {
+        presenter.addNewPlayer(inputName);
     }
 
     @Override

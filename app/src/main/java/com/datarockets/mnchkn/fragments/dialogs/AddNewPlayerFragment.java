@@ -53,6 +53,7 @@ public class AddNewPlayerFragment extends DialogFragment implements TextView.OnE
             AddNewPlayerDialogInterface listener = (AddNewPlayerDialogInterface) getActivity();
             listener.onFinishEditDialog(etPlayerName.getText().toString());
             dismiss();
+            this.dismiss();
             return true;
         }
         return false;

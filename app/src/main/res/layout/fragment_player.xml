@@ -47,7 +47,7 @@
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/tv_level_score"
                 android:textColor="@color/white"
-                android:textSize="80dp"
+                android:textSize="70dp"
                 android:text="0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -61,7 +61,7 @@
                 android:layout_width="@dimen/counter_button_size"
                 android:layout_height="@dimen/counter_button_size" />
 
-            <TextView
+            <com.datarockets.mnchkn.views.fonts.MunchkinTextView
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/white"
                 android:text="@string/text.level"
@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="80dp"
+                android:textSize="70dp"
                 android:text="0"/>
 
             <ImageButton
@@ -101,7 +101,7 @@
                 android:layout_width="@dimen/counter_button_size"
                 android:layout_height="@dimen/counter_button_size" />
 
-            <TextView
+            <com.datarockets.mnchkn.views.fonts.MunchkinTextView
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/white"
                 android:text="@string/text.strength"

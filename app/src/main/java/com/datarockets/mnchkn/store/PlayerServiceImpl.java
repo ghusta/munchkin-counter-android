@@ -2,6 +2,7 @@ package com.datarockets.mnchkn.store;
 
 import com.datarockets.mnchkn.models.Player;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class PlayerServiceImpl implements PlayerService {
@@ -27,12 +28,15 @@ public class PlayerServiceImpl implements PlayerService {
         return instance;
     }
 
+
     @Override
-    public void addPlayer(String name) {
+    public ArrayList<Player> addPlayer(String name) {
         Player player = new Player();
         player.name = name;
         player.levelScore = 0;
         player.strengthScore = 0;
+        playersList.add(player);
+        return playersList;
     }
 
     @Override
