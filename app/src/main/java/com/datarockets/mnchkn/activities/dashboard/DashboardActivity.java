@@ -1,7 +1,5 @@
 package com.datarockets.mnchkn.activities.dashboard;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,11 +7,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -27,10 +24,10 @@ import com.datarockets.mnchkn.models.Player;
 import com.datarockets.mnchkn.utils.LogUtil;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DashboardActivity extends AppCompatActivity implements DashboardView,
-        View.OnClickListener, Dialog.OnClickListener, View.OnLongClickListener, AddNewPlayerFragment.AddNewPlayerDialogInterface{
+        View.OnClickListener, AdapterView.OnItemLongClickListener,
+        AdapterView.OnItemClickListener, AddNewPlayerFragment.AddNewPlayerDialogInterface{
 
     public static final String TAG = LogUtil.makeLogTag(DashboardActivity.class);
 
@@ -52,9 +49,16 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
         fabDiceRoll = (FloatingActionButton) findViewById(R.id.fab_dice_roll);
         fabDiceRoll.setOnClickListener(this);
         btnNextStep = (Button) findViewById(R.id.btn_next_step);
-        rvPlayerListAdapter = new PlayerListAdapter(this, new ArrayList<>());
-        rvPlayerList.setOnLongClickListener(this);
+        rvPlayerList = (ListView) findViewById(R.id.rv_player_list);
+        rvPlayerList.setOnItemClickListener(this);
+        rvPlayerList.setOnItemLongClickListener(this);
         rvPlayerList.setAdapter(rvPlayerListAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.onResume();
     }
 
     @Override
@@ -91,8 +95,8 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     }
 
     @Override
-    public void setItems(List<Player> players) {
-        rvPlayerListAdapter.notifyDataSetChanged();
+    public void setItems(ArrayList<Player> players) {
+        rvPlayerList.setAdapter(new PlayerListAdapter(this, players));
     }
 
     @Override
@@ -106,8 +110,12 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
         AlertDialog.Builder confirmFinishGameDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_finish_game_title)
                 .setMessage(R.string.dialog_finish_game_message)
-                .setPositiveButton(R.string.button_yes, this)
-                .setNegativeButton(R.string.button_no, this);
+                .setPositiveButton(R.string.button_yes, (dialog, which) -> {
+                    finishGame();
+                })
+                .setNegativeButton(R.string.button_no, (dialog, which) -> {
+                    dialog.dismiss();
+                });
         confirmFinishGameDialog.create().show();
     }
 
@@ -133,27 +141,28 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     }
 
     @Override
-    public void onClick(DialogInterface dialog, int which) {
-        switch (which) {
-            case Dialog.BUTTON_POSITIVE:
-                finishGame();
-                break;
-            case Dialog.BUTTON_NEGATIVE:
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public boolean onLongClick(View v) {
-        return true;
-    }
-
-
-    @Override
     public void onFinishEditDialog(String inputName) {
     }
 
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_player_delete_title)
+                .setMessage(R.string.dialog_player_delete_message)
+                .setPositiveButton(R.string.button_yes, (dialog, which) -> {
+                    presenter.deletePlayerListItem(position);
+                })
+                .setNegativeButton(R.string.button_no, (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .create();
+        alertDialog.show();
+        return true;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+    }
 
 }

@@ -15,4 +15,9 @@ public class DashboardInteractorImpl implements DashboardInteractor {
         listener.onFinished(playerService.getPlayersList());
     }
 
+    @Override
+    public void deletePlayer(int index, OnLoadPlayerListener listener) {
+        listener.onFinished(playerService.deletePlayer(index));
+    }
+
 }

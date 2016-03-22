@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.datarockets.mnchkn.R;
 import com.datarockets.mnchkn.models.Player;
@@ -23,7 +24,8 @@ public class PlayerListAdapter extends ArrayAdapter<Player>{
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.player_list_item, parent, false);
         }
-
+        TextView tvPlayerName = (TextView) convertView.findViewById(R.id.tv_player_item_name);
+        tvPlayerName.setText(player.name);
         return convertView;
     }
 

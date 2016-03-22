@@ -7,9 +7,19 @@ import java.util.List;
 
 public class PlayerServiceImpl implements PlayerService {
     private static PlayerServiceImpl instance;
-    private PlayerServiceImpl() {}
 
-    List<Player> playersList = new ArrayList<>();
+    ArrayList<Player> playersList;
+
+    private PlayerServiceImpl() {
+        playersList = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Player player = new Player();
+            player.name = "Player " + String.valueOf(i);
+            player.strengthScore = i;
+            player.levelScore = i;
+            playersList.add(player);
+        }
+    }
 
     public static PlayerServiceImpl getInstance() {
         if (instance == null) {
@@ -20,15 +30,20 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public void addPlayer(String name) {
+        Player player = new Player();
+        player.name = name;
+        player.levelScore = 0;
+        player.strengthScore = 0;
     }
 
     @Override
-    public void deletePlayer(int index) {
-
+    public ArrayList<Player> deletePlayer(int index) {
+        playersList.remove(index);
+        return playersList;
     }
 
     @Override
-    public List<Player> getPlayersList() {
+    public ArrayList<Player> getPlayersList() {
         return playersList;
     }
 
