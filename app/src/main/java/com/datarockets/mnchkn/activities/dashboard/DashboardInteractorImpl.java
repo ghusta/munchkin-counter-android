@@ -1,5 +1,6 @@
 package com.datarockets.mnchkn.activities.dashboard;
 
+import com.datarockets.mnchkn.models.Player;
 import com.datarockets.mnchkn.store.PlayerServiceImpl;
 
 public class DashboardInteractorImpl implements DashboardInteractor {
@@ -24,5 +25,14 @@ public class DashboardInteractorImpl implements DashboardInteractor {
     public void deletePlayer(int index, OnLoadPlayerListener listener) {
         listener.onFinished(playerService.deletePlayer(index));
     }
+
+    @Override
+    public void updatePlayer(int index, int level, int strength, OnLoadPlayerListener listener) {
+        Player player = new Player();
+        player.levelScore = level;
+        player.strengthScore = strength;
+        listener.onFinished(playerService.updatePlayer(index, player));
+    }
+
 
 }

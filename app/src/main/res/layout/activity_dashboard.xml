@@ -16,13 +16,12 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:id="@+id/viewA"
             android:layout_weight="0.45"
             android:layout_width="match_parent"
-            android:background="@color/card_corner"
             android:layout_height="match_parent">
 
             <fragment
+                android:id="@+id/fragment_player"
                 class="com.datarockets.mnchkn.fragments.players.PlayerFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

@@ -46,8 +46,21 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
+    public Player getPlayer(int index) {
+        return playersList.get(index);
+    }
+
+    @Override
+    public ArrayList<Player> updatePlayer(int index, Player player) {
+        playersList.get(index).setLevelScore(player.levelScore);
+        playersList.get(index).setStrengthScore(player.strengthScore);
+        return playersList;
+    }
+
+    @Override
     public ArrayList<Player> getPlayersList() {
         return playersList;
     }
+
 
 }

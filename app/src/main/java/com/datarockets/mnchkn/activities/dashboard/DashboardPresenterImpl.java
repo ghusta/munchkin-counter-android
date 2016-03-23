@@ -30,6 +30,13 @@ public class DashboardPresenterImpl implements DashboardPresenter, DashboardInte
     }
 
     @Override
+    public void updatePlayerListItem(int index, int currentLevel, int currentStrength) {
+        if (dashboardView != null) {
+            interactor.updatePlayer(index, currentLevel, currentStrength, this);
+        }
+    }
+
+    @Override
     public void onResume() {
         if (dashboardView != null) {
             interactor.loadPlayersList(this);

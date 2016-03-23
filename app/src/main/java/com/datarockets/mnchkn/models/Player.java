@@ -17,4 +17,16 @@ public class Player {
         return strengthScore;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLevelScore(int levelScore) {
+        this.levelScore = levelScore;
+    }
+
+    public void setStrengthScore(int strengthScore) {
+        this.strengthScore = strengthScore;
+    }
+
 }

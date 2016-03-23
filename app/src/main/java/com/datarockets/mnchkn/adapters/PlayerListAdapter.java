@@ -25,7 +25,11 @@ public class PlayerListAdapter extends ArrayAdapter<Player>{
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.player_list_item, parent, false);
         }
         TextView tvPlayerName = (TextView) convertView.findViewById(R.id.tv_player_item_name);
+        TextView tvPlayerLevelScore = (TextView) convertView.findViewById(R.id.tv_player_item_level_score);
+        TextView tvPlayerStrengthScore = (TextView) convertView.findViewById(R.id.tv_player_item_strength_score);
         tvPlayerName.setText(player.name);
+        tvPlayerLevelScore.setText(String.valueOf(player.levelScore));
+        tvPlayerStrengthScore.setText(String.valueOf(player.strengthScore));
         return convertView;
     }
 
