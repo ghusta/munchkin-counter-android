@@ -55,7 +55,6 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
         btnAddNewPlayer.setOnClickListener(this);
         lvPlayerList.setOnItemClickListener(this);
         lvPlayerList.setOnItemLongClickListener(this);
-        lvPlayerList.setAdapter(lvPlayerListAdapter);
         playerFragment = (PlayerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_player);
     }
 
@@ -99,7 +98,8 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
 
     @Override
     public void setItems(ArrayList<Player> players) {
-        lvPlayerList.setAdapter(new PlayerListAdapter(this, players));
+        lvPlayerListAdapter = new PlayerListAdapter(this, players);
+        lvPlayerList.setAdapter(lvPlayerListAdapter);
     }
 
     @Override
@@ -131,9 +131,10 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
 
     @Override
     public void updatePlayerData(int index, int levelScore, int levelStrength) {
-        Log.v(TAG, "Current level score is: " + String.valueOf(levelScore));
-        Log.v(TAG, "Current level strength is: " + String.valueOf(levelStrength));
-        presenter.updatePlayerListItem(index, levelScore, levelStrength);
+        Player player = lvPlayerListAdapter.getItem(index);
+        player.setLevelScore(levelScore);
+        player.setStrengthScore(levelStrength);
+        lvPlayerListAdapter.notifyDataSetChanged();
     }
 
     @Override

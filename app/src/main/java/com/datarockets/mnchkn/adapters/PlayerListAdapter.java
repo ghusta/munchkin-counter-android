@@ -14,13 +14,21 @@ import java.util.ArrayList;
 
 public class PlayerListAdapter extends ArrayAdapter<Player>{
 
+    ArrayList<Player> players = new ArrayList<Player>();
+
     public PlayerListAdapter(Context context, ArrayList<Player> players) {
         super(context, 0, players);
+        this.players = players;
+    }
+
+    @Override
+    public Player getItem(int position) {
+        return players.get(position);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Player player = getItem(position);
+        Player player = players.get(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.player_list_item, parent, false);
         }
