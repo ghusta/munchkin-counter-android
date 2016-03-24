@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.datarockets.mnchkn">
-
+    
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -8,6 +8,11 @@
         android:supportsRtl="true"
         android:theme="@style/MunchkinCounterTheme"
         android:name=".MunchkinApplication">
+
+
+        <instrumentation
+            android:name="android.test.InstrumentationTestRunner"
+            android:targetPackage="com.datarockets.mnchkn"/>
 
         <activity android:name=".activities.dashboard.DashboardActivity">
             <intent-filter>

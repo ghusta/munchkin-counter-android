@@ -44,4 +44,5 @@ dependencies {
     testCompile "junit:junit:4.10"
     testCompile "org.assertj:assertj-core:1.7.0"
     testCompile "org.robolectric:robolectric:3.0"
+    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.5.4'
 }
