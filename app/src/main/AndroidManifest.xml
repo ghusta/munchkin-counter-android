@@ -21,8 +21,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.welcome.WelcomeActivity"/>
-        <activity android:name=".activities.result.GameResultActivity"/>
-        <activity android:name=".activities.settings.SettingsActivity"/>
+        <activity
+            android:label="@string/title.analytics"
+            android:name=".activities.result.GameResultActivity"
+            android:parentActivityName=".activities.dashboard.DashboardActivity"/>
+        <activity
+            android:label="@string/title.settings"
+            android:name=".activities.settings.SettingsActivity"
+            android:parentActivityName=".activities.dashboard.DashboardActivity"/>
 
     </application>
 

@@ -84,7 +84,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
             case R.id.item_settings:
                 openSettingsActivity();
             default:
-                break;
+                return super.onOptionsItemSelected(item);
         }
         return super.onOptionsItemSelected(item);
     }

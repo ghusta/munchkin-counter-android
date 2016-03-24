@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -8,9 +8,16 @@
     <include
         layout="@layout/toolbar"/>
 
-    <lecho.lib.hellocharts.view.LineChartView
-        android:id="@+id/chart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tl_charts_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="fixed"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_charts"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"/>
 
 </LinearLayout>
