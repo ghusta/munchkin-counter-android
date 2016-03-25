@@ -1,5 +1,7 @@
 package com.datarockets.mnchkn.activities.dashboard;
 
+import android.content.Context;
+
 import com.datarockets.mnchkn.models.Player;
 
 import java.util.ArrayList;
@@ -10,9 +12,9 @@ public class DashboardPresenterImpl implements DashboardPresenter, DashboardInte
     DashboardView dashboardView;
     DashboardInteractor interactor;
 
-    public DashboardPresenterImpl(DashboardView dashboardView) {
+    public DashboardPresenterImpl(DashboardView dashboardView, Context context) {
         this.dashboardView = dashboardView;
-        this.interactor = new DashboardInteractorImpl();
+        this.interactor = new DashboardInteractorImpl(context);
     }
 
     @Override

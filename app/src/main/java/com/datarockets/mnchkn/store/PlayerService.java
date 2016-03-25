@@ -23,14 +23,6 @@ public interface PlayerService {
     ArrayList<Player> deletePlayer(int index);
 
     /**
-     * An action to get player from the list
-     *
-     * @param index - position of the palyer in the list
-     * @return Player from the list
-     */
-    Player getPlayer(int index);
-
-    /**
      * An action to update player in the list
      *
      * @param index - position of the player in the list

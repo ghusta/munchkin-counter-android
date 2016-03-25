@@ -1,26 +1,29 @@
 package com.datarockets.mnchkn.store;
 
-import com.datarockets.mnchkn.models.Player;
+import android.content.Context;
 
-import java.lang.reflect.Array;
+import com.datarockets.mnchkn.models.Player;
+import com.datarockets.mnchkn.utils.LogUtil;
+
 import java.util.ArrayList;
 
 public class PlayerServiceImpl implements PlayerService {
     private static PlayerServiceImpl instance;
 
-    ArrayList<Player> playersList;
+    public static final String TAG = LogUtil.makeLogTag(PlayerServiceImpl.class);
 
-    private PlayerServiceImpl() {
-        playersList = new ArrayList<>();
+    PlayerDatabaseHelper playerDatabase;
+
+    private PlayerServiceImpl(Context context) {
+        playerDatabase = PlayerDatabaseHelper.getInstance(context);
     }
 
-    public static PlayerServiceImpl getInstance() {
+    public static PlayerServiceImpl getInstance(Context context) {
         if (instance == null) {
-            instance = new PlayerServiceImpl();
+            instance = new PlayerServiceImpl(context);
         }
         return instance;
     }
-
 
     @Override
     public ArrayList<Player> addPlayer(String name) {
@@ -28,31 +31,25 @@ public class PlayerServiceImpl implements PlayerService {
         player.name = name;
         player.levelScore = 0;
         player.strengthScore = 0;
-        playersList.add(player);
-        return playersList;
+        playerDatabase.addPlayer(player);
+        return getPlayersList();
     }
 
     @Override
     public ArrayList<Player> deletePlayer(int index) {
-        playersList.remove(index);
-        return playersList;
-    }
-
-    @Override
-    public Player getPlayer(int index) {
-        return playersList.get(index);
+        playerDatabase.deletePlayer(index);
+        return (ArrayList<Player>) playerDatabase.getPlayers();
     }
 
     @Override
     public ArrayList<Player> updatePlayer(int index, Player player) {
-        playersList.get(index).setLevelScore(player.levelScore);
-        playersList.get(index).setStrengthScore(player.strengthScore);
-        return playersList;
+        playerDatabase.updatePlayer(index, player);
+        return (ArrayList<Player>)playerDatabase.getPlayers();
     }
 
     @Override
     public ArrayList<Player> getPlayersList() {
-        return playersList;
+        return (ArrayList<Player>) playerDatabase.getPlayers();
     }
 
 

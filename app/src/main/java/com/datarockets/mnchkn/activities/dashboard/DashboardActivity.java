@@ -19,7 +19,9 @@ import com.datarockets.mnchkn.activities.settings.SettingsActivity;
 import com.datarockets.mnchkn.adapters.PlayerListAdapter;
 import com.datarockets.mnchkn.fragments.dialogs.AddNewPlayerFragment;
 import com.datarockets.mnchkn.fragments.players.PlayerFragment;
+import com.datarockets.mnchkn.fragments.players.PlayerView;
 import com.datarockets.mnchkn.models.Player;
+import com.datarockets.mnchkn.store.PlayerDatabaseHelper;
 import com.datarockets.mnchkn.utils.LogUtil;
 
 import java.util.ArrayList;
@@ -36,12 +38,11 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     View lvPlayerListFooterView;
     PlayerListAdapter lvPlayerListAdapter;
     Button btnNextStep, btnAddNewPlayer;
-    PlayerFragment playerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new DashboardPresenterImpl(this);
+        presenter = new DashboardPresenterImpl(this, getApplicationContext());
         setContentView(R.layout.activity_dashboard);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -54,7 +55,6 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
         btnAddNewPlayer.setOnClickListener(this);
         lvPlayerList.setOnItemClickListener(this);
         lvPlayerList.setOnItemLongClickListener(this);
-        playerFragment = (PlayerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_player);
     }
 
     @Override
@@ -134,6 +134,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
         player.setLevelScore(levelScore);
         player.setStrengthScore(levelStrength);
         lvPlayerListAdapter.notifyDataSetChanged();
+        presenter.updatePlayerListItem(index, levelScore, levelStrength);
     }
 
     @Override
@@ -150,7 +151,6 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
                     lvPlayerList.setItemChecked(lvPlayerList.getCheckedItemPosition() + 1, true);
                     lvPlayerList.setSelection(lvPlayerList.getCheckedItemPosition());
                 }
-                playerFragment.displayPlayerData(lvPlayerList.getCheckedItemPosition());
                 break;
         }
     }
@@ -179,7 +179,6 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         lvPlayerList.setItemChecked(position, true);
-        playerFragment.displayPlayerData(lvPlayerList.getCheckedItemPosition());
     }
 
 }

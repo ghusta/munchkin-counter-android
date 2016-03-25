@@ -1,5 +1,7 @@
 package com.datarockets.mnchkn.activities.dashboard;
 
+import android.content.Context;
+
 import com.datarockets.mnchkn.models.Player;
 import com.datarockets.mnchkn.store.PlayerServiceImpl;
 
@@ -7,8 +9,8 @@ public class DashboardInteractorImpl implements DashboardInteractor {
 
     PlayerServiceImpl playerService;
 
-    public DashboardInteractorImpl() {
-        playerService = PlayerServiceImpl.getInstance();
+    public DashboardInteractorImpl(Context context) {
+        playerService = PlayerServiceImpl.getInstance(context);
     }
 
     @Override

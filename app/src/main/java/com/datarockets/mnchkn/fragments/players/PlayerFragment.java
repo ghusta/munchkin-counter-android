@@ -30,7 +30,6 @@ public class PlayerFragment extends Fragment implements PlayerView, View.OnClick
     TextView tvPlayerName;
     MunchkinTextView tvLevelScore, tvStrengthScore;
     DashboardView dashboardView;
-    int index;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,19 +50,14 @@ public class PlayerFragment extends Fragment implements PlayerView, View.OnClick
         tvLevelScore = (MunchkinTextView) currentPlayerView.findViewById(R.id.tv_level_score);
         tvStrengthScore = (MunchkinTextView) currentPlayerView.findViewById(R.id.tv_strength_score);
         btnLevelScoreUp = (ImageButton) currentPlayerView.findViewById(R.id.btn_level_score_up);
-        btnLevelScoreUp.setOnClickListener(this);
         btnLevelScoreDown = (ImageButton) currentPlayerView.findViewById(R.id.btn_level_score_down);
-        btnLevelScoreDown.setOnClickListener(this);
         btnStrengthScoreUp = (ImageButton) currentPlayerView.findViewById(R.id.btn_strength_score_up);
-        btnStrengthScoreUp.setOnClickListener(this);
         btnStrengthScoreDown = (ImageButton) currentPlayerView.findViewById(R.id.btn_strength_score_down);
+        btnLevelScoreUp.setOnClickListener(this);
+        btnLevelScoreDown.setOnClickListener(this);
+        btnStrengthScoreUp.setOnClickListener(this);
         btnStrengthScoreDown.setOnClickListener(this);
         return currentPlayerView;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
@@ -90,16 +84,6 @@ public class PlayerFragment extends Fragment implements PlayerView, View.OnClick
             default:
                 break;
         }
-        dashboardView.updatePlayerData(index, currentLevel, currentStrength);
-    }
-
-    @Override
-    public void displayPlayerData(int index) {
-        this.index = index;
-        Player selectedPlayer = presenter.loadPlayer(index);
-        tvPlayerName.setText(selectedPlayer.name);
-        tvLevelScore.setText(String.valueOf(selectedPlayer.levelScore));
-        tvStrengthScore.setText(String.valueOf(selectedPlayer.strengthScore));
     }
 
 }
