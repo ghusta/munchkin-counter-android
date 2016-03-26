@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +29,8 @@ import java.util.ArrayList;
 
 public class DashboardActivity extends AppCompatActivity implements DashboardView,
         View.OnClickListener, AdapterView.OnItemLongClickListener,
-        AdapterView.OnItemClickListener, AddNewPlayerFragment.AddNewPlayerDialogInterface{
+        AdapterView.OnItemClickListener, AddNewPlayerFragment.AddNewPlayerDialogInterface,
+        PlayerFragment.PlayerFragmentCallback{
 
     public static final String TAG = LogUtil.makeLogTag(DashboardActivity.class);
 
@@ -124,7 +126,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     @Override
     public void showAddNewPlayerDialog() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        AddNewPlayerFragment addNewPlayerFragment = AddNewPlayerFragment.newInstance("");
+        AddNewPlayerFragment addNewPlayerFragment = AddNewPlayerFragment.newInstance();
         addNewPlayerFragment.show(fragmentManager, TAG);
     }
 
@@ -157,6 +159,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
 
     @Override
     public void onFinishEditDialog(String inputName) {
+        Log.v(TAG, inputName);
         presenter.addNewPlayer(inputName);
     }
 
@@ -179,6 +182,11 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         lvPlayerList.setItemChecked(position, true);
+    }
+
+    @Override
+    public void onScoreChanged(Player player) {
+
     }
 
 }

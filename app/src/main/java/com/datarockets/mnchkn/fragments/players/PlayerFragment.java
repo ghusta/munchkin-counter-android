@@ -30,6 +30,11 @@ public class PlayerFragment extends Fragment implements PlayerView, View.OnClick
     TextView tvPlayerName;
     MunchkinTextView tvLevelScore, tvStrengthScore;
     DashboardView dashboardView;
+    PlayerFragmentCallback callback;
+
+    public interface PlayerFragmentCallback {
+        public void onScoreChanged(Player player);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

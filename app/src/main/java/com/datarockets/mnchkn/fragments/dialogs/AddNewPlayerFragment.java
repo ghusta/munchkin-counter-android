@@ -23,11 +23,8 @@ public class AddNewPlayerFragment extends DialogFragment implements TextView.OnE
         void onFinishEditDialog(String inputName);
     }
 
-    public static AddNewPlayerFragment newInstance(String name) {
+    public static AddNewPlayerFragment newInstance() {
         AddNewPlayerFragment fragment = new AddNewPlayerFragment();
-        Bundle args = new Bundle();
-        args.putString("name", name);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -39,12 +36,11 @@ public class AddNewPlayerFragment extends DialogFragment implements TextView.OnE
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        etPlayerName = (EditText) view.findViewById(R.id.et_player_name);
-        String name = getArguments().getString("name", "Enter name of player");
-        getDialog().setTitle(name);
-        etPlayerName.requestFocus();
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        getDialog().getWindow().setBackgroundDrawableResource(R.drawable.add_player_dialog);
+        etPlayerName = (EditText) view.findViewById(R.id.et_player_name);
         etPlayerName.setOnEditorActionListener(this);
+        etPlayerName.requestFocus();
     }
 
     @Override

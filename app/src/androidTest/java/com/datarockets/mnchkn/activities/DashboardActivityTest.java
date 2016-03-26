@@ -2,11 +2,13 @@ package com.datarockets.mnchkn.activities;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.MediumTest;
+import android.test.suitebuilder.annotation.SmallTest;
+import android.widget.ListView;
 
 import com.datarockets.mnchkn.R;
 import com.datarockets.mnchkn.activities.dashboard.DashboardActivity;
 import com.datarockets.mnchkn.activities.result.GameResultActivity;
-import com.datarockets.mnchkn.activities.welcome.WelcomeActivity;
+import com.datarockets.mnchkn.activities.settings.SettingsActivity;
 import com.robotium.solo.Solo;
 
 public class DashboardActivityTest extends ActivityInstrumentationTestCase2<DashboardActivity>{
@@ -22,22 +24,27 @@ public class DashboardActivityTest extends ActivityInstrumentationTestCase2<Dash
         solo = new Solo(getInstrumentation(), getActivity());
     }
 
+    @SmallTest
+    public void testCurrentActivity() {
+        solo.assertCurrentActivity("Wrong activity", DashboardActivity.class);
+    }
+
     @MediumTest
-    public void testAddingPlayers() {
-        solo.assertCurrentActivity("wrong activity", DashboardActivity.class);
+    public void testAddingNewPlayers() {
         solo.clickOnButton(solo.getString(R.string.button_add_new_player));
         solo.waitForDialogToOpen();
         solo.enterText(0, "Alex");
         solo.pressSoftKeyboardDoneButton();
         solo.waitForDialogToClose();
-        solo.clickInList(0);
-        solo.clickOnView(solo.getView(R.id.btn_level_score_up));
-        solo.clickOnView(solo.getView(R.id.btn_level_score_up));
+    }
+
+    @MediumTest
+    public void testOpenGameResultActivity() {
         solo.clickOnView(solo.getView(R.id.item_finish_game));
         solo.waitForDialogToOpen();
         solo.clickOnButton(solo.getString(R.string.button_yes));
         solo.waitForDialogToClose();
-        solo.assertCurrentActivity("wrong activity", GameResultActivity.class);
+        solo.assertCurrentActivity("Wrong activity", GameResultActivity.class);
     }
 
     @Override
