@@ -9,10 +9,12 @@ public interface DashboardInteractor {
 
     interface OnLoadPlayerListener {
         void onFinished(ArrayList<Player> players);
+        void onPlayerAdded(Player player);
+        void onPlayerDeleted(int position);
     }
 
     void loadPlayersList(OnLoadPlayerListener listener);
     void addPlayer(String name, OnLoadPlayerListener listener);
-    void deletePlayer(int index, OnLoadPlayerListener listener);
+    void deletePlayer(int position, long id, OnLoadPlayerListener listener);
     void updatePlayer(int index, int level, int strength, OnLoadPlayerListener listener);
 }

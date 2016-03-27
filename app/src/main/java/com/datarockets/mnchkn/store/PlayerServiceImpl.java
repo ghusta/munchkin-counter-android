@@ -26,30 +26,31 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public ArrayList<Player> addPlayer(String name) {
+    public Player addPlayer(String name) {
         Player player = new Player();
-        player.name = name;
-        player.levelScore = 0;
-        player.strengthScore = 0;
-        playerDatabase.addPlayer(player);
-        return getPlayersList();
+        player.setName(name);
+        player.setLevelScore(0);
+        player.setStrengthScore(0);
+        long id = playerDatabase.addPlayer(player);
+        player.setId(id);
+        return player;
     }
 
     @Override
-    public ArrayList<Player> deletePlayer(int index) {
-        playerDatabase.deletePlayer(index);
-        return (ArrayList<Player>) playerDatabase.getPlayers();
+    public int deletePlayer(int position, long id) {
+        playerDatabase.deletePlayer(id);
+        return position;
     }
 
     @Override
     public ArrayList<Player> updatePlayer(int index, Player player) {
         playerDatabase.updatePlayer(index, player);
-        return (ArrayList<Player>)playerDatabase.getPlayers();
+        return playerDatabase.getPlayers();
     }
 
     @Override
     public ArrayList<Player> getPlayersList() {
-        return (ArrayList<Player>) playerDatabase.getPlayers();
+        return playerDatabase.getPlayers();
     }
 
 

@@ -12,22 +12,23 @@ public interface PlayerService {
      * @param name - the name of the player
      * @return Updated players list
      */
-    ArrayList<Player> addPlayer(String name);
+    Player addPlayer(String name);
 
     /**
      * An action to delete player
      *
-     * @param index - position of the player in the list
-     * @return Updated players list
+     * @param position - position of the player in the list
+     * @param id - id of the player in the database
+     * @return Return position of the player the list which should be deleted
      */
-    ArrayList<Player> deletePlayer(int index);
+    int deletePlayer(int position, long id);
 
     /**
      * An action to update player in the list
      *
      * @param index - position of the player in the list
      * @param player - updated player
-     * @return Updated players list
+     * @return Updated player item to list
      */
     ArrayList<Player> updatePlayer(int index, Player player);
 

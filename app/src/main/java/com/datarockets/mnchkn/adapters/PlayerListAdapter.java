@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class PlayerListAdapter extends ArrayAdapter<Player>{
 
-    ArrayList<Player> players = new ArrayList<Player>();
+    ArrayList<Player> players = new ArrayList<>();
 
     public PlayerListAdapter(Context context, ArrayList<Player> players) {
         super(context, 0, players);
@@ -35,9 +35,9 @@ public class PlayerListAdapter extends ArrayAdapter<Player>{
         TextView tvPlayerName = (TextView) convertView.findViewById(R.id.tv_player_item_name);
         TextView tvPlayerLevelScore = (TextView) convertView.findViewById(R.id.tv_player_item_level_score);
         TextView tvPlayerStrengthScore = (TextView) convertView.findViewById(R.id.tv_player_item_strength_score);
-        tvPlayerName.setText(player.name);
-        tvPlayerLevelScore.setText(String.valueOf(player.levelScore));
-        tvPlayerStrengthScore.setText(String.valueOf(player.strengthScore));
+        tvPlayerName.setText(player.getName());
+        tvPlayerLevelScore.setText(String.valueOf(player.getLevelScore()));
+        tvPlayerStrengthScore.setText(String.valueOf(player.getStrengthScore()));
         return convertView;
     }
 

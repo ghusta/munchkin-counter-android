@@ -1,6 +1,9 @@
 package com.datarockets.mnchkn;
 
+import android.app.Instrumentation;
+import android.test.ViewAsserts;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.datarockets.mnchkn.activities.dashboard.DashboardActivity;
 import com.datarockets.mnchkn.fragments.dialogs.AddNewPlayerFragment;
@@ -21,7 +24,6 @@ public class DashboardActivityUnitTest {
     @Test
     public void checkAddNewPlayer() {
         DashboardActivity activity = Robolectric.setupActivity(DashboardActivity.class);
-        Button btnAddNewPlayer = (Button) activity.findViewById(R.id.btn_add_new_player);
     }
 
 }

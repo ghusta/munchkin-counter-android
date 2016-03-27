@@ -44,7 +44,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new DashboardPresenterImpl(this, getApplicationContext());
+        presenter = new DashboardPresenterImpl(this, this);
         setContentView(R.layout.activity_dashboard);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -140,6 +140,18 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     }
 
     @Override
+    public void addPlayerToList(Player player) {
+        lvPlayerListAdapter.add(player);
+        lvPlayerListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void deletePlayerFromList(int position) {
+        lvPlayerListAdapter.remove(lvPlayerListAdapter.getItem(position));
+        lvPlayerListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_add_new_player:
@@ -159,7 +171,6 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
 
     @Override
     public void onFinishEditDialog(String inputName) {
-        Log.v(TAG, inputName);
         presenter.addNewPlayer(inputName);
     }
 
@@ -169,7 +180,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
                 .setTitle(R.string.dialog_player_delete_title)
                 .setMessage(R.string.dialog_player_delete_message)
                 .setPositiveButton(R.string.button_yes, (dialog, which) -> {
-                    presenter.deletePlayerListItem(position);
+                    presenter.deletePlayerListItem(position, lvPlayerListAdapter.getItem(position).getId());
                 })
                 .setNegativeButton(R.string.button_no, (dialog, which) -> {
                     dialog.dismiss();

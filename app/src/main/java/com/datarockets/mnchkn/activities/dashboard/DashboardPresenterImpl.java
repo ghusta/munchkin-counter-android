@@ -25,9 +25,9 @@ public class DashboardPresenterImpl implements DashboardPresenter, DashboardInte
     }
 
     @Override
-    public void deletePlayerListItem(int index) {
+    public void deletePlayerListItem(int position, long id) {
         if (dashboardView != null) {
-            interactor.deletePlayer(index, this);
+            interactor.deletePlayer(position, id, this);
         }
     }
 
@@ -49,6 +49,20 @@ public class DashboardPresenterImpl implements DashboardPresenter, DashboardInte
     public void onFinished(ArrayList<Player> players) {
         if (dashboardView != null) {
             dashboardView.setItems(players);
+        }
+    }
+
+    @Override
+    public void onPlayerAdded(Player player) {
+        if (dashboardView != null) {
+            dashboardView.addPlayerToList(player);
+        }
+    }
+
+    @Override
+    public void onPlayerDeleted(int position) {
+        if (dashboardView != null) {
+            dashboardView.deletePlayerFromList(position);
         }
     }
 
