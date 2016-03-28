@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class PlayerListAdapter extends ArrayAdapter<Player>{
 
-    ArrayList<Player> players = new ArrayList<>();
+    ArrayList<Player> players;
 
     public PlayerListAdapter(Context context, ArrayList<Player> players) {
         super(context, 0, players);

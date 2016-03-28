@@ -12,10 +12,10 @@ public class PlayerServiceImpl implements PlayerService {
 
     public static final String TAG = LogUtil.makeLogTag(PlayerServiceImpl.class);
 
-    PlayerDatabaseHelper playerDatabase;
+    private MunchkinDatabaseHelper playerDatabase;
 
     private PlayerServiceImpl(Context context) {
-        playerDatabase = PlayerDatabaseHelper.getInstance(context);
+        playerDatabase = MunchkinDatabaseHelper.getInstance(context);
     }
 
     public static PlayerServiceImpl getInstance(Context context) {

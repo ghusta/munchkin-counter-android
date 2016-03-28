@@ -14,4 +14,5 @@ public interface DashboardView {
     void updatePlayerData(int index, int levelScore, int levelStrength);
     void addPlayerToList(Player player);
     void deletePlayerFromList(int index);
+    void showStartContinueDialog();
 }

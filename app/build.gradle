@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 23
@@ -41,9 +42,10 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.2.1'
     compile 'com.android.support:cardview-v7:23.2.1'
     compile 'com.github.lecho:hellocharts-library:1.5.8@aar'
+    compile 'com.google.android.gms:play-services-analytics:8.1.0'
+    compile 'org.assertj:assertj-core:1.7.0'
     testCompile "junit:junit:4.10"
     testCompile "org.assertj:assertj-core:1.7.0"
     testCompile "org.robolectric:robolectric:3.0"
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.5.4'
-    compile 'org.assertj:assertj-core:1.7.0'
 }

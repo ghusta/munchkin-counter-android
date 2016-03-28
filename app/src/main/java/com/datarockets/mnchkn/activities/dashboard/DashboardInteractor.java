@@ -1,5 +1,7 @@
 package com.datarockets.mnchkn.activities.dashboard;
 
+import android.content.Context;
+
 import com.datarockets.mnchkn.models.Player;
 
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ public interface DashboardInteractor {
         void onPlayerDeleted(int position);
     }
 
+    boolean isGameStarted(Context context);
     void loadPlayersList(OnLoadPlayerListener listener);
     void addPlayer(String name, OnLoadPlayerListener listener);
     void deletePlayer(int position, long id, OnLoadPlayerListener listener);

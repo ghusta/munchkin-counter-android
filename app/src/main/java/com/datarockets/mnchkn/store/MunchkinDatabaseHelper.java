@@ -11,11 +11,10 @@ import com.datarockets.mnchkn.models.Player;
 import com.datarockets.mnchkn.utils.LogUtil;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class PlayerDatabaseHelper extends SQLiteOpenHelper {
+public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String TAG = LogUtil.makeLogTag(PlayerDatabaseHelper.class);
+    private static final String TAG = LogUtil.makeLogTag(MunchkinDatabaseHelper.class);
 
     private static final String DATABASE_NAME = "players_db";
     private static final int DATABASE_VERSION = 1;
@@ -27,16 +26,22 @@ public class PlayerDatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_PLAYER_LEVEL = "level";
     private static final String KEY_PLAYER_STRENGTH = "strength";
 
-    private static PlayerDatabaseHelper instance;
+    private static final String TABLE_GAME = "game";
 
-    public static synchronized PlayerDatabaseHelper getInstance(Context context) {
+    private static final String KEY_GAME_PLAYER_ID = "player_id";
+    private static final String KEY_GAME_PLAYER_LEVEL = "player_level";
+    private static final String KEY_GAME_PLAYER_STRENGTH = "player_strength";
+
+    private static MunchkinDatabaseHelper instance;
+
+    public static synchronized MunchkinDatabaseHelper getInstance(Context context) {
         if (instance == null) {
-            instance = new PlayerDatabaseHelper(context.getApplicationContext());
+            instance = new MunchkinDatabaseHelper(context.getApplicationContext());
         }
         return instance;
     }
 
-    private PlayerDatabaseHelper(Context context) {
+    private MunchkinDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -49,13 +54,21 @@ public class PlayerDatabaseHelper extends SQLiteOpenHelper {
                 KEY_PLAYER_LEVEL + " INTEGER," +
                 KEY_PLAYER_STRENGTH + " INTEGER" +
                 ")";
+        String CREATE_GAME_TABLE = "CREATE TABLE " + TABLE_GAME +
+                "(" +
+                KEY_GAME_PLAYER_ID + " INTEGER REFERENCES " + TABLE_PLAYERS + "," +
+                KEY_GAME_PLAYER_LEVEL + " INTEGER," +
+                KEY_GAME_PLAYER_STRENGTH + " INTEGER" +
+                ")";
         db.execSQL(CREATE_PLAYERS_TABLE);
+        db.execSQL(CREATE_GAME_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion != newVersion) {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLAYERS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_GAME);
             onCreate(db);
         }
     }

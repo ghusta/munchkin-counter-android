@@ -1,16 +1,26 @@
 package com.datarockets.mnchkn.activities.dashboard;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.datarockets.mnchkn.models.Player;
 import com.datarockets.mnchkn.store.PlayerServiceImpl;
 
 public class DashboardInteractorImpl implements DashboardInteractor {
 
-    PlayerServiceImpl playerService;
+    private static final String IS_GAME_STARTED = "game_started";
+
+    private PlayerServiceImpl playerService;
 
     public DashboardInteractorImpl(Context context) {
         playerService = PlayerServiceImpl.getInstance(context);
+    }
+
+    @Override
+    public boolean isGameStarted(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getBoolean(IS_GAME_STARTED, false);
     }
 
     @Override

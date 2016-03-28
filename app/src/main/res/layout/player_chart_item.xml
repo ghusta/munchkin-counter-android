@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/list_item_height"
+    android:paddingLeft="@dimen/list_item_side_padding"
+    android:paddingRight="@dimen/list_item_side_padding"
+    android:gravity="center_vertical">
+
+    <ImageView
+        android:id="@+id/iv_player_color"
+        android:background="@color/colorPrimary"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
+
+    <TextView
+        android:id="@+id/tv_player_name"
+        android:paddingLeft="@dimen/list_item_side_padding"
+        android:text="Player Name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_player_score"
+        android:text="0"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:gravity="end"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    
+</LinearLayout>

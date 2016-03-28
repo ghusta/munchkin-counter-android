@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,9 +19,7 @@ import com.datarockets.mnchkn.activities.settings.SettingsActivity;
 import com.datarockets.mnchkn.adapters.PlayerListAdapter;
 import com.datarockets.mnchkn.fragments.dialogs.AddNewPlayerFragment;
 import com.datarockets.mnchkn.fragments.players.PlayerFragment;
-import com.datarockets.mnchkn.fragments.players.PlayerView;
 import com.datarockets.mnchkn.models.Player;
-import com.datarockets.mnchkn.store.PlayerDatabaseHelper;
 import com.datarockets.mnchkn.utils.LogUtil;
 
 import java.util.ArrayList;
@@ -149,6 +146,21 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     public void deletePlayerFromList(int position) {
         lvPlayerListAdapter.remove(lvPlayerListAdapter.getItem(position));
         lvPlayerListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showStartContinueDialog() {
+        AlertDialog startContinueDialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_start_continue_game_title)
+                .setMessage(R.string.dialog_start_continue_game_message)
+                .setPositiveButton(R.string.button_continue, (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .setNegativeButton(R.string.button_start, (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .create();
+        startContinueDialog.show();
     }
 
     @Override

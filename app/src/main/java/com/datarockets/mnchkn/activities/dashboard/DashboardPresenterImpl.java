@@ -11,10 +11,21 @@ public class DashboardPresenterImpl implements DashboardPresenter, DashboardInte
 
     DashboardView dashboardView;
     DashboardInteractor interactor;
+    Context context;
 
     public DashboardPresenterImpl(DashboardView dashboardView, Context context) {
         this.dashboardView = dashboardView;
+        this.context = context;
         this.interactor = new DashboardInteractorImpl(context);
+    }
+
+    @Override
+    public void checkIsGameStarted() {
+        if (dashboardView != null) {
+            if (interactor.isGameStarted(context)) {
+                dashboardView.showAddNewPlayerDialog();
+            }
+        }
     }
 
     @Override

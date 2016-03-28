@@ -33,5 +33,8 @@ public class GameResultActivity extends AppCompatActivity implements GameResultV
         tlChartsTitle.setupWithViewPager(vpCharts);
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }

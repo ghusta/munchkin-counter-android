@@ -5,12 +5,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.datarockets.mnchkn.fragments.ChartsFragment;
+import com.datarockets.mnchkn.R;
+import com.datarockets.mnchkn.fragments.charts.ChartsFragment;
 
 public class ChartsPagerAdapter extends FragmentStatePagerAdapter {
 
-    public static final int PAGES_COUNT = 3;
-    private String titles[] = new String[] { "Level", "Strength", "Summary" };
+    private int titles[] = new int[] { R.string.tab_level, R.string.tab_strength, R.string.tab_summary };
     private Context context;
 
     public ChartsPagerAdapter(FragmentManager fm, Context context) {
@@ -20,16 +20,16 @@ public class ChartsPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return new ChartsFragment();
+        return ChartsFragment.newInstance(position);
     }
 
     @Override
     public int getCount() {
-        return PAGES_COUNT;
+        return titles.length;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return titles[position];
+        return context.getResources().getString(titles[position]);
     }
 }
