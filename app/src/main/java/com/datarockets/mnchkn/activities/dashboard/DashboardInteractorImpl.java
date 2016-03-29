@@ -39,11 +39,8 @@ public class DashboardInteractorImpl implements DashboardInteractor {
     }
 
     @Override
-    public void updatePlayer(int index, int level, int strength, OnLoadPlayerListener listener) {
-        Player player = new Player();
-        player.levelScore = level;
-        player.strengthScore = strength;
-        listener.onFinished(playerService.updatePlayer(index, player));
+    public void updatePlayer(Player player, int position, OnLoadPlayerListener listener) {
+        listener.onPlayerUpdated(playerService.updatePlayer(player), position);
     }
 
 

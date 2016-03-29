@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class DashboardActivity extends AppCompatActivity implements DashboardView,
         View.OnClickListener, AdapterView.OnItemLongClickListener,
         AdapterView.OnItemClickListener, AddNewPlayerFragment.AddNewPlayerDialogInterface,
-        PlayerFragment.PlayerFragmentCallback{
+        PlayerFragment.PlayerFragmentCallback {
 
     public static final String TAG = LogUtil.makeLogTag(DashboardActivity.class);
 
@@ -37,6 +37,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     View lvPlayerListFooterView;
     PlayerListAdapter lvPlayerListAdapter;
     Button btnNextStep, btnAddNewPlayer;
+    PlayerFragment playerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,12 +129,11 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     }
 
     @Override
-    public void updatePlayerData(int index, int levelScore, int levelStrength) {
-        Player player = lvPlayerListAdapter.getItem(index);
-        player.setLevelScore(levelScore);
-        player.setStrengthScore(levelStrength);
+    public void updatePlayerData(Player player, int position) {
+        Player playerToUpdate = lvPlayerListAdapter.getItem(position);
+        playerToUpdate.levelScore = player.levelScore;
+        playerToUpdate.strengthScore = player.strengthScore;
         lvPlayerListAdapter.notifyDataSetChanged();
-        presenter.updatePlayerListItem(index, levelScore, levelStrength);
     }
 
     @Override
@@ -205,11 +205,12 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         lvPlayerList.setItemChecked(position, true);
+        playerFragment.loadPlayerScores((Player) lvPlayerList.getItemAtPosition(position), position);
     }
 
     @Override
-    public void onScoreChanged(Player player) {
-
+    public void onScoreChanged(Player player, int index) {
+        presenter.updatePlayerListItem(player, index);
     }
 
 }

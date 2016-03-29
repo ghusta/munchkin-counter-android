@@ -23,17 +23,18 @@ import static android.widget.Toast.makeText;
 public class PlayerFragment extends Fragment implements PlayerView, View.OnClickListener {
 
     public static final String TAG = LogUtil.makeLogTag(PlayerFragment.class);
+    private int playerPosition;
+    private Player player;
 
     PlayerPresenter presenter;
     View currentPlayerView;
     ImageButton btnLevelScoreUp, btnLevelScoreDown, btnStrengthScoreUp, btnStrengthScoreDown;
     TextView tvPlayerName;
     MunchkinTextView tvLevelScore, tvStrengthScore;
-    DashboardView dashboardView;
     PlayerFragmentCallback callback;
 
     public interface PlayerFragmentCallback {
-        public void onScoreChanged(Player player);
+        void onScoreChanged(Player player, int index);
     }
 
     @Override
@@ -45,7 +46,7 @@ public class PlayerFragment extends Fragment implements PlayerView, View.OnClick
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        dashboardView = (DashboardView) getActivity();
+        callback = (PlayerFragmentCallback) getActivity();
     }
 
     @Override
@@ -89,6 +90,17 @@ public class PlayerFragment extends Fragment implements PlayerView, View.OnClick
             default:
                 break;
         }
+        player.setLevelScore(currentLevel);
+        player.setStrengthScore(currentStrength);
+        callback.onScoreChanged(player, playerPosition);
+    }
+
+    public void loadPlayerScores(Player player, int index) {
+        this.player = player;
+        this.playerPosition = index;
+        tvPlayerName.setText(player.getName());
+        tvLevelScore.setText(String.valueOf(player.getLevelScore()));
+        tvStrengthScore.setText(String.valueOf(player.getStrengthScore()));
     }
 
 }

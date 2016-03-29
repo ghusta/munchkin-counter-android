@@ -11,7 +11,7 @@ import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
 
-public class GameServiceImpl {
+public class GameServiceImpl implements GameService {
     private static GameServiceImpl instance;
 
     private MunchkinDatabaseHelper database;
@@ -32,10 +32,7 @@ public class GameServiceImpl {
     }
 
     public LineChartData getPlayersData(int type) {
-        List<PointValue> values = new ArrayList<>();
-        List<Line> lines = new ArrayList<>();
-        LineChartData data = new LineChartData(lines);
-        return data;
+        return database.getLineChartData();
     }
 
 }

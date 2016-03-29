@@ -13,11 +13,12 @@ public interface DashboardInteractor {
         void onFinished(ArrayList<Player> players);
         void onPlayerAdded(Player player);
         void onPlayerDeleted(int position);
+        void onPlayerUpdated(Player player, int position);
     }
 
     boolean isGameStarted(Context context);
     void loadPlayersList(OnLoadPlayerListener listener);
     void addPlayer(String name, OnLoadPlayerListener listener);
     void deletePlayer(int position, long id, OnLoadPlayerListener listener);
-    void updatePlayer(int index, int level, int strength, OnLoadPlayerListener listener);
+    void updatePlayer(Player player, int position, OnLoadPlayerListener listener);
 }

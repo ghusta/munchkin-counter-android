@@ -1,9 +1,6 @@
 package com.datarockets.mnchkn.fragments.charts;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +12,8 @@ import com.datarockets.mnchkn.adapters.PlayerChartListAdapter;
 import com.datarockets.mnchkn.models.Player;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import lecho.lib.hellocharts.model.Axis;
-import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
-import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.view.LineChartView;
 
 public class ChartsFragment extends Fragment implements ChartsView {
@@ -39,11 +32,6 @@ public class ChartsFragment extends Fragment implements ChartsView {
         bundle.putInt(DATA_TYPE, type);
         fragment.setArguments(bundle);
         return fragment;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
     }
 
     @Override

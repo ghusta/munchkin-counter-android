@@ -26,11 +26,10 @@ public interface PlayerService {
     /**
      * An action to update player in the list
      *
-     * @param index - position of the player in the list
      * @param player - updated player
      * @return Updated player item to list
      */
-    ArrayList<Player> updatePlayer(int index, Player player);
+    Player updatePlayer(Player player);
 
     List<Player> getPlayersList();
 

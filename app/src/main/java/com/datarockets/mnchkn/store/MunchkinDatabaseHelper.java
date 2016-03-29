@@ -5,12 +5,18 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Point;
 import android.util.Log;
 
 import com.datarockets.mnchkn.models.Player;
 import com.datarockets.mnchkn.utils.LogUtil;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import lecho.lib.hellocharts.model.Line;
+import lecho.lib.hellocharts.model.LineChartData;
+import lecho.lib.hellocharts.model.PointValue;
 
 public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
 
@@ -121,12 +127,13 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
         return players;
     }
 
-    public void updatePlayer(int position, Player player) {
+    public Player updatePlayer(Player player) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_PLAYER_LEVEL, player.levelScore);
         values.put(KEY_PLAYER_STRENGTH, player.strengthScore);
-        db.update(TABLE_PLAYERS, values, KEY_PLAYER_ID + " = ?", new String[] {String.valueOf(position)});
+        db.update(TABLE_PLAYERS, values, KEY_PLAYER_ID + " = ?", new String[] {String.valueOf(player.id)});
+        return player;
     }
 
     public void deletePlayer(long id) {
@@ -144,5 +151,27 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public LineChartData getLineChartData() {
+        List<PointValue> values = new ArrayList<>();
+        List<Line> lines = new ArrayList<>();
+        LineChartData data = new LineChartData(lines);
+
+        SQLiteDatabase db = getReadableDatabase();
+        String LINE_CHART_QUERY = "SELECT * FROM " + TABLE_GAME;
+        Cursor cursor = db.rawQuery(LINE_CHART_QUERY, null);
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    // Сначала получаем id игрока
+                    // Получаем все координаты для построения линии на графике
+                    // Строим лист с линиями
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Error while getting linechart data");
+            e.printStackTrace();
+        }
+        return data;
+    }
 
 }

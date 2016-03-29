@@ -20,7 +20,7 @@ public class ChartsPresenterImpl implements ChartsPresenter {
     @Override
     public void onViewCreated() {
         if (chartsView != null) {
-            chartsView.loadCharts();
+
         }
     }
 

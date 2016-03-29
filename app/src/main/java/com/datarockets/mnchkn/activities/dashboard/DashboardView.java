@@ -11,7 +11,7 @@ public interface DashboardView {
     void openSettingsActivity();
     void showConfirmFinishGameDialog();
     void showAddNewPlayerDialog();
-    void updatePlayerData(int index, int levelScore, int levelStrength);
+    void updatePlayerData(Player player, int position);
     void addPlayerToList(Player player);
     void deletePlayerFromList(int index);
     void showStartContinueDialog();

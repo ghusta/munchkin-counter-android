@@ -43,9 +43,8 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public ArrayList<Player> updatePlayer(int index, Player player) {
-        playerDatabase.updatePlayer(index, player);
-        return playerDatabase.getPlayers();
+    public Player updatePlayer(Player player) {
+        return playerDatabase.updatePlayer(player);
     }
 
     @Override
