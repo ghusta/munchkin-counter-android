@@ -22,15 +22,13 @@ import static android.widget.Toast.makeText;
 
 public class PlayerFragment extends Fragment implements PlayerView, View.OnClickListener {
 
-    public static final String TAG = LogUtil.makeLogTag(PlayerFragment.class);
     private int playerPosition;
     private Player player;
 
     PlayerPresenter presenter;
     View currentPlayerView;
     ImageButton btnLevelScoreUp, btnLevelScoreDown, btnStrengthScoreUp, btnStrengthScoreDown;
-    TextView tvPlayerName;
-    MunchkinTextView tvLevelScore, tvStrengthScore;
+    MunchkinTextView tvPlayerName, tvLevelScore, tvStrengthScore;
     PlayerFragmentCallback callback;
 
     public interface PlayerFragmentCallback {
@@ -52,7 +50,7 @@ public class PlayerFragment extends Fragment implements PlayerView, View.OnClick
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         currentPlayerView = inflater.inflate(R.layout.fragment_player, container, false);
-        tvPlayerName = (TextView) currentPlayerView.findViewById(R.id.tv_player_name);
+        tvPlayerName = (MunchkinTextView) currentPlayerView.findViewById(R.id.tv_player_name);
         tvLevelScore = (MunchkinTextView) currentPlayerView.findViewById(R.id.tv_level_score);
         tvStrengthScore = (MunchkinTextView) currentPlayerView.findViewById(R.id.tv_strength_score);
         btnLevelScoreUp = (ImageButton) currentPlayerView.findViewById(R.id.btn_level_score_up);
@@ -72,26 +70,22 @@ public class PlayerFragment extends Fragment implements PlayerView, View.OnClick
         int currentStrength = Integer.valueOf(tvStrengthScore.getText().toString());
         switch (v.getId()) {
             case R.id.btn_level_score_up:
-                currentLevel++;
-                tvLevelScore.setText(String.valueOf(currentLevel));
+                presenter.increaseLevelScore(currentLevel);
                 break;
             case R.id.btn_level_score_down:
-                currentLevel--;
-                tvLevelScore.setText(String.valueOf(currentLevel));
+                presenter.decreaseLevelScore(currentLevel);
                 break;
             case R.id.btn_strength_score_up:
-                currentStrength++;
-                tvStrengthScore.setText(String.valueOf(currentStrength));
+                presenter.increaseStrengthScore(currentStrength);
                 break;
             case R.id.btn_strength_score_down:
-                currentStrength--;
-                tvStrengthScore.setText(String.valueOf(currentStrength));
+                presenter.decreaseStrengthScore(currentStrength);
                 break;
             default:
                 break;
         }
-        player.setLevelScore(currentLevel);
-        player.setStrengthScore(currentStrength);
+        player.setStrengthScore(Integer.valueOf(tvStrengthScore.getText().toString()));
+        player.setLevelScore(Integer.valueOf(tvLevelScore.getText().toString()));
         callback.onScoreChanged(player, playerPosition);
     }
 
@@ -101,6 +95,16 @@ public class PlayerFragment extends Fragment implements PlayerView, View.OnClick
         tvPlayerName.setText(player.getName());
         tvLevelScore.setText(String.valueOf(player.getLevelScore()));
         tvStrengthScore.setText(String.valueOf(player.getStrengthScore()));
+    }
+
+    @Override
+    public void setLevelScore(String score) {
+        tvLevelScore.setText(score);
+    }
+
+    @Override
+    public void setStrengthScore(String score) {
+        tvStrengthScore.setText(score);
     }
 
 }

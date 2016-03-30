@@ -17,6 +17,7 @@ public interface DashboardInteractor {
     }
 
     boolean isGameStarted(Context context);
+    int countPlayers(OnLoadPlayerListener listener);
     void loadPlayersList(OnLoadPlayerListener listener);
     void addPlayer(String name, OnLoadPlayerListener listener);
     void deletePlayer(int position, long id, OnLoadPlayerListener listener);

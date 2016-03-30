@@ -1,8 +1,8 @@
 package com.datarockets.mnchkn.activities.dashboard;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,11 +14,10 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.datarockets.mnchkn.R;
-import com.datarockets.mnchkn.activities.result.GameResultActivity;
-import com.datarockets.mnchkn.activities.settings.SettingsActivity;
 import com.datarockets.mnchkn.adapters.PlayerListAdapter;
 import com.datarockets.mnchkn.fragments.dialogs.AddNewPlayerFragment;
 import com.datarockets.mnchkn.fragments.players.PlayerFragment;
+import com.datarockets.mnchkn.fragments.players.PlayerWarningFragment;
 import com.datarockets.mnchkn.models.Player;
 import com.datarockets.mnchkn.utils.LogUtil;
 
@@ -38,6 +37,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     PlayerListAdapter lvPlayerListAdapter;
     Button btnNextStep, btnAddNewPlayer;
     PlayerFragment playerFragment;
+    PlayerWarningFragment playerWarningFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +55,15 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
         btnAddNewPlayer.setOnClickListener(this);
         lvPlayerList.setOnItemClickListener(this);
         lvPlayerList.setOnItemLongClickListener(this);
+        playerFragment = new PlayerFragment();
+        playerWarningFragment = new PlayerWarningFragment();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         presenter.onResume();
+        presenter.checkIsEnoughPlayers();
     }
 
     @Override
@@ -78,11 +81,15 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.item_start_game:
+                btnAddNewPlayer.setEnabled(true);
+                break;
             case R.id.item_finish_game:
                 showConfirmFinishGameDialog();
                 break;
             case R.id.item_settings:
                 openSettingsActivity();
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -91,8 +98,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
 
     @Override
     public void finishGame() {
-        Intent intent = new Intent(this, GameResultActivity.class);
-        startActivity(intent);
+        // TODO
     }
 
     @Override
@@ -103,8 +109,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
 
     @Override
     public void openSettingsActivity() {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
+        // TODO
     }
 
     @Override
@@ -113,7 +118,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
                 .setTitle(R.string.dialog_finish_game_title)
                 .setMessage(R.string.dialog_finish_game_message)
                 .setPositiveButton(R.string.button_yes, (dialog, which) -> {
-                    finishGame();
+                    dialog.dismiss();
                 })
                 .setNegativeButton(R.string.button_no, (dialog, which) -> {
                     dialog.dismiss();
@@ -140,12 +145,16 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     public void addPlayerToList(Player player) {
         lvPlayerListAdapter.add(player);
         lvPlayerListAdapter.notifyDataSetChanged();
+        presenter.checkIsEnoughPlayers();
+        lvPlayerList.setSelection(0);
+        lvPlayerList.setItemChecked(0, true);
     }
 
     @Override
     public void deletePlayerFromList(int position) {
         lvPlayerListAdapter.remove(lvPlayerListAdapter.getItem(position));
         lvPlayerListAdapter.notifyDataSetChanged();
+        presenter.checkIsEnoughPlayers();
     }
 
     @Override
@@ -164,19 +173,35 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     }
 
     @Override
+    public void showPlayerCounter() {
+        FragmentTransaction ftrans = getSupportFragmentManager().beginTransaction();
+        ftrans.replace(R.id.fragment_player, playerFragment).commit();
+    }
+
+    @Override
+    public void showPlayerAddWarning() {
+        FragmentTransaction ftrans = getSupportFragmentManager().beginTransaction();
+        ftrans.replace(R.id.fragment_player, playerWarningFragment).commit();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_add_new_player:
                 showAddNewPlayerDialog();
                 break;
             case R.id.btn_next_step:
-                if (lvPlayerList.getCheckedItemPosition() == lvPlayerList.getCount() - 2) {
+                int position = lvPlayerList.getCheckedItemPosition();
+                if (position == lvPlayerList.getCount() - 2) {
                     lvPlayerList.setItemChecked(0, true);
                     lvPlayerList.setSelection(0);
+                    position = 0;
                 } else {
-                    lvPlayerList.setItemChecked(lvPlayerList.getCheckedItemPosition() + 1, true);
-                    lvPlayerList.setSelection(lvPlayerList.getCheckedItemPosition());
+                    position++;
+                    lvPlayerList.setItemChecked(position, true);
+                    lvPlayerList.setSelection(position);
                 }
+                playerFragment.loadPlayerScores(lvPlayerListAdapter.getItem(position), position);
                 break;
         }
     }
@@ -193,6 +218,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
                 .setMessage(R.string.dialog_player_delete_message)
                 .setPositiveButton(R.string.button_yes, (dialog, which) -> {
                     presenter.deletePlayerListItem(position, lvPlayerListAdapter.getItem(position).getId());
+                    presenter.checkIsEnoughPlayers();
                 })
                 .setNegativeButton(R.string.button_no, (dialog, which) -> {
                     dialog.dismiss();
@@ -205,7 +231,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         lvPlayerList.setItemChecked(position, true);
-        playerFragment.loadPlayerScores((Player) lvPlayerList.getItemAtPosition(position), position);
+        playerFragment.loadPlayerScores(lvPlayerListAdapter.getItem(position), position);
     }
 
     @Override

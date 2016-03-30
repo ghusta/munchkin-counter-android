@@ -15,4 +15,6 @@ public interface DashboardView {
     void addPlayerToList(Player player);
     void deletePlayerFromList(int index);
     void showStartContinueDialog();
+    void showPlayerCounter();
+    void showPlayerAddWarning();
 }

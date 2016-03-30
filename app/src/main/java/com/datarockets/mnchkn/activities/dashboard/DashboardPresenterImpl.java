@@ -29,6 +29,17 @@ public class DashboardPresenterImpl implements DashboardPresenter, DashboardInte
     }
 
     @Override
+    public void checkIsEnoughPlayers() {
+        if (dashboardView != null) {
+            if (interactor.countPlayers(this) >= 2) {
+                dashboardView.showPlayerCounter();
+            } else {
+                dashboardView.showPlayerAddWarning();
+            }
+        }
+    }
+
+    @Override
     public void addNewPlayer(String name) {
         if (dashboardView != null) {
             interactor.addPlayer(name, this);

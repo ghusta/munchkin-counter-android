@@ -2,9 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/item_start_game"
+        android:icon="@drawable/ic_dice"
+        app:showAsAction="always"
+        android:title="@string/button.start"/>
+    <item
         android:id="@+id/item_finish_game"
         android:icon="@drawable/ic_checkerboard"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:title="@string/menu.finish"/>
     <item
         android:id="@+id/item_settings"

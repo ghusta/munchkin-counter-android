@@ -24,6 +24,11 @@ public class DashboardInteractorImpl implements DashboardInteractor {
     }
 
     @Override
+    public int countPlayers(OnLoadPlayerListener listener) {
+        return playerService.getPlayersList().size();
+    }
+
+    @Override
     public void loadPlayersList(OnLoadPlayerListener listener) {
         listener.onFinished(playerService.getPlayersList());
     }

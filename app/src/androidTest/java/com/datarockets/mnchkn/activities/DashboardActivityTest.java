@@ -3,12 +3,9 @@ package com.datarockets.mnchkn.activities;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.test.suitebuilder.annotation.SmallTest;
-import android.widget.ListView;
 
 import com.datarockets.mnchkn.R;
-import com.datarockets.mnchkn.activities.dashboard.DashboardActivity;
 import com.datarockets.mnchkn.activities.result.GameResultActivity;
-import com.datarockets.mnchkn.activities.settings.SettingsActivity;
 import com.robotium.solo.Solo;
 
 public class DashboardActivityTest extends ActivityInstrumentationTestCase2<DashboardActivity>{

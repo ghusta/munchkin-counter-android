@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="@color/card_corner"
+    android:background="@drawable/player_background"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
+        <com.datarockets.mnchkn.views.fonts.MunchkinTextView
             android:id="@+id/tv_player_name"
             android:layout_gravity="center_horizontal"
             android:textColor="@color/white"
@@ -47,7 +47,7 @@
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/tv_level_score"
                 android:textColor="@color/white"
-                android:textSize="70dp"
+                android:textSize="@dimen/font_count"
                 android:text="0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="70dp"
+                android:textSize="@dimen/font_count"
                 android:text="0"/>
 
             <ImageButton
