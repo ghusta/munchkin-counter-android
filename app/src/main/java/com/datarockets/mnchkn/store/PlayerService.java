@@ -31,6 +31,12 @@ public interface PlayerService {
      */
     Player updatePlayer(Player player);
 
+    /**
+     * An action to clear players stats
+     *
+     */
+    void clearPlayersStats();
+
     List<Player> getPlayersList();
 
 }

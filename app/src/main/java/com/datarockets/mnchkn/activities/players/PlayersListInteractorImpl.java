@@ -22,6 +22,12 @@ public class PlayersListInteractorImpl implements PlayersListInteractor {
     }
 
     @Override
+    public void clearPlayersStats(OnFinishedListener listener) {
+        playerService.clearPlayersStats();
+        listener.onPlayersLoaded(playerService.getPlayersList());
+    }
+
+    @Override
     public void isGameStarted(Context context, OnFinishedListener listener) {
         listener.onGameStarted(gameService.getGameStatus());
     }
@@ -46,6 +52,8 @@ public class PlayersListInteractorImpl implements PlayersListInteractor {
     public void deletePlayer(int position, long id, OnFinishedListener listener) {
         listener.onPlayerDeleted(playerService.deletePlayer(position, id));
     }
+
+
 
     @Override
     public void setGameStatus(boolean started) {

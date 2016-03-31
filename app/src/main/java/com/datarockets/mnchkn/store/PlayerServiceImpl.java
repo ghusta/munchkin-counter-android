@@ -6,6 +6,8 @@ import com.datarockets.mnchkn.models.Player;
 import com.datarockets.mnchkn.utils.LogUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class PlayerServiceImpl implements PlayerService {
     private static PlayerServiceImpl instance;
@@ -45,6 +47,11 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public Player updatePlayer(Player player) {
         return playerDatabase.updatePlayer(player);
+    }
+
+    @Override
+    public void clearPlayersStats() {
+        playerDatabase.clearPlayersStats();
     }
 
     @Override

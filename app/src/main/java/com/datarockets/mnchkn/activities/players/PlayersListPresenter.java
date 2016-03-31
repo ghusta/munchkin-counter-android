@@ -4,6 +4,7 @@ public interface PlayersListPresenter {
     void checkIsEnoughPlayers();
     void addPlayer(String name);
     void deletePlayerListItem(int position, long id);
+    void clearPlayersStats();
     void setGameStarted();
     void setGameFinished();
     void onCreate();

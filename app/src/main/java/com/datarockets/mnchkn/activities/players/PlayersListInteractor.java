@@ -16,6 +16,7 @@ public interface PlayersListInteractor {
         void onGameStarted(boolean started);
     }
 
+    void clearPlayersStats(OnFinishedListener listener);
     void isGameStarted(Context context, OnFinishedListener listener);
     void checkIsEnoughPlayer(OnFinishedListener listener);
     void getPlayers(OnFinishedListener listener);

@@ -151,6 +151,14 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void clearPlayersStats() {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_PLAYER_LEVEL, 0);
+        values.put(KEY_PLAYER_STRENGTH, 0);
+        db.update(TABLE_PLAYERS, values, null, null);
+    }
+
     public LineChartData getLineChartData() {
         List<PointValue> values = new ArrayList<>();
         List<Line> lines = new ArrayList<>();
@@ -162,9 +170,6 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
         try {
             if (cursor.moveToFirst()) {
                 do {
-                    // Сначала получаем id игрока
-                    // Получаем все координаты для построения линии на графике
-                    // Строим лист с линиями
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {

@@ -27,6 +27,11 @@ public class DashboardInteractorImpl implements DashboardInteractor {
     }
 
     @Override
+    public void clearPlayersStats() {
+        playerService.clearPlayersStats();
+    }
+
+    @Override
     public void setGameFinished() {
         gameService.setGameStatus(false);
     }

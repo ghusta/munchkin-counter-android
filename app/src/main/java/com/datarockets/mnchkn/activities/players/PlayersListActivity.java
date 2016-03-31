@@ -140,6 +140,7 @@ public class PlayersListActivity extends AppCompatActivity implements PlayersLis
                 .setNegativeButton(R.string.button_start, (dialog, which) -> {
                     dialog.dismiss();
                     presenter.setGameFinished();
+                    presenter.clearPlayersStats();
                 })
                 .setCancelable(false)
                 .create();

@@ -40,6 +40,13 @@ public class PlayersListPresenterImpl implements PlayersListPresenter, PlayersLi
     }
 
     @Override
+    public void clearPlayersStats() {
+        if (playersListView != null) {
+            interactor.clearPlayersStats(this);
+        }
+    }
+
+    @Override
     public void setGameStarted() {
         if (playersListView != null) {
             interactor.setGameStatus(true);
