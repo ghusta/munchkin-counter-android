@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.datarockets.mnchkn.R;
+import com.datarockets.mnchkn.activities.BaseActivity;
 import com.datarockets.mnchkn.activities.dashboard.DashboardActivity;
 import com.datarockets.mnchkn.activities.settings.SettingsActivity;
 import com.datarockets.mnchkn.adapters.PlayerListAdapter;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 import static android.widget.Toast.makeText;
 
-public class PlayersListActivity extends AppCompatActivity implements PlayersListView,
+public class PlayersListActivity extends BaseActivity implements PlayersListView,
         AdapterView.OnItemLongClickListener, View.OnClickListener, AddNewPlayerFragment.AddNewPlayerDialogInterface {
 
     public static final String TAG = LogUtil.makeLogTag(PlayersListActivity.class);
@@ -55,6 +55,7 @@ public class PlayersListActivity extends AppCompatActivity implements PlayersLis
     protected void onResume() {
         super.onResume();
         presenter.onResume();
+        trackCurrentActivity(TAG);
     }
 
     @Override
@@ -97,6 +98,7 @@ public class PlayersListActivity extends AppCompatActivity implements PlayersLis
     @Override
     public void launchDashboard() {
         presenter.setGameStarted();
+        trackClick("Action", "Started game");
         Intent intent = new Intent(this, DashboardActivity.class);
         startActivity(intent);
         finish();

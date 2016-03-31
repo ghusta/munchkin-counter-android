@@ -3,7 +3,6 @@ package com.datarockets.mnchkn.activities.dashboard;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,15 +12,19 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.datarockets.mnchkn.R;
+import com.datarockets.mnchkn.activities.BaseActivity;
 import com.datarockets.mnchkn.activities.players.PlayersListActivity;
 import com.datarockets.mnchkn.adapters.PlayerListAdapter;
 import com.datarockets.mnchkn.fragments.players.PlayerFragment;
 import com.datarockets.mnchkn.models.Player;
+import com.datarockets.mnchkn.utils.LogUtil;
 
 import java.util.ArrayList;
 
-public class DashboardActivity extends AppCompatActivity implements DashboardView,
+public class DashboardActivity extends BaseActivity implements DashboardView,
         View.OnClickListener, AdapterView.OnItemClickListener, PlayerFragment.PlayerFragmentCallback {
+
+    public static final String TAG = LogUtil.makeLogTag(DashboardActivity.class);
 
     DashboardPresenter presenter;
     Toolbar toolbar;
@@ -48,6 +51,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
     protected void onResume() {
         super.onResume();
         presenter.onResume();
+        trackCurrentActivity(TAG);
     }
 
     @Override
@@ -98,6 +102,7 @@ public class DashboardActivity extends AppCompatActivity implements DashboardVie
                 .setMessage(R.string.dialog_finish_game_message)
                 .setPositiveButton(R.string.button_yes, (dialog, which) -> {
                     finishGame();
+                    trackClick("Action", "Finished game");
                     presenter.clearPlayersStats();
                 })
                 .setNegativeButton(R.string.button_no, (dialog, which) -> {
