@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.datarockets.mnchkn"
-        minSdkVersion 18
+        minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -21,8 +21,8 @@ android {
             testCoverageEnabled true
         }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 

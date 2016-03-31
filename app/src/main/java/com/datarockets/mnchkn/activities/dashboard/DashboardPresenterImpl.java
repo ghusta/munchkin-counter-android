@@ -20,40 +20,6 @@ public class DashboardPresenterImpl implements DashboardPresenter, DashboardInte
     }
 
     @Override
-    public void checkIsGameStarted() {
-        if (dashboardView != null) {
-            if (interactor.isGameStarted(context)) {
-                dashboardView.showAddNewPlayerDialog();
-            }
-        }
-    }
-
-    @Override
-    public void checkIsEnoughPlayers() {
-        if (dashboardView != null) {
-            if (interactor.countPlayers(this) >= 2) {
-                dashboardView.showPlayerCounter();
-            } else {
-                dashboardView.showPlayerAddWarning();
-            }
-        }
-    }
-
-    @Override
-    public void addNewPlayer(String name) {
-        if (dashboardView != null) {
-            interactor.addPlayer(name, this);
-        }
-    }
-
-    @Override
-    public void deletePlayerListItem(int position, long id) {
-        if (dashboardView != null) {
-            interactor.deletePlayer(position, id, this);
-        }
-    }
-
-    @Override
     public void updatePlayerListItem(Player player, int position) {
         if (dashboardView != null) {
             interactor.updatePlayer(player, position, this);
@@ -75,20 +41,6 @@ public class DashboardPresenterImpl implements DashboardPresenter, DashboardInte
     }
 
     @Override
-    public void onPlayerAdded(Player player) {
-        if (dashboardView != null) {
-            dashboardView.addPlayerToList(player);
-        }
-    }
-
-    @Override
-    public void onPlayerDeleted(int position) {
-        if (dashboardView != null) {
-            dashboardView.deletePlayerFromList(position);
-        }
-    }
-
-    @Override
     public void onPlayerUpdated(Player player, int position) {
         if (dashboardView != null) {
             dashboardView.updatePlayerData(player, position);
@@ -97,7 +49,16 @@ public class DashboardPresenterImpl implements DashboardPresenter, DashboardInte
 
     @Override
     public void onDestroy() {
-        dashboardView = null;
+        if (dashboardView != null) {
+            dashboardView = null;
+        }
+    }
+
+    @Override
+    public void setGameFinished() {
+        if (dashboardView != null) {
+            interactor.setGameFinished();
+        }
     }
 
 

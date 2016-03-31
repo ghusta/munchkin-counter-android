@@ -12,4 +12,7 @@
 
     <dimen name="counter_button_size">48dp</dimen>
 
+    <dimen name="fab_margin_phone">16dp</dimen>
+    <dimen name="fab_margin_tablet">24dp</dimen>
+
 </resources>

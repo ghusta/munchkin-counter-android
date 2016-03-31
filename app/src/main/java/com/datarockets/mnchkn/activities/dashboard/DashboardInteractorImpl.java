@@ -1,31 +1,19 @@
 package com.datarockets.mnchkn.activities.dashboard;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.datarockets.mnchkn.models.Player;
+import com.datarockets.mnchkn.store.GameServiceImpl;
 import com.datarockets.mnchkn.store.PlayerServiceImpl;
 
 public class DashboardInteractorImpl implements DashboardInteractor {
 
-    private static final String IS_GAME_STARTED = "game_started";
-
     private PlayerServiceImpl playerService;
+    private GameServiceImpl gameService;
 
     public DashboardInteractorImpl(Context context) {
         playerService = PlayerServiceImpl.getInstance(context);
-    }
-
-    @Override
-    public boolean isGameStarted(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return sharedPreferences.getBoolean(IS_GAME_STARTED, false);
-    }
-
-    @Override
-    public int countPlayers(OnLoadPlayerListener listener) {
-        return playerService.getPlayersList().size();
+        gameService = GameServiceImpl.getInstance(context);
     }
 
     @Override
@@ -34,18 +22,13 @@ public class DashboardInteractorImpl implements DashboardInteractor {
     }
 
     @Override
-    public void addPlayer(String name, OnLoadPlayerListener listener) {
-        listener.onPlayerAdded(playerService.addPlayer(name));
-    }
-
-    @Override
-    public void deletePlayer(int position, long id, OnLoadPlayerListener listener) {
-        listener.onPlayerDeleted(playerService.deletePlayer(position, id));
-    }
-
-    @Override
     public void updatePlayer(Player player, int position, OnLoadPlayerListener listener) {
         listener.onPlayerUpdated(playerService.updatePlayer(player), position);
+    }
+
+    @Override
+    public void setGameFinished() {
+        gameService.setGameStatus(false);
     }
 
 
