@@ -9,9 +9,8 @@ android {
         applicationId "com.datarockets.mnchkn"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 2
+        versionCode 3
         versionName "1.0"
-
         jackOptions {
             enabled true
         }
@@ -22,7 +21,7 @@ android {
             testCoverageEnabled true
         }
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
