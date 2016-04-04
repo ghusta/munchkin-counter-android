@@ -15,4 +15,12 @@
     <dimen name="fab_margin_phone">16dp</dimen>
     <dimen name="fab_margin_tablet">24dp</dimen>
 
+    <dimen name="gv_text_item_height_phone">48dp</dimen>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_half_margin">8dp</dimen>
+
+    <dimen name="section_image_item">192dp</dimen>
+
 </resources>

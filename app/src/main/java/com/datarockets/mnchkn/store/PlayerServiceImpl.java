@@ -31,8 +31,8 @@ public class PlayerServiceImpl implements PlayerService {
     public Player addPlayer(String name) {
         Player player = new Player();
         player.setName(name);
-        player.setLevelScore(0);
-        player.setStrengthScore(0);
+        player.setLevelScore(1);
+        player.setStrengthScore(1);
         long id = playerDatabase.addPlayer(player);
         player.setId(id);
         return player;

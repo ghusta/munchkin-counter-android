@@ -17,37 +17,17 @@
             android:name="android.test.InstrumentationTestRunner"
             android:targetPackage="com.datarockets.mnchkn"/>
 
-        <receiver
-            android:name="com.google.android.gms.analytics.AnalyticsReceiver"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name="com.google.android.gms.analytics.AnalyticsService"
-            android:enabled="true"
-            android:exported="false" />
-
-        <receiver
-            android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
-
-        <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
-
         <activity
-            android:label="@string/title.players"
+            android:label="@string/app_name"
             android:name=".activities.players.PlayersListActivity">
-            <intent-filter android:label="@string/app_name">
+            <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER"/>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
+        <activity android:name=".activities.SplashScreen"/>
+        <activity android:theme="@style/Theme.AppCompat.NoActionBar" android:name=".activities.onboard.OnBoardActivity"/>
+        <activity android:name=".activities.chooser.ChooseGameActivity"/>
         <activity android:name=".activities.dashboard.DashboardActivity"/>
         <activity
             android:label="@string/title.analytics"

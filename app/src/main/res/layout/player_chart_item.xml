@@ -10,7 +10,7 @@
 
     <ImageView
         android:id="@+id/iv_player_color"
-        android:background="@color/colorPrimary"
+        android:background="?attr/colorPrimary"
         android:layout_width="30dp"
         android:layout_height="30dp" />
 

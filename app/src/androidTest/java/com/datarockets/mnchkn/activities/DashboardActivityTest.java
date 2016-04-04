@@ -2,9 +2,9 @@ package com.datarockets.mnchkn.activities;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.MediumTest;
-import android.test.suitebuilder.annotation.SmallTest;
 
 import com.datarockets.mnchkn.R;
+import com.datarockets.mnchkn.activities.dashboard.DashboardActivity;
 import com.datarockets.mnchkn.activities.result.GameResultActivity;
 import com.robotium.solo.Solo;
 
@@ -21,10 +21,6 @@ public class DashboardActivityTest extends ActivityInstrumentationTestCase2<Dash
         solo = new Solo(getInstrumentation(), getActivity());
     }
 
-    @SmallTest
-    public void testCurrentActivity() {
-        solo.assertCurrentActivity("Wrong activity", DashboardActivity.class);
-    }
 
     @MediumTest
     public void testAddingNewPlayers() {

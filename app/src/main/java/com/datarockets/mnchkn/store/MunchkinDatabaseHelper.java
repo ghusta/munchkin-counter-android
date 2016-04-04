@@ -154,8 +154,8 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
     public void clearPlayersStats() {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_PLAYER_LEVEL, 0);
-        values.put(KEY_PLAYER_STRENGTH, 0);
+        values.put(KEY_PLAYER_LEVEL, 1);
+        values.put(KEY_PLAYER_STRENGTH, 1);
         db.update(TABLE_PLAYERS, values, null, null);
     }
 
