@@ -24,7 +24,7 @@
         <activity
             android:theme="@style/Theme.AppCompat"
             android:label="@string/app_name"
-            android:name=".activities.onboard.OnBoardActivity">
+            android:name=".activities.onboard.OnboardActivity">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER"/>
                 <action android:name="android.intent.action.MAIN"/>

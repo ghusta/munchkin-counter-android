@@ -6,7 +6,7 @@
     android:background="@android:color/holo_red_dark"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.onboard.OnBoardActivity">
+    tools:context=".activities.onboard.OnboardActivity">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_onboard"

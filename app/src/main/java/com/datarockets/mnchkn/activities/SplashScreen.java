@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.datarockets.mnchkn.R;
-import com.datarockets.mnchkn.activities.onboard.OnBoardActivity;
+import com.datarockets.mnchkn.activities.onboard.OnboardActivity;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -18,7 +18,7 @@ public class SplashScreen extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Intent intent = new Intent(this, OnBoardActivity.class);
+        Intent intent = new Intent(this, OnboardActivity.class);
         startActivity(intent);
         finish();
     }

@@ -11,14 +11,17 @@ import com.datarockets.mnchkn.activities.players.PlayersListActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OnBoardActivity extends OnboarderActivity {
+public class OnboardActivity extends OnboarderActivity implements OnboardView {
 
+    OnboardPresenter presenter;
     List<OnboarderPage> onboarderPages;
     OnboarderPage onboarderPageOne, onboarderPageTwo, onboarderPageThree;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        presenter = new OnboardPresenterImpl(this, this);
+        presenter.checkIsUserSeenOnboarding();
         onboarderPages = new ArrayList<>();
         onboarderPageOne = new OnboarderPage(R.string.onboarder_page1_title, R.string.onboarder_page1_description);
         onboarderPageOne.setBackgroundColor(R.color.card_general);
@@ -39,6 +42,12 @@ public class OnBoardActivity extends OnboarderActivity {
 
     @Override
     public void onFinishButtonPressed() {
+        openPlayersActivity();
+    }
+
+    @Override
+    public void openPlayersActivity() {
+        presenter.setOnboardingSeen();
         Intent intent = new Intent(this, PlayersListActivity.class);
         startActivity(intent);
         finish();
