@@ -6,8 +6,8 @@
     <color name="white">@android:color/white</color>
     <color name="transparent">@android:color/transparent</color>
 
-    <color name="card_light">#F7C568</color>
-    <color name="card_dark">#f7d774</color>
+    <color name="card_general">#F7C568</color>
+    <color name="card_light">#f7d774</color>
     <color name="card_corner">#3b1606</color>
     <color name="card_background">#F8E9D4</color>
 

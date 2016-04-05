@@ -28,4 +28,10 @@
     <string name="tab.level">Level</string>
     <string name="tab.strength">Strength</string>
     <string name="tab.summary">Summary</string>
+    <string name="onboarder.page1.title">Welcome!</string>
+    <string name="onboarder.page1.description">Munchkin Level Counter makes your game a way better</string>
+    <string name="onboarder.page2.title">Usability</string>
+    <string name="onboarder.page2.description">Add so much players as you want</string>
+    <string name="onboarder.page3.title">Statistics</string>
+    <string name="onboarder.page3.description">See the stats of the game after finishing</string>
 </resources>

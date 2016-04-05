@@ -3,6 +3,7 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
 
     <application
         android:allowBackup="true"
@@ -17,18 +18,24 @@
             android:name="android.test.InstrumentationTestRunner"
             android:targetPackage="com.datarockets.mnchkn"/>
 
+        <activity android:name="com.mixpanel.android.surveys.SurveyActivity"
+            android:theme="@style/com_mixpanel_android_SurveyActivityTheme"/>
+
         <activity
+            android:theme="@style/Theme.AppCompat"
             android:label="@string/app_name"
-            android:name=".activities.players.PlayersListActivity">
+            android:name=".activities.onboard.OnBoardActivity">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER"/>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
+
         <activity android:name=".activities.SplashScreen"/>
-        <activity android:theme="@style/Theme.AppCompat.NoActionBar" android:name=".activities.onboard.OnBoardActivity"/>
+        <activity android:name=".activities.players.PlayersListActivity"/>
         <activity android:name=".activities.chooser.ChooseGameActivity"/>
         <activity android:name=".activities.dashboard.DashboardActivity"/>
+
         <activity
             android:label="@string/title.analytics"
             android:name=".activities.result.GameResultActivity"

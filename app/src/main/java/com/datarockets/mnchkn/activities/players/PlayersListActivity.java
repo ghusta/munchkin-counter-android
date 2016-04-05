@@ -14,7 +14,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.datarockets.mnchkn.MunchkinApplication;
 import com.datarockets.mnchkn.R;
+import com.datarockets.mnchkn.activities.BaseActivity;
 import com.datarockets.mnchkn.activities.dashboard.DashboardActivity;
 import com.datarockets.mnchkn.activities.settings.SettingsActivity;
 import com.datarockets.mnchkn.adapters.PlayerListAdapter;
@@ -26,7 +28,7 @@ import java.util.ArrayList;
 
 import static android.widget.Toast.makeText;
 
-public class PlayersListActivity extends AppCompatActivity implements PlayersListView,
+public class PlayersListActivity extends BaseActivity implements PlayersListView,
         AdapterView.OnItemLongClickListener, View.OnClickListener, AddNewPlayerFragment.AddNewPlayerDialogInterface {
 
     public static final String TAG = LogUtil.makeLogTag(PlayersListActivity.class);
