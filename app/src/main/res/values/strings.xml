@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Munchkin Level Counter</string>
     <string name="title.choose_game_type">Choose Game Type</string>
-    <string name="title.players">Players</string>
+    <string name="title.players_editor">Players Editor</string>
     <string name="title.analytics">Analytics</string>
     <string name="title.settings">Settings</string>
     <string name="menu.finish">Finish</string>
@@ -30,8 +30,8 @@
     <string name="tab.summary">Summary</string>
     <string name="onboarder.page1.title">Welcome!</string>
     <string name="onboarder.page1.description">Munchkin Level Counter makes your game a way better</string>
-    <string name="onboarder.page2.title">Usability</string>
+    <string name="onboarder.page2.title">Unlimited</string>
     <string name="onboarder.page2.description">Add so much players as you want</string>
-    <string name="onboarder.page3.title">Statistics</string>
-    <string name="onboarder.page3.description">See the stats of the game after finishing</string>
+    <string name="onboarder.page3.title">Usability</string>
+    <string name="onboarder.page3.description">Handle players scores easy</string>
 </resources>
