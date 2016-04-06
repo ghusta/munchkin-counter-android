@@ -47,7 +47,10 @@ public class AddNewPlayerFragment extends DialogFragment implements TextView.OnE
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (EditorInfo.IME_ACTION_DONE == actionId) {
             AddNewPlayerDialogInterface listener = (AddNewPlayerDialogInterface) getActivity();
-            listener.onFinishEditDialog(etPlayerName.getText().toString());
+            String inputName = etPlayerName.getText().toString();
+            if (!inputName.isEmpty()) {
+                listener.onFinishEditDialog(inputName);
+            }
             dismiss();
             this.dismiss();
             return true;

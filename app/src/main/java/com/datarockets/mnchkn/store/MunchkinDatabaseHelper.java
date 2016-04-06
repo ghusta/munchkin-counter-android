@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Point;
 import android.util.Log;
 
 import com.datarockets.mnchkn.models.Player;
@@ -23,7 +22,7 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = LogUtil.makeLogTag(MunchkinDatabaseHelper.class);
 
     private static final String DATABASE_NAME = "players_db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private static final String TABLE_PLAYERS = "players";
 
@@ -31,6 +30,7 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_PLAYER_NAME = "name";
     private static final String KEY_PLAYER_LEVEL = "level";
     private static final String KEY_PLAYER_STRENGTH = "strength";
+    private static final String KEY_PLAYER_COLOR = "color";
 
     private static final String TABLE_GAME = "game";
 
@@ -58,7 +58,8 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
                 KEY_PLAYER_ID + " INTEGER PRIMARY KEY," +
                 KEY_PLAYER_NAME + " TEXT," +
                 KEY_PLAYER_LEVEL + " INTEGER," +
-                KEY_PLAYER_STRENGTH + " INTEGER" +
+                KEY_PLAYER_STRENGTH + " INTEGER," +
+                KEY_PLAYER_COLOR + " TEXT" +
                 ")";
         String CREATE_GAME_TABLE = "CREATE TABLE " + TABLE_GAME +
                 "(" +
@@ -72,10 +73,14 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion != newVersion) {
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLAYERS);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_GAME);
-            onCreate(db);
+        switch (oldVersion) {
+            case 1:
+                db.execSQL("ALTER TABLE " + TABLE_PLAYERS + " ADD COLUMN " + KEY_PLAYER_COLOR + " TEXT");
+                if (!isTableEmpty(db, TABLE_PLAYERS)) {
+                    addColorsToUpdatedPlayers(db);
+                }
+            default:
+                break;
         }
     }
 
@@ -88,6 +93,7 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
             values.put(KEY_PLAYER_NAME, player.name);
             values.put(KEY_PLAYER_LEVEL, player.levelScore);
             values.put(KEY_PLAYER_STRENGTH, player.strengthScore);
+            values.put(KEY_PLAYER_COLOR, player.color);
             playerId = db.insertOrThrow(TABLE_PLAYERS, null, values);
             db.setTransactionSuccessful();
             Log.v(TAG, "Player id is " + playerId);
@@ -113,6 +119,7 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
                     player.setName(cursor.getString(cursor.getColumnIndex(KEY_PLAYER_NAME)));
                     player.setLevelScore(cursor.getInt(cursor.getColumnIndex(KEY_PLAYER_LEVEL)));
                     player.setStrengthScore(cursor.getInt(cursor.getColumnIndex(KEY_PLAYER_STRENGTH)));
+                    player.setColor(cursor.getString(cursor.getColumnIndex(KEY_PLAYER_COLOR)));
                     players.add(player);
                 } while(cursor.moveToNext());
             }
@@ -149,6 +156,24 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
         } finally {
             db.endTransaction();
         }
+    }
+
+    private boolean isTableEmpty(SQLiteDatabase db, String tableName) {
+        String countQuery = "SELECT COUNT(*) FROM " + tableName;
+        Cursor cursor = db.rawQuery(countQuery, null);
+        cursor.moveToFirst();
+        int count = cursor.getInt(0);
+        if (count > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private void addColorsToUpdatedPlayers(SQLiteDatabase db) {
+        ContentValues values = new ContentValues();
+        values.put(KEY_PLAYER_COLOR, "#3B1606");
+        db.update(TABLE_PLAYERS, values, null, null);
     }
 
     public void clearPlayersStats() {

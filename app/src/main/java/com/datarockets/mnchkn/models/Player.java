@@ -5,6 +5,7 @@ public class Player {
     public String name;
     public int levelScore;
     public int strengthScore;
+    public String color;
 
     public long getId() {
         return id;
@@ -26,6 +27,10 @@ public class Player {
         return strengthScore;
     }
 
+    public String getColor() {
+        return color;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -38,4 +43,7 @@ public class Player {
         this.strengthScore = strengthScore;
     }
 
+    public void setColor(String color) {
+        this.color = color;
+    }
 }

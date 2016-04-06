@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.datarockets.mnchkn.R;
 import com.datarockets.mnchkn.activities.BaseActivity;
 import com.datarockets.mnchkn.activities.dashboard.DashboardActivity;
 import com.datarockets.mnchkn.activities.settings.SettingsActivity;
+import com.datarockets.mnchkn.adapters.PlayerEditorListAdapter;
 import com.datarockets.mnchkn.adapters.PlayerListAdapter;
 import com.datarockets.mnchkn.fragments.dialogs.AddNewPlayerFragment;
 import com.datarockets.mnchkn.models.Player;
@@ -36,7 +38,7 @@ public class PlayersListActivity extends BaseActivity implements PlayersListView
     PlayersListPresenter presenter;
     Toolbar toolbar;
     ListView lvPlayersList;
-    PlayerListAdapter lvPlayerListAdapter;
+    PlayerEditorListAdapter lvPlayerEditorListAdapter;
     FloatingActionButton fabAddPlayer;
 
     @Override
@@ -56,13 +58,21 @@ public class PlayersListActivity extends BaseActivity implements PlayersListView
     @Override
     protected void onResume() {
         super.onResume();
+        Log.v(TAG, "onResume");
         presenter.onResume();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.v(TAG, "onDestroy");
         presenter.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.v(TAG, "onStop");
     }
 
     @Override
@@ -73,20 +83,21 @@ public class PlayersListActivity extends BaseActivity implements PlayersListView
 
     @Override
     public void addPlayerToList(Player player) {
-        lvPlayerListAdapter.add(player);
-        lvPlayerListAdapter.notifyDataSetChanged();
+        lvPlayerEditorListAdapter.add(player);
+        lvPlayerEditorListAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void deletePlayerFromList(int position) {
-        lvPlayerListAdapter.remove(lvPlayerListAdapter.getItem(position));
-        lvPlayerListAdapter.notifyDataSetChanged();
+        lvPlayerEditorListAdapter.remove(lvPlayerEditorListAdapter.getItem(position));
+        lvPlayerEditorListAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void setPlayersList(ArrayList<Player> players) {
-        lvPlayerListAdapter = new PlayerListAdapter(this, players);
-        lvPlayersList.setAdapter(lvPlayerListAdapter);
+        Log.v(TAG, "setPlayersList");
+        lvPlayerEditorListAdapter = new PlayerEditorListAdapter(this, players);
+        lvPlayersList.setAdapter(lvPlayerEditorListAdapter);
     }
 
     @Override
@@ -110,7 +121,7 @@ public class PlayersListActivity extends BaseActivity implements PlayersListView
                 .setTitle(R.string.dialog_player_delete_title)
                 .setMessage(R.string.dialog_player_delete_message)
                 .setPositiveButton(R.string.button_yes, (dialog, which) -> {
-                    presenter.deletePlayerListItem(position, lvPlayerListAdapter.getItem(position).getId());
+                    presenter.deletePlayerListItem(position, lvPlayerEditorListAdapter.getItem(position).getId());
                 })
                 .setNegativeButton(R.string.button_no, (dialog, which) -> {
                     dialog.dismiss();
@@ -170,6 +181,7 @@ public class PlayersListActivity extends BaseActivity implements PlayersListView
 
     @Override
     public void onFinishEditDialog(String inputName) {
+        Log.v(TAG, inputName);
         presenter.addPlayer(inputName);
     }
 
