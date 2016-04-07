@@ -2,7 +2,6 @@ package com.datarockets.mnchkn.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,11 +42,7 @@ public class PlayerEditorListAdapter extends ArrayAdapter<Player> {
         }
 
         int color = Color.parseColor(player.getColor());
-        Log.v(TAG, player.getColor());
-        Log.v(TAG, String.valueOf(color));
-
         String capitalizedPlayerFirstLetter = player.getName().substring(0, 1).toUpperCase();
-
         TextDrawable drawable = TextDrawable.builder().buildRound(capitalizedPlayerFirstLetter, color);
         ImageView ivPlayerImage = (ImageView) convertView.findViewById(R.id.iv_player_color);
         ivPlayerImage.setImageDrawable(drawable);
