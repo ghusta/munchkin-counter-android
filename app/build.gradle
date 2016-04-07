@@ -11,6 +11,7 @@ android {
         versionCode 4
         version "${version_code}"
         versionName "${version_name}"
+        vectorDrawables.useSupportLibrary = true
         jackOptions {
             enabled true
         }

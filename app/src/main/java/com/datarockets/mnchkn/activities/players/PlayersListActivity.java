@@ -3,11 +3,8 @@ package com.datarockets.mnchkn.activities.players;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,13 +12,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.datarockets.mnchkn.MunchkinApplication;
 import com.datarockets.mnchkn.R;
 import com.datarockets.mnchkn.activities.BaseActivity;
 import com.datarockets.mnchkn.activities.dashboard.DashboardActivity;
 import com.datarockets.mnchkn.activities.settings.SettingsActivity;
 import com.datarockets.mnchkn.adapters.PlayerEditorListAdapter;
-import com.datarockets.mnchkn.adapters.PlayerListAdapter;
 import com.datarockets.mnchkn.fragments.dialogs.AddNewPlayerFragment;
 import com.datarockets.mnchkn.models.Player;
 import com.datarockets.mnchkn.utils.LogUtil;
@@ -58,21 +53,18 @@ public class PlayersListActivity extends BaseActivity implements PlayersListView
     @Override
     protected void onResume() {
         super.onResume();
-        Log.v(TAG, "onResume");
         presenter.onResume();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.v(TAG, "onDestroy");
         presenter.onDestroy();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.v(TAG, "onStop");
     }
 
     @Override
@@ -95,16 +87,14 @@ public class PlayersListActivity extends BaseActivity implements PlayersListView
 
     @Override
     public void setPlayersList(ArrayList<Player> players) {
-        Log.v(TAG, "setPlayersList");
         lvPlayerEditorListAdapter = new PlayerEditorListAdapter(this, players);
         lvPlayersList.setAdapter(lvPlayerEditorListAdapter);
     }
 
     @Override
     public void showAddNewPlayerDialog() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        AddNewPlayerFragment addNewPlayerFragment = AddNewPlayerFragment.newInstance();
-        addNewPlayerFragment.show(fragmentManager, TAG);
+        AddNewPlayerFragment dialog = new AddNewPlayerFragment();
+        dialog.show(getSupportFragmentManager(), TAG);
     }
 
     @Override
@@ -179,15 +169,14 @@ public class PlayersListActivity extends BaseActivity implements PlayersListView
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onFinishEditDialog(String inputName) {
-        Log.v(TAG, inputName);
-        presenter.addPlayer(inputName);
-    }
-
     private void launchSettings() {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onFinishEditDialog(String inputName) {
+        presenter.addPlayer(inputName);
     }
 
 }
