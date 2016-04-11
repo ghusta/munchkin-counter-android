@@ -45,6 +45,16 @@ public class ChartsFragment extends Fragment implements ChartsView {
         chartsView = inflater.inflate(R.layout.fragment_charts, container, false);
         lineChartView = (LineChartView) chartsView.findViewById(R.id.line_chart_view);
         lvPlayerList = (ListView) chartsView.findViewById(R.id.lv_player_list);
+
+        ArrayList<Player> stuff = new ArrayList<>();
+        Player player = new Player();
+        player.name = "Dzmitry";
+        player.strengthScore = 1;
+        player.levelScore = 1;
+        stuff.add(player);
+
+        loadPlayers(stuff);
+
         return chartsView;
     }
 

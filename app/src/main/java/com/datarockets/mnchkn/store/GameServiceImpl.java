@@ -6,12 +6,7 @@ import android.preference.PreferenceManager;
 
 import com.datarockets.mnchkn.models.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
-import lecho.lib.hellocharts.model.PointValue;
 
 public class GameServiceImpl implements GameService {
     private static GameServiceImpl instance;
@@ -34,8 +29,14 @@ public class GameServiceImpl implements GameService {
         return instance;
     }
 
+    @Override
     public void insertStep(Player player) {
+        database.insertStep(player);
+    }
 
+    @Override
+    public void clearSteps() {
+        database.clearSteps();
     }
 
     public LineChartData getPlayersData(int type) {

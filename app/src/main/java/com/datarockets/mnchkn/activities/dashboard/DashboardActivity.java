@@ -13,7 +13,7 @@ import android.widget.ListView;
 
 import com.datarockets.mnchkn.R;
 import com.datarockets.mnchkn.activities.BaseActivity;
-import com.datarockets.mnchkn.activities.players.PlayersListActivity;
+import com.datarockets.mnchkn.activities.result.GameResultActivity;
 import com.datarockets.mnchkn.adapters.PlayerListAdapter;
 import com.datarockets.mnchkn.fragments.players.PlayerFragment;
 import com.datarockets.mnchkn.models.Player;
@@ -80,7 +80,7 @@ public class DashboardActivity extends BaseActivity implements DashboardView,
     @Override
     public void finishGame() {
         presenter.setGameFinished();
-        Intent intent = new Intent(this, PlayersListActivity.class);
+        Intent intent = new Intent(this, GameResultActivity.class);
         startActivity(intent);
         finish();
     }
@@ -146,6 +146,7 @@ public class DashboardActivity extends BaseActivity implements DashboardView,
     @Override
     public void onScoreChanged(Player player, int index) {
         presenter.updatePlayerListItem(player, index);
+        presenter.insertStep(player);
     }
 
 }

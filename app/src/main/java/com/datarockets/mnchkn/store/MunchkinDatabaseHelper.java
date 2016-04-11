@@ -96,9 +96,9 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
             values.put(KEY_PLAYER_COLOR, player.color);
             playerId = db.insertOrThrow(TABLE_PLAYERS, null, values);
             db.setTransactionSuccessful();
-            Log.v(TAG, "Player id is " + playerId);
+            Log.i(TAG, "Player id is " + playerId);
         } catch (Exception e) {
-            Log.d(TAG, "Error while trying to add new player");
+            Log.e(TAG, "Error while trying to add new player");
             e.printStackTrace();
         } finally {
             db.endTransaction();
@@ -124,7 +124,7 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
                 } while(cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.d(TAG, "Error while trying to get posts from database");
+            Log.e(TAG, "Error while trying to get posts from database");
             e.printStackTrace();
         } finally {
             if (cursor != null && !cursor.isClosed()) {
@@ -151,7 +151,7 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
             db.delete(TABLE_PLAYERS, KEY_PLAYER_ID + " = ?", new String[] {Long.toString(id)});
             db.setTransactionSuccessful();
         } catch (Exception e) {
-            Log.d(TAG, "Error while deleting player");
+            Log.e(TAG, "Error while deleting player");
             e.printStackTrace();
         } finally {
             db.endTransaction();
@@ -184,6 +184,35 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
         db.update(TABLE_PLAYERS, values, null, null);
     }
 
+    public void insertStep(Player player) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(KEY_GAME_PLAYER_ID, player.id);
+            values.put(KEY_GAME_PLAYER_LEVEL, player.levelScore);
+            values.put(KEY_GAME_PLAYER_STRENGTH, player.strengthScore);
+            db.insertOrThrow(TABLE_GAME, null, values);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.e(TAG, "Error while trying to insert step to database");
+            e.printStackTrace();
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public void clearSteps() {
+        SQLiteDatabase db = getWritableDatabase();
+        try {
+            db.delete(TABLE_GAME, null, null);
+        } catch (Exception e) {
+            Log.e(TAG, "Error while trying to delete game steps");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
     public LineChartData getLineChartData() {
         List<PointValue> values = new ArrayList<>();
         List<Line> lines = new ArrayList<>();
@@ -195,13 +224,34 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
         try {
             if (cursor.moveToFirst()) {
                 do {
+                    Player player = new Player();
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.d(TAG, "Error while getting linechart data");
+            Log.e(TAG, "Error while getting linechart data");
             e.printStackTrace();
         }
         return data;
+    }
+
+    public ArrayList<Player> getGameStats(int type) {
+        ArrayList<Player> players = new ArrayList<>();
+        String GAME_SELECT_QUERY = String.format("SELECT * FROM " + TABLE_GAME);
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(GAME_SELECT_QUERY, null);
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    Player player = new Player();
+
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error while getting game stats from database");
+        } finally {
+            db.endTransaction();
+        }
+        return players;
     }
 
 }

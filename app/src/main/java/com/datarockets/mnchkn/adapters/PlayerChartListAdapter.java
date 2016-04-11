@@ -1,12 +1,15 @@
 package com.datarockets.mnchkn.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.datarockets.mnchkn.R;
 import com.datarockets.mnchkn.models.Player;
 
@@ -34,6 +37,12 @@ public class PlayerChartListAdapter extends ArrayAdapter<Player> {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.player_chart_item, null);
         }
+
+        int color = Color.parseColor("#333333");
+        String capitalizedPlayerFirstLetter = player.getName().substring(0, 1).toUpperCase();
+        TextDrawable drawable = TextDrawable.builder().buildRound(capitalizedPlayerFirstLetter, color);
+        ImageView ivPlayerColor = (ImageView) convertView.findViewById(R.id.iv_player_color);
+        ivPlayerColor.setImageDrawable(drawable);
         TextView tvPlayerName = (TextView) convertView.findViewById(R.id.tv_player_name);
         TextView tvPlayerScore = (TextView) convertView.findViewById(R.id.tv_player_score);
         tvPlayerName.setText(player.getName());

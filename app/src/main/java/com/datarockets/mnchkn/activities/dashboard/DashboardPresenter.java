@@ -8,4 +8,5 @@ public interface DashboardPresenter {
     void onResume();
     void onDestroy();
     void setGameFinished();
+    void insertStep(Player player);
 }

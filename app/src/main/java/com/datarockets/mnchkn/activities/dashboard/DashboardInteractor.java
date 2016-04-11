@@ -13,6 +13,7 @@ public interface DashboardInteractor {
 
     void loadPlayersList(OnLoadPlayerListener listener);
     void updatePlayer(Player player, int position, OnLoadPlayerListener listener);
+    void insertStep(Player player);
     void clearPlayersStats();
     void setGameFinished();
 }
