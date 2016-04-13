@@ -2,7 +2,13 @@ package com.datarockets.mnchkn.fragments.charts;
 
 import android.content.Context;
 
-public class ChartsPresenterImpl implements ChartsPresenter {
+import com.datarockets.mnchkn.models.Player;
+
+import java.util.ArrayList;
+
+import lecho.lib.hellocharts.model.LineChartData;
+
+public class ChartsPresenterImpl implements ChartsPresenter, ChartsInteractor.OnChartLoadedListener {
 
     ChartsView chartsView;
     ChartsInteractorImpl interactor;
@@ -13,14 +19,24 @@ public class ChartsPresenterImpl implements ChartsPresenter {
     }
 
     @Override
-    public void loadChartData(int type) {
-
+    public void showPlayers(ArrayList<Player> players) {
+        if (chartsView != null) {
+            chartsView.showPlayersList(players);
+        }
     }
 
     @Override
-    public void onViewCreated() {
+    public void setChartDataReady(LineChartData lineChartData) {
         if (chartsView != null) {
+            chartsView.drawChart(lineChartData);
+        }
+    }
 
+
+    @Override
+    public void loadChartData(int type) {
+        if (chartsView != null) {
+            interactor.loadLineChartData(type, this);
         }
     }
 
@@ -30,4 +46,5 @@ public class ChartsPresenterImpl implements ChartsPresenter {
             chartsView = null;
         }
     }
+
 }

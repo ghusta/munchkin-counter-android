@@ -7,6 +7,6 @@ import java.util.ArrayList;
 import lecho.lib.hellocharts.model.LineChartData;
 
 public interface ChartsView {
-    void loadCharts(LineChartData lineChartData);
-    void loadPlayers(ArrayList<Player> players);
+    void drawChart(LineChartData lineChartData);
+    void showPlayersList(ArrayList<Player> players);
 }

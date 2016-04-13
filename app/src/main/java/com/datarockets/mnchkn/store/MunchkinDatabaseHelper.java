@@ -7,15 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.datarockets.mnchkn.models.GameStep;
 import com.datarockets.mnchkn.models.Player;
 import com.datarockets.mnchkn.utils.LogUtil;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import lecho.lib.hellocharts.model.Line;
-import lecho.lib.hellocharts.model.LineChartData;
-import lecho.lib.hellocharts.model.PointValue;
 
 public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
 
@@ -184,14 +180,14 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
         db.update(TABLE_PLAYERS, values, null, null);
     }
 
-    public void insertStep(Player player) {
+    public void insertStep(GameStep gameStep) {
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
         try {
             ContentValues values = new ContentValues();
-            values.put(KEY_GAME_PLAYER_ID, player.id);
-            values.put(KEY_GAME_PLAYER_LEVEL, player.levelScore);
-            values.put(KEY_GAME_PLAYER_STRENGTH, player.strengthScore);
+            values.put(KEY_GAME_PLAYER_ID, gameStep.getPlayerId());
+            values.put(KEY_GAME_PLAYER_LEVEL, gameStep.getPlayerLevel());
+            values.put(KEY_GAME_PLAYER_STRENGTH, gameStep.getPlayerStrength());
             db.insertOrThrow(TABLE_GAME, null, values);
             db.setTransactionSuccessful();
         } catch (Exception e) {
@@ -208,50 +204,40 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
             db.delete(TABLE_GAME, null, null);
         } catch (Exception e) {
             Log.e(TAG, "Error while trying to delete game steps");
+            e.printStackTrace();
         } finally {
             db.endTransaction();
         }
     }
 
-    public LineChartData getLineChartData() {
-        List<PointValue> values = new ArrayList<>();
-        List<Line> lines = new ArrayList<>();
-        LineChartData data = new LineChartData(lines);
-
+    public ArrayList<GameStep> getGameSteps() {
+        ArrayList<GameStep> gameSteps = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        String LINE_CHART_QUERY = "SELECT * FROM " + TABLE_GAME;
+        String LINE_CHART_QUERY = "SELECT "
+                + KEY_GAME_PLAYER_ID + ", "
+                + KEY_GAME_PLAYER_LEVEL + ", "
+                + KEY_GAME_PLAYER_STRENGTH + ", "
+                + KEY_PLAYER_NAME + ", "
+                + KEY_PLAYER_COLOR + " FROM " + TABLE_GAME
+                + " INNER JOIN " + TABLE_PLAYERS + " ON players.id = " + KEY_GAME_PLAYER_ID;
+        Log.v("TAG", LINE_CHART_QUERY);
+        db.beginTransaction();
         Cursor cursor = db.rawQuery(LINE_CHART_QUERY, null);
         try {
             if (cursor.moveToFirst()) {
                 do {
-                    Player player = new Player();
+                    GameStep gameStep = new GameStep();
+                    gameStep.setPlayerId(cursor.getLong(cursor.getColumnIndex(KEY_GAME_PLAYER_ID)));
+                    gameStep.setPlayerLevel(cursor.getInt(cursor.getColumnIndex(KEY_GAME_PLAYER_LEVEL)));
+                    gameStep.setPlayerStrength(cursor.getInt(cursor.getColumnIndex(KEY_GAME_PLAYER_STRENGTH)));
+                    gameSteps.add(gameStep);
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.e(TAG, "Error while getting linechart data");
+            Log.e(TAG, "Error while getting ");
             e.printStackTrace();
         }
-        return data;
-    }
-
-    public ArrayList<Player> getGameStats(int type) {
-        ArrayList<Player> players = new ArrayList<>();
-        String GAME_SELECT_QUERY = String.format("SELECT * FROM " + TABLE_GAME);
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery(GAME_SELECT_QUERY, null);
-        try {
-            if (cursor.moveToFirst()) {
-                do {
-                    Player player = new Player();
-
-                } while (cursor.moveToNext());
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error while getting game stats from database");
-        } finally {
-            db.endTransaction();
-        }
-        return players;
+        return gameSteps;
     }
 
 }

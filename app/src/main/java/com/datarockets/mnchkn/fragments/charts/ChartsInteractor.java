@@ -1,12 +1,18 @@
 package com.datarockets.mnchkn.fragments.charts;
 
-import java.util.List;
+import com.datarockets.mnchkn.models.Player;
 
-import lecho.lib.hellocharts.model.Line;
+import java.util.ArrayList;
+
+import lecho.lib.hellocharts.model.LineChartData;
 
 public interface ChartsInteractor {
+
     interface OnChartLoadedListener {
-        void showChart();
+        void showPlayers(ArrayList<Player> players);
+        void setChartDataReady(LineChartData lineChartData);
     }
-    List<Line> loadChartData(int type, OnChartLoadedListener listener);
+
+    void loadLineChartData(int type, OnChartLoadedListener listener);
+
 }

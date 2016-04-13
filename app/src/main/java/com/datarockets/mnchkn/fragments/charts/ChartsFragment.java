@@ -18,59 +18,51 @@ import lecho.lib.hellocharts.view.LineChartView;
 
 public class ChartsFragment extends Fragment implements ChartsView {
 
-    public static final String DATA_TYPE = "dataType";
-
     View chartsView;
     LineChartView lineChartView;
     ListView lvPlayerList;
     PlayerChartListAdapter lvPlayerListAdapter;
-    ChartsPresenter presenter;
+    ChartsPresenterImpl presenter;
+    LayoutInflater layoutInflater;
+    ViewGroup container;
 
     public static ChartsFragment newInstance(int type) {
+        Bundle args = new Bundle();
+        args.putInt("TYPE", type);
         ChartsFragment fragment = new ChartsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt(DATA_TYPE, type);
-        fragment.setArguments(bundle);
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        presenter = new ChartsPresenterImpl(this, getActivity());
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        this.layoutInflater = inflater;
+        this.container = container;
+        presenter = new ChartsPresenterImpl(this, getActivity());
         chartsView = inflater.inflate(R.layout.fragment_charts, container, false);
-        lineChartView = (LineChartView) chartsView.findViewById(R.id.line_chart_view);
-        lvPlayerList = (ListView) chartsView.findViewById(R.id.lv_player_list);
-
-        ArrayList<Player> stuff = new ArrayList<>();
-        Player player = new Player();
-        player.name = "Dzmitry";
-        player.strengthScore = 1;
-        player.levelScore = 1;
-        stuff.add(player);
-
-        loadPlayers(stuff);
-
         return chartsView;
     }
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter.onViewCreated();
+        presenter.loadChartData(getArguments().getInt("TYPE"));
+        lvPlayerList = (ListView) view.findViewById(R.id.lv_player_list);
+        lineChartView = (LineChartView) view.findViewById(R.id.line_chart_view);
     }
 
+
     @Override
-    public void loadCharts(LineChartData lineChartData) {
+    public void drawChart(LineChartData lineChartData) {
+        chartsView = layoutInflater.inflate(R.layout.fragment_charts, container, false);
+        lineChartView = (LineChartView) chartsView.findViewById(R.id.line_chart_view);
         lineChartView.setLineChartData(lineChartData);
     }
 
     @Override
-    public void loadPlayers(ArrayList<Player> players) {
+    public void showPlayersList(ArrayList<Player> players) {
         lvPlayerListAdapter = new PlayerChartListAdapter(getActivity(), players);
         lvPlayerList.setAdapter(lvPlayerListAdapter);
     }
@@ -80,4 +72,5 @@ public class ChartsFragment extends Fragment implements ChartsView {
         super.onDestroy();
         presenter.onDestroy();
     }
+
 }

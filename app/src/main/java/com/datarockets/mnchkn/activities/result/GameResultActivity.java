@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import com.datarockets.mnchkn.R;
 import com.datarockets.mnchkn.adapters.ChartsPagerAdapter;
 
+import lecho.lib.hellocharts.model.LineChartData;
+
 public class GameResultActivity extends AppCompatActivity implements GameResultView {
 
     GameResultPresenter presenter;
@@ -19,10 +21,11 @@ public class GameResultActivity extends AppCompatActivity implements GameResultV
     ChartsPagerAdapter vpChartsAdapter;
     ProgressDialog progressDialog;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new GameResultPresenterImpl(this);
+        presenter = new GameResultPresenterImpl(this, this);
         setContentView(R.layout.activity_game_result);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -30,35 +33,49 @@ public class GameResultActivity extends AppCompatActivity implements GameResultV
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         vpCharts = (ViewPager) findViewById(R.id.vp_charts);
         vpChartsAdapter = new ChartsPagerAdapter(getSupportFragmentManager(), this);
+        vpCharts.setOffscreenPageLimit(3);
         vpCharts.setAdapter(vpChartsAdapter);
         tlChartsTitle = (TabLayout) findViewById(R.id.tl_charts_title);
         tlChartsTitle.setupWithViewPager(vpCharts);
+        presenter.onCreate();
+    }
+
+
+    @Override
+    public void showProgressBar() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle(R.string.progress_dialog_stats_loader_title);
+        progressDialog.setMessage(getResources().getString(R.string.progress_dialog_stats_loader_message));
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+
+
+    @Override
+    public void hideProgressBar() {
+        progressDialog.hide();
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        presenter.onResume();
+    public void sendLevelScoresChartData(LineChartData levelScoresChartData) {
+
+    }
+
+    @Override
+    public void sendStrengthScoresChartData(LineChartData strengthScoresChartData) {
+
+    }
+
+    @Override
+    public void sendSummaryScoresChartData(LineChartData summaryScoresChartData) {
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         presenter.onDestroy();
-    }
-
-    @Override
-    public void showProgressBar() {
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle(R.string.app_name);
-        progressDialog.setMessage("Wait while we're loading your game stats");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-    }
-
-    @Override
-    public void hideProgressBar() {
-        progressDialog.hide();
     }
 
 }
