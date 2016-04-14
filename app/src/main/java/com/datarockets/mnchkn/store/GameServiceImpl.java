@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.datarockets.mnchkn.models.GameStep;
 import com.datarockets.mnchkn.models.Player;
@@ -14,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
@@ -26,6 +26,7 @@ public class GameServiceImpl implements GameService {
     private MunchkinDatabaseHelper database;
     private SharedPreferences preferences;
     private SharedPreferences.Editor preferencesEditor;
+    private static Map<Player, List<GameStep>> gameStepsMap;
 
     private GameServiceImpl(Context context) {
         database = MunchkinDatabaseHelper.getInstance(context);
@@ -49,7 +50,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Map<Player, List<GameStep>> createPlayerIdGameStepsMap() {
+    public void createPlayerIdGameStepsMap() {
         List<Player> playersList = database.getPlayers();
         List<GameStep> gameSteps = database.getGameSteps();
 
@@ -63,18 +64,25 @@ public class GameServiceImpl implements GameService {
             }
             playerGameStepsMap.put(player, playerSteps);
         }
+        gameStepsMap = playerGameStepsMap;
+    }
 
-        Log.v("PLAYER GAME STEPS MAP", String.valueOf(playerGameStepsMap.size()));
-
-        return playerGameStepsMap;
+    @Override
+    public Map<Player, List<GameStep>> getScoresChartData() {
+        return gameStepsMap;
     }
 
     @Override
     public LineChartData createScoresChartData(int type, Map<Player, List<GameStep>> playerGameStepsMap) {
         List<Line> playersLines = new ArrayList<>();
+        List<String> playerColors = new ArrayList<>();
+
+        for (Player player : playerGameStepsMap.keySet()) {
+            String color = player.getColor();
+            playerColors.add(color);
+        }
 
         for (List<GameStep> gameSteps : playerGameStepsMap.values()) {
-            Log.v("SIZE OF GAMESTEPS", String.valueOf(gameSteps.size()));
             List<PointValue> pointValues = new ArrayList<>();
             for (int i = 0; i < gameSteps.size(); i++) {
                 switch (type) {
@@ -89,13 +97,17 @@ public class GameServiceImpl implements GameService {
                         break;
                 }
             }
-            Log.v("POINT VALUES ", String.valueOf(pointValues.size()));
-            Line line = new Line(pointValues).setColor(Color.BLACK).setCubic(true);
+            Line line = new Line(pointValues);
             playersLines.add(line);
-            Log.v("PLAYER LINES", String.valueOf(playersLines.size()));
         }
 
-        LineChartData lineChartData = new LineChartData();
+        for (int i = 0; i < playersLines.size(); i++) {
+            playersLines.get(i).setColor(Color.parseColor(playerColors.get(i)));
+        }
+
+        LineChartData lineChartData = new LineChartData(playersLines);
+        lineChartData.setAxisXBottom(new Axis());
+        lineChartData.setAxisYLeft(new Axis().setHasLines(true));
         return lineChartData.setLines(playersLines);
     }
 

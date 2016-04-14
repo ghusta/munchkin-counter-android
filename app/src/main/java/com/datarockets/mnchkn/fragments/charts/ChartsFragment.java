@@ -18,17 +18,18 @@ import lecho.lib.hellocharts.view.LineChartView;
 
 public class ChartsFragment extends Fragment implements ChartsView {
 
+    private static final String CHART_TYPE = "chart_type";
+
     View chartsView;
     LineChartView lineChartView;
+    LineChartData lineChartData;
     ListView lvPlayerList;
     PlayerChartListAdapter lvPlayerListAdapter;
     ChartsPresenterImpl presenter;
-    LayoutInflater layoutInflater;
-    ViewGroup container;
 
     public static ChartsFragment newInstance(int type) {
         Bundle args = new Bundle();
-        args.putInt("TYPE", type);
+        args.putInt(CHART_TYPE, type);
         ChartsFragment fragment = new ChartsFragment();
         fragment.setArguments(args);
         return fragment;
@@ -37,9 +38,8 @@ public class ChartsFragment extends Fragment implements ChartsView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        this.layoutInflater = inflater;
-        this.container = container;
         presenter = new ChartsPresenterImpl(this, getActivity());
+        lineChartData = presenter.loadChartData(getArguments().getInt(CHART_TYPE));
         chartsView = inflater.inflate(R.layout.fragment_charts, container, false);
         return chartsView;
     }
@@ -48,18 +48,11 @@ public class ChartsFragment extends Fragment implements ChartsView {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter.loadChartData(getArguments().getInt("TYPE"));
         lvPlayerList = (ListView) view.findViewById(R.id.lv_player_list);
         lineChartView = (LineChartView) view.findViewById(R.id.line_chart_view);
-    }
-
-
-    @Override
-    public void drawChart(LineChartData lineChartData) {
-        chartsView = layoutInflater.inflate(R.layout.fragment_charts, container, false);
-        lineChartView = (LineChartView) chartsView.findViewById(R.id.line_chart_view);
         lineChartView.setLineChartData(lineChartData);
     }
+
 
     @Override
     public void showPlayersList(ArrayList<Player> players) {

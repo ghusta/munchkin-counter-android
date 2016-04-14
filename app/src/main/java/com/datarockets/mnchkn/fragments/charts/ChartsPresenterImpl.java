@@ -26,18 +26,19 @@ public class ChartsPresenterImpl implements ChartsPresenter, ChartsInteractor.On
     }
 
     @Override
-    public void setChartDataReady(LineChartData lineChartData) {
+    public ArrayList<Player> loadPlayers() {
         if (chartsView != null) {
-            chartsView.drawChart(lineChartData);
+            interactor.loadPlayers(this);
         }
+        return null;
     }
 
-
     @Override
-    public void loadChartData(int type) {
+    public LineChartData loadChartData(int type) {
         if (chartsView != null) {
-            interactor.loadLineChartData(type, this);
+            return interactor.loadLineChartData(type);
         }
+        return null;
     }
 
     @Override

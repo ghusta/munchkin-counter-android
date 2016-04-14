@@ -2,8 +2,6 @@ package com.datarockets.mnchkn.activities.result;
 
 import android.content.Context;
 
-import lecho.lib.hellocharts.model.LineChartData;
-
 public class GameResultPresenterImpl implements GameResultPresenter, GameResultInteractorImpl.OnResultsLoaded {
 
     GameResultView gameResultView;
@@ -30,23 +28,9 @@ public class GameResultPresenterImpl implements GameResultPresenter, GameResultI
     }
 
     @Override
-    public void setLevelScoresChartData(LineChartData scoresChartData) {
+    public void notifyChartDataPrepared() {
         if (gameResultView != null) {
-            gameResultView.sendLevelScoresChartData(scoresChartData);
-        }
-    }
-
-    @Override
-    public void setStrengthScoresChartData(LineChartData strengthScoresChartData) {
-        if (gameResultView != null) {
-            gameResultView.sendStrengthScoresChartData(strengthScoresChartData);
-        }
-    }
-
-    @Override
-    public void setSummaryScoresChartData(LineChartData summaryScoresChartData) {
-        if (gameResultView != null) {
-            gameResultView.sendSummaryScoresChartData(summaryScoresChartData);
+            gameResultView.loadChartFragments();
         }
     }
 

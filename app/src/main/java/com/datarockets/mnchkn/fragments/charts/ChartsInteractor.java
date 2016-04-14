@@ -10,9 +10,9 @@ public interface ChartsInteractor {
 
     interface OnChartLoadedListener {
         void showPlayers(ArrayList<Player> players);
-        void setChartDataReady(LineChartData lineChartData);
     }
 
-    void loadLineChartData(int type, OnChartLoadedListener listener);
+    LineChartData loadLineChartData(int type);
+    void loadPlayers(OnChartLoadedListener listener);
 
 }

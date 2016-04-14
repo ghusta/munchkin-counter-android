@@ -20,16 +20,7 @@ public class ChartsPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case 0:
-                return ChartsFragment.newInstance(0);
-            case 1:
-                return ChartsFragment.newInstance(1);
-            case 2:
-                return ChartsFragment.newInstance(2);
-            default:
-                return null;
-        }
+        return ChartsFragment.newInstance(position);
     }
 
     @Override

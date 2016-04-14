@@ -200,8 +200,10 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
 
     public void clearSteps() {
         SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
         try {
             db.delete(TABLE_GAME, null, null);
+            db.setTransactionSuccessful();
         } catch (Exception e) {
             Log.e(TAG, "Error while trying to delete game steps");
             e.printStackTrace();
@@ -211,6 +213,7 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<GameStep> getGameSteps() {
+        Log.v(TAG, "GET GAME STEPS");
         ArrayList<GameStep> gameSteps = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         String LINE_CHART_QUERY = "SELECT "
