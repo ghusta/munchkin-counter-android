@@ -1,15 +1,21 @@
 package com.datarockets.mnchkn.activities.result;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.datarockets.mnchkn.R;
+import com.datarockets.mnchkn.activities.players.PlayersListActivity;
 import com.datarockets.mnchkn.adapters.ChartsPagerAdapter;
+import com.datarockets.mnchkn.utils.LogUtil;
 
 public class GameResultActivity extends AppCompatActivity implements GameResultView {
+
+    public static final String TAG = LogUtil.makeLogTag(GameResultActivity.class);
 
     GameResultPresenter presenter;
     Toolbar toolbar;
@@ -38,11 +44,22 @@ public class GameResultActivity extends AppCompatActivity implements GameResultV
         tlChartsTitle.setupWithViewPager(vpCharts);
     }
 
-
     @Override
-    protected void onDestroy() {
-        presenter.onDestroy();
-        super.onDestroy();
+    public void onBackPressed() {
+        presenter.onBackPressed();
+        super.onBackPressed();
+        Intent intent = new Intent(this, PlayersListActivity.class);
+        startActivity(intent);
+        finish();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return false;
+    }
 }

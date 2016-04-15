@@ -39,4 +39,12 @@ public interface PlayerService {
 
     List<Player> getPlayersList();
 
+    /**
+     * An action to get players by score, strength or summary
+     *
+     * @param type - type of data to sort
+     * @return players list
+     */
+    ArrayList<Player> getPlayersListByCategory(int type);
+
 }

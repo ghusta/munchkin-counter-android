@@ -25,12 +25,12 @@ public class ChartsPresenterImpl implements ChartsPresenter, ChartsInteractor.On
         }
     }
 
+
     @Override
-    public ArrayList<Player> loadPlayers() {
+    public void loadPlayersList(int type) {
         if (chartsView != null) {
-            interactor.loadPlayers(this);
+            interactor.loadPlayers(type, this);
         }
-        return null;
     }
 
     @Override

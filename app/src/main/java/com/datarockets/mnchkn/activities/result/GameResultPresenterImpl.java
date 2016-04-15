@@ -12,6 +12,7 @@ public class GameResultPresenterImpl implements GameResultPresenter, GameResultI
         this.interactor = new GameResultInteractorImpl(context);
     }
 
+
     @Override
     public void onCreate() {
         if (gameResultView != null) {
@@ -20,17 +21,24 @@ public class GameResultPresenterImpl implements GameResultPresenter, GameResultI
     }
 
     @Override
-    public void onDestroy() {
+    public void notifyChartDataPrepared() {
         if (gameResultView != null) {
-            interactor.clearSteps();
-            gameResultView = null;
+            gameResultView.loadChartFragments();
         }
     }
 
     @Override
-    public void notifyChartDataPrepared() {
+    public void onBackPressed() {
         if (gameResultView != null) {
-            gameResultView.loadChartFragments();
+            interactor.clearSteps();
+            interactor.clearPlayerStats();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (gameResultView != null) {
+            gameResultView = null;
         }
     }
 

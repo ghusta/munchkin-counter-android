@@ -23,5 +23,6 @@ public interface PlayersListInteractor {
     void addPlayer(String name, OnFinishedListener listener);
     void deletePlayer(int position, long id, OnFinishedListener listener);
     void setGameStatus(boolean started);
+    void clearGameSteps();
 
 }

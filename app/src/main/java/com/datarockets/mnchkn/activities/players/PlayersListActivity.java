@@ -144,6 +144,7 @@ public class PlayersListActivity extends BaseActivity implements PlayersListView
                     dialog.dismiss();
                     presenter.setGameFinished();
                     presenter.clearPlayersStats();
+                    presenter.clearGameSteps();
                 })
                 .setCancelable(false)
                 .create();

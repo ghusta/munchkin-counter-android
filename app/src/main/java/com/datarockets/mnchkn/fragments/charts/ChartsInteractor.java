@@ -13,6 +13,6 @@ public interface ChartsInteractor {
     }
 
     LineChartData loadLineChartData(int type);
-    void loadPlayers(OnChartLoadedListener listener);
+    void loadPlayers(int type, OnChartLoadedListener listener);
 
 }

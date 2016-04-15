@@ -199,6 +199,7 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void clearSteps() {
+        Log.v(TAG, "Clearing game steps");
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
         try {
@@ -239,8 +240,51 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             Log.e(TAG, "Error while getting ");
             e.printStackTrace();
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
         }
         return gameSteps;
+    }
+
+    public ArrayList<Player> getPlayersByScore(int type) {
+        ArrayList<Player> playerList = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        String sort_type = null;
+        switch (type) {
+            case 0:
+                sort_type = KEY_PLAYER_LEVEL;
+                break;
+            case 1:
+                sort_type = KEY_PLAYER_STRENGTH;
+                break;
+            case 2:
+                sort_type = KEY_PLAYER_LEVEL;
+                break;
+        }
+        String PLAYERS_LIST_QUERY = "SELECT * FROM " + TABLE_PLAYERS + " ORDER BY " + sort_type;
+        Cursor cursor = db.rawQuery(PLAYERS_LIST_QUERY, null);
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    Player player = new Player();
+                    player.setId(cursor.getLong(cursor.getColumnIndex(KEY_PLAYER_ID)));
+                    player.setName(cursor.getString(cursor.getColumnIndex(KEY_PLAYER_NAME)));
+                    player.setLevelScore(cursor.getInt(cursor.getColumnIndex(KEY_PLAYER_LEVEL)));
+                    player.setStrengthScore(cursor.getInt(cursor.getColumnIndex(KEY_PLAYER_STRENGTH)));
+                    player.setColor(cursor.getString(cursor.getColumnIndex(KEY_PLAYER_COLOR)));
+                    playerList.add(player);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error while getting players list with type of sort");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+        return playerList;
     }
 
 }

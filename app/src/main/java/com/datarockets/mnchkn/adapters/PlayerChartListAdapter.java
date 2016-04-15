@@ -19,11 +19,13 @@ public class PlayerChartListAdapter extends ArrayAdapter<Player> {
 
     ArrayList<Player> playersList;
     Context context;
+    int type;
 
-    public PlayerChartListAdapter(Context context, ArrayList<Player> playersList) {
+    public PlayerChartListAdapter(Context context, ArrayList<Player> playersList, int type) {
         super(context, 0, playersList);
         this.context = context;
         this.playersList = playersList;
+        this.type = type;
     }
 
     @Override
@@ -38,13 +40,24 @@ public class PlayerChartListAdapter extends ArrayAdapter<Player> {
             convertView = LayoutInflater.from(context).inflate(R.layout.player_chart_item, null);
         }
 
-        int color = Color.parseColor("#333333");
+        int color = Color.parseColor(player.getColor());
         String capitalizedPlayerFirstLetter = player.getName().substring(0, 1).toUpperCase();
         TextDrawable drawable = TextDrawable.builder().buildRound(capitalizedPlayerFirstLetter, color);
         ImageView ivPlayerColor = (ImageView) convertView.findViewById(R.id.iv_player_color);
         ivPlayerColor.setImageDrawable(drawable);
         TextView tvPlayerName = (TextView) convertView.findViewById(R.id.tv_player_name);
         TextView tvPlayerScore = (TextView) convertView.findViewById(R.id.tv_player_score);
+        switch (type) {
+            case 0:
+                tvPlayerScore.setText(String.valueOf(player.getLevelScore()));
+                break;
+            case 1:
+                tvPlayerScore.setText(String.valueOf(player.getStrengthScore()));
+                break;
+            case 2:
+                tvPlayerScore.setText(String.valueOf(player.getLevelScore() + player.getStrengthScore()));
+                break;
+        }
         tvPlayerName.setText(player.getName());
         return convertView;
     }

@@ -8,5 +8,6 @@ public interface GameResultInteractor {
 
     void loadGameResults(OnResultsLoaded listener);
     void clearSteps();
+    void clearPlayerStats();
 
 }

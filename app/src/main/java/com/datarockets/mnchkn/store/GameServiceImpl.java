@@ -26,7 +26,7 @@ public class GameServiceImpl implements GameService {
     private MunchkinDatabaseHelper database;
     private SharedPreferences preferences;
     private SharedPreferences.Editor preferencesEditor;
-    private static Map<Player, List<GameStep>> gameStepsMap;
+    private Map<Player, List<GameStep>> gameStepsMap;
 
     private GameServiceImpl(Context context) {
         database = MunchkinDatabaseHelper.getInstance(context);
@@ -97,7 +97,10 @@ public class GameServiceImpl implements GameService {
                         break;
                 }
             }
-            Line line = new Line(pointValues);
+            Line line = new Line();
+            line.setValues(pointValues);
+            line.setHasPoints(false);
+            line.setCubic(true);
             playersLines.add(line);
         }
 

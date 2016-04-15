@@ -101,7 +101,6 @@ public class DashboardActivity extends BaseActivity implements DashboardView,
                 .setMessage(R.string.dialog_finish_game_message)
                 .setPositiveButton(R.string.button_yes, (dialog, which) -> {
                     finishGame();
-                    presenter.clearPlayersStats();
                 })
                 .setNegativeButton(R.string.button_no, (dialog, which) -> {
                     dialog.dismiss();

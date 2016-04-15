@@ -19,13 +19,6 @@ public class DashboardPresenterImpl implements DashboardPresenter, DashboardInte
     }
 
     @Override
-    public void clearPlayersStats() {
-        if (dashboardView != null) {
-            interactor.clearPlayersStats();
-        }
-    }
-
-    @Override
     public void updatePlayerListItem(Player player, int position) {
         if (dashboardView != null) {
             interactor.updatePlayer(player, position, this);

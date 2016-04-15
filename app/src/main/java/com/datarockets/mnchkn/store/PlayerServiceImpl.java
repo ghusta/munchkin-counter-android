@@ -1,7 +1,6 @@
 package com.datarockets.mnchkn.store;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.datarockets.mnchkn.models.Player;
 import com.datarockets.mnchkn.utils.ColorUtil;
@@ -60,5 +59,9 @@ public class PlayerServiceImpl implements PlayerService {
         return playerDatabase.getPlayers();
     }
 
+    @Override
+    public ArrayList<Player> getPlayersListByCategory(int type) {
+        return playerDatabase.getPlayersByScore(type);
+    }
 
 }
