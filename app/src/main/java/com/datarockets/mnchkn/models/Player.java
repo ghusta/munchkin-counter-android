@@ -5,6 +5,7 @@ public class Player {
     public String name;
     public int levelScore;
     public int strengthScore;
+    public int totalScore;
     public String color;
 
     public long getId() {
@@ -46,4 +47,13 @@ public class Player {
     public void setColor(String color) {
         this.color = color;
     }
+
+    public int getTotalScore() {
+        return totalScore;
+    }
+
+    public void setTotalScore(int totalScore) {
+        this.totalScore = totalScore;
+    }
+
 }

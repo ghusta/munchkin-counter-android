@@ -27,12 +27,18 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_PLAYER_LEVEL = "level";
     private static final String KEY_PLAYER_STRENGTH = "strength";
     private static final String KEY_PLAYER_COLOR = "color";
+    private static final String KEY_PLAYER_TOTAL = "total";
 
     private static final String TABLE_GAME = "game";
 
     private static final String KEY_GAME_PLAYER_ID = "player_id";
     private static final String KEY_GAME_PLAYER_LEVEL = "player_level";
     private static final String KEY_GAME_PLAYER_STRENGTH = "player_strength";
+
+    private static final int ORDER_BY_ID = 0;
+    private static final int ORDER_BY_LEVEL = 1;
+    private static final int ORDER_BY_STRENGTH = 2;
+    private static final int ORDER_BY_TOTAL = 3;
 
     private static MunchkinDatabaseHelper instance;
 
@@ -103,31 +109,58 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Player> getPlayers() {
-        ArrayList<Player> players = new ArrayList<>();
-        String PLAYERS_SELECT_QUERY = String.format("SELECT * FROM " + TABLE_PLAYERS);
+        return getPlayers(0);
+    }
+
+    public ArrayList<Player> getPlayers(int orderValue) {
+        ArrayList<Player> playersList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery(PLAYERS_SELECT_QUERY, null);
+        String ORDER_BY = " ORDER BY ";
+        switch (orderValue) {
+            case ORDER_BY_ID:
+                ORDER_BY = ORDER_BY + KEY_PLAYER_ID;
+                break;
+            case ORDER_BY_LEVEL:
+                ORDER_BY = ORDER_BY + KEY_PLAYER_LEVEL;
+                break;
+            case ORDER_BY_STRENGTH:
+                ORDER_BY = ORDER_BY + KEY_PLAYER_STRENGTH;
+                break;
+            case ORDER_BY_TOTAL:
+                ORDER_BY = ORDER_BY + KEY_PLAYER_TOTAL;
+                break;
+        }
+        String PLAYERS_TOTAL_QUERY = "SELECT "
+                + KEY_PLAYER_ID + ", "
+                + KEY_PLAYER_NAME + ", "
+                + KEY_PLAYER_LEVEL + ", "
+                + KEY_PLAYER_STRENGTH + ", "
+                + KEY_PLAYER_COLOR + ", ("
+                + KEY_PLAYER_LEVEL + " + " + KEY_PLAYER_STRENGTH + ") AS " + KEY_PLAYER_TOTAL
+                + " FROM " + TABLE_PLAYERS + ORDER_BY;
+        Cursor cursor = db.rawQuery(PLAYERS_TOTAL_QUERY, null);
         try {
             if (cursor.moveToFirst()) {
                 do {
                     Player player = new Player();
                     player.setId(cursor.getLong(cursor.getColumnIndex(KEY_PLAYER_ID)));
                     player.setName(cursor.getString(cursor.getColumnIndex(KEY_PLAYER_NAME)));
+                    player.setColor(cursor.getString(cursor.getColumnIndex(KEY_PLAYER_COLOR)));
                     player.setLevelScore(cursor.getInt(cursor.getColumnIndex(KEY_PLAYER_LEVEL)));
                     player.setStrengthScore(cursor.getInt(cursor.getColumnIndex(KEY_PLAYER_STRENGTH)));
-                    player.setColor(cursor.getString(cursor.getColumnIndex(KEY_PLAYER_COLOR)));
-                    players.add(player);
-                } while(cursor.moveToNext());
+                    player.setTotalScore(cursor.getInt(cursor.getColumnIndex(KEY_PLAYER_TOTAL)));
+                    playersList.add(player);
+                } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.e(TAG, "Error while trying to get posts from database");
+            Log.e(TAG, "Error while getting players");
             e.printStackTrace();
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
             }
         }
-        return players;
+        return playersList;
     }
 
     public Player updatePlayer(Player player) {
@@ -246,45 +279,6 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
             }
         }
         return gameSteps;
-    }
-
-    public ArrayList<Player> getPlayersByScore(int type) {
-        ArrayList<Player> playerList = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        String sort_type = null;
-        switch (type) {
-            case 0:
-                sort_type = KEY_PLAYER_LEVEL;
-                break;
-            case 1:
-                sort_type = KEY_PLAYER_STRENGTH;
-                break;
-            case 2:
-                sort_type = KEY_PLAYER_LEVEL;
-                break;
-        }
-        String PLAYERS_LIST_QUERY = "SELECT * FROM " + TABLE_PLAYERS + " ORDER BY " + sort_type;
-        Cursor cursor = db.rawQuery(PLAYERS_LIST_QUERY, null);
-        try {
-            if (cursor.moveToFirst()) {
-                do {
-                    Player player = new Player();
-                    player.setId(cursor.getLong(cursor.getColumnIndex(KEY_PLAYER_ID)));
-                    player.setName(cursor.getString(cursor.getColumnIndex(KEY_PLAYER_NAME)));
-                    player.setLevelScore(cursor.getInt(cursor.getColumnIndex(KEY_PLAYER_LEVEL)));
-                    player.setStrengthScore(cursor.getInt(cursor.getColumnIndex(KEY_PLAYER_STRENGTH)));
-                    player.setColor(cursor.getString(cursor.getColumnIndex(KEY_PLAYER_COLOR)));
-                    playerList.add(player);
-                } while (cursor.moveToNext());
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error while getting players list with type of sort");
-        } finally {
-            if (cursor != null && !cursor.isClosed()) {
-                cursor.close();
-            }
-        }
-        return playerList;
     }
 
 }

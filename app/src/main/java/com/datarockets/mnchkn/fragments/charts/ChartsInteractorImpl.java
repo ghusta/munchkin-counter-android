@@ -24,7 +24,7 @@ public class ChartsInteractorImpl implements ChartsInteractor {
 
     @Override
     public void loadPlayers(int type, OnChartLoadedListener listener) {
-        listener.showPlayers(playerService.getPlayersListByCategory(type));
+        listener.showPlayers(playerService.getPlayersList(type));
     }
 
 }

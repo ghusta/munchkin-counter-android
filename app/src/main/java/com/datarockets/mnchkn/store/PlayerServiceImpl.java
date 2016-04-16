@@ -13,6 +13,8 @@ public class PlayerServiceImpl implements PlayerService {
 
     public static final String TAG = LogUtil.makeLogTag(PlayerServiceImpl.class);
 
+    private static final int ORDER_BY_ID = 0;
+
     private MunchkinDatabaseHelper playerDatabase;
 
     private PlayerServiceImpl(Context context) {
@@ -60,8 +62,8 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public ArrayList<Player> getPlayersListByCategory(int type) {
-        return playerDatabase.getPlayersByScore(type);
+    public ArrayList<Player> getPlayersList(int orderValue) {
+        return playerDatabase.getPlayers(orderValue);
     }
 
 }

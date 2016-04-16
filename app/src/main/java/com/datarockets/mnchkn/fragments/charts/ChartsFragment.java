@@ -33,7 +33,7 @@ public class ChartsFragment extends Fragment implements ChartsView {
 
     public static ChartsFragment newInstance(int type) {
         Bundle args = new Bundle();
-        args.putInt(CHART_TYPE, type);
+        args.putInt(CHART_TYPE, type + 1);
         ChartsFragment fragment = new ChartsFragment();
         fragment.setArguments(args);
         return fragment;
