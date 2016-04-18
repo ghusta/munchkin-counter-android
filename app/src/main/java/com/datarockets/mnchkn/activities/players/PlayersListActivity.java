@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.datarockets.mnchkn.R;
 import com.datarockets.mnchkn.activities.BaseActivity;
 import com.datarockets.mnchkn.activities.dashboard.DashboardActivity;
-import com.datarockets.mnchkn.activities.settings.SettingsActivity;
 import com.datarockets.mnchkn.adapters.PlayerEditorListAdapter;
 import com.datarockets.mnchkn.fragments.dialogs.AddNewPlayerFragment;
 import com.datarockets.mnchkn.models.Player;
@@ -53,6 +52,7 @@ public class PlayersListActivity extends BaseActivity implements PlayersListView
     @Override
     protected void onResume() {
         super.onResume();
+        super.trackWithProperties("Current activity", "Activity name", TAG);
         presenter.onResume();
     }
 
@@ -162,17 +162,10 @@ public class PlayersListActivity extends BaseActivity implements PlayersListView
             case R.id.item_start_game:
                 presenter.checkIsEnoughPlayers();
                 break;
-            case R.id.item_settings:
-                launchSettings();
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void launchSettings() {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
     }
 
     @Override

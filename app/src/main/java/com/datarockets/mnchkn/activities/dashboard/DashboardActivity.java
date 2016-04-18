@@ -50,6 +50,7 @@ public class DashboardActivity extends BaseActivity implements DashboardView,
     @Override
     protected void onResume() {
         super.onResume();
+        super.trackWithProperties("Current activity", "Activity name", TAG);
         presenter.onResume();
     }
 

@@ -4,16 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.datarockets.mnchkn.R;
+import com.datarockets.mnchkn.activities.BaseActivity;
 import com.datarockets.mnchkn.activities.players.PlayersListActivity;
 import com.datarockets.mnchkn.adapters.ChartsPagerAdapter;
 import com.datarockets.mnchkn.utils.LogUtil;
 
-public class GameResultActivity extends AppCompatActivity implements GameResultView {
+public class GameResultActivity extends BaseActivity implements GameResultView {
 
     public static final String TAG = LogUtil.makeLogTag(GameResultActivity.class);
 
@@ -43,6 +43,12 @@ public class GameResultActivity extends AppCompatActivity implements GameResultV
         vpCharts.setOffscreenPageLimit(3);
         tlChartsTitle = (TabLayout) findViewById(R.id.tl_charts_title);
         tlChartsTitle.setupWithViewPager(vpCharts);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        super.trackWithProperties("Current activity", "Activity name", TAG);
     }
 
     @Override
