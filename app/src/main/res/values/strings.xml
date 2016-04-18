@@ -26,6 +26,7 @@
     <string name="text.player_name">Player Name</string>
     <string name="text.level">Level</string>
     <string name="text.strength">Strength</string>
+    <string name="text.steps">Steps</string>
     <string name="settings.max_level">Maximum level</string>
     <string name="tab.level">Level</string>
     <string name="tab.strength">Strength</string>

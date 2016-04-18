@@ -109,7 +109,7 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Player> getPlayers() {
-        return getPlayers(0);
+        return getPlayers(ORDER_BY_ID);
     }
 
     public ArrayList<Player> getPlayers(int orderValue) {
@@ -137,7 +137,8 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
                 + KEY_PLAYER_STRENGTH + ", "
                 + KEY_PLAYER_COLOR + ", ("
                 + KEY_PLAYER_LEVEL + " + " + KEY_PLAYER_STRENGTH + ") AS " + KEY_PLAYER_TOTAL
-                + " FROM " + TABLE_PLAYERS + ORDER_BY;
+                + " FROM " + TABLE_PLAYERS + ORDER_BY + " DESC";
+        Log.v(TAG, PLAYERS_TOTAL_QUERY);
         Cursor cursor = db.rawQuery(PLAYERS_TOTAL_QUERY, null);
         try {
             if (cursor.moveToFirst()) {
@@ -258,7 +259,6 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
                 + KEY_PLAYER_COLOR + " FROM " + TABLE_GAME
                 + " INNER JOIN " + TABLE_PLAYERS + " ON players.id = " + KEY_GAME_PLAYER_ID;
         Log.v("TAG", LINE_CHART_QUERY);
-        db.beginTransaction();
         Cursor cursor = db.rawQuery(LINE_CHART_QUERY, null);
         try {
             if (cursor.moveToFirst()) {
@@ -271,7 +271,7 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.e(TAG, "Error while getting ");
+            Log.e(TAG, "Error while getting game steps");
             e.printStackTrace();
         } finally {
             if (cursor != null && !cursor.isClosed()) {

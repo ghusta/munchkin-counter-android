@@ -40,14 +40,15 @@ public class GameResultActivity extends AppCompatActivity implements GameResultV
         vpCharts = (ViewPager) findViewById(R.id.vp_charts);
         vpChartsAdapter = new ChartsPagerAdapter(getSupportFragmentManager(), this);
         vpCharts.setAdapter(vpChartsAdapter);
+        vpCharts.setOffscreenPageLimit(3);
         tlChartsTitle = (TabLayout) findViewById(R.id.tl_charts_title);
         tlChartsTitle.setupWithViewPager(vpCharts);
     }
 
     @Override
     public void onBackPressed() {
-        presenter.onBackPressed();
         super.onBackPressed();
+        presenter.onBackPressed();
         Intent intent = new Intent(this, PlayersListActivity.class);
         startActivity(intent);
         finish();
@@ -62,4 +63,11 @@ public class GameResultActivity extends AppCompatActivity implements GameResultV
         }
         return false;
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        presenter.onStop();
+    }
+
 }

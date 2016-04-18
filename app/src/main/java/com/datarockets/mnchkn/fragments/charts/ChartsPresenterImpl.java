@@ -25,7 +25,6 @@ public class ChartsPresenterImpl implements ChartsPresenter, ChartsInteractor.On
         }
     }
 
-
     @Override
     public void loadPlayersList(int type) {
         if (chartsView != null) {
@@ -35,10 +34,7 @@ public class ChartsPresenterImpl implements ChartsPresenter, ChartsInteractor.On
 
     @Override
     public LineChartData loadChartData(int type) {
-        if (chartsView != null) {
-            return interactor.loadLineChartData(type);
-        }
-        return null;
+        return interactor.loadLineChartData(type);
     }
 
     @Override

@@ -13,8 +13,6 @@ public class PlayerServiceImpl implements PlayerService {
 
     public static final String TAG = LogUtil.makeLogTag(PlayerServiceImpl.class);
 
-    private static final int ORDER_BY_ID = 0;
-
     private MunchkinDatabaseHelper playerDatabase;
 
     private PlayerServiceImpl(Context context) {

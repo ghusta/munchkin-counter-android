@@ -36,8 +36,18 @@ public class GameResultPresenterImpl implements GameResultPresenter, GameResultI
     }
 
     @Override
+    public void onStop() {
+        if (gameResultView != null) {
+            interactor.clearSteps();
+            interactor.clearPlayerStats();
+        }
+    }
+
+    @Override
     public void onDestroy() {
         if (gameResultView != null) {
+            interactor.clearSteps();
+            interactor.clearPlayerStats();
             gameResultView = null;
         }
     }

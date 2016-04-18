@@ -2,7 +2,6 @@ package com.datarockets.mnchkn.fragments.charts;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import com.datarockets.mnchkn.utils.LogUtil;
 
 import java.util.ArrayList;
 
+import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.view.LineChartView;
 
@@ -33,7 +33,7 @@ public class ChartsFragment extends Fragment implements ChartsView {
 
     public static ChartsFragment newInstance(int type) {
         Bundle args = new Bundle();
-        args.putInt(CHART_TYPE, type + 1);
+        args.putInt(CHART_TYPE, type);
         ChartsFragment fragment = new ChartsFragment();
         fragment.setArguments(args);
         return fragment;
@@ -54,17 +54,17 @@ public class ChartsFragment extends Fragment implements ChartsView {
         super.onViewCreated(view, savedInstanceState);
         lvPlayerList = (ListView) view.findViewById(R.id.lv_player_list);
         lineChartView = (LineChartView) view.findViewById(R.id.line_chart_view);
+        lineChartData.setAxisXBottom(new Axis().setName(getResources().getString(R.string.text_steps)));
+        lineChartData.setAxisYLeft(new Axis().setHasLines(true));
         lineChartView.setLineChartData(lineChartData);
-        presenter.loadPlayersList(getArguments().getInt(CHART_TYPE));
+        presenter.loadPlayersList(getArguments().getInt(CHART_TYPE) + 1);
     }
 
 
     @Override
     public void showPlayersList(ArrayList<Player> players) {
-        Log.v(TAG, "Showing players list");
         lvPlayerListAdapter = new PlayerChartListAdapter(getActivity(), players, getArguments().getInt(CHART_TYPE));
         lvPlayerList.setAdapter(lvPlayerListAdapter);
-        lvPlayerListAdapter.notifyDataSetChanged();
     }
 
     @Override

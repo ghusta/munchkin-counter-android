@@ -17,6 +17,10 @@ import java.util.ArrayList;
 
 public class PlayerChartListAdapter extends ArrayAdapter<Player> {
 
+    private static final int ORDER_BY_LEVEL = 0;
+    private static final int ORDER_BY_STRENGTH = 1;
+    private static final int ORDER_BY_TOTAL = 2;
+
     ArrayList<Player> playersList;
     Context context;
     int type;
@@ -26,11 +30,6 @@ public class PlayerChartListAdapter extends ArrayAdapter<Player> {
         this.context = context;
         this.playersList = playersList;
         this.type = type;
-    }
-
-    @Override
-    public Player getItem(int position) {
-        return super.getItem(position);
     }
 
     @Override
@@ -48,13 +47,13 @@ public class PlayerChartListAdapter extends ArrayAdapter<Player> {
         TextView tvPlayerName = (TextView) convertView.findViewById(R.id.tv_player_name);
         TextView tvPlayerScore = (TextView) convertView.findViewById(R.id.tv_player_score);
         switch (type) {
-            case 0:
+            case ORDER_BY_LEVEL:
                 tvPlayerScore.setText(String.valueOf(player.getLevelScore()));
                 break;
-            case 1:
+            case ORDER_BY_STRENGTH:
                 tvPlayerScore.setText(String.valueOf(player.getStrengthScore()));
                 break;
-            case 2:
+            case ORDER_BY_TOTAL:
                 tvPlayerScore.setText(String.valueOf(player.getLevelScore() + player.getStrengthScore()));
                 break;
         }

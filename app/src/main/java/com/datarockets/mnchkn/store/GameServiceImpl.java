@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
@@ -76,6 +75,7 @@ public class GameServiceImpl implements GameService {
     public LineChartData createScoresChartData(int type, Map<Player, List<GameStep>> playerGameStepsMap) {
         List<Line> playersLines = new ArrayList<>();
         List<String> playerColors = new ArrayList<>();
+        LineChartData lineChartData;
 
         for (Player player : playerGameStepsMap.keySet()) {
             String color = player.getColor();
@@ -108,10 +108,9 @@ public class GameServiceImpl implements GameService {
             playersLines.get(i).setColor(Color.parseColor(playerColors.get(i)));
         }
 
-        LineChartData lineChartData = new LineChartData(playersLines);
-        lineChartData.setAxisXBottom(new Axis());
-        lineChartData.setAxisYLeft(new Axis().setHasLines(true));
-        return lineChartData.setLines(playersLines);
+        lineChartData = new LineChartData(playersLines);
+
+        return lineChartData;
     }
 
     @Override
