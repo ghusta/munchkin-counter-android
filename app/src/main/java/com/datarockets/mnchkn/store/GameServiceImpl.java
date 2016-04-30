@@ -34,7 +34,7 @@ public class GameServiceImpl implements GameService {
 
     public static GameServiceImpl getInstance(Context context) {
         if (instance == null) {
-            instance = new GameServiceImpl(context.getApplicationContext());
+            instance = new GameServiceImpl(context);
         }
         return instance;
     }

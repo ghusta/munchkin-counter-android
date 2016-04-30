@@ -4,12 +4,12 @@ import android.content.Context;
 
 import com.datarockets.mnchkn.models.Player;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface PlayersListInteractor {
 
     interface OnFinishedListener {
-        void onPlayersLoaded(ArrayList<Player> players);
+        void onPlayersLoaded(List<Player> players);
         void onPlayerAdded(Player player);
         void onPlayerDeleted(int position);
         void onPlayersCountChecked(boolean enough);

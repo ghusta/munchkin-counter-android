@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.datarockets.mnchkn.models.Player;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class PlayersListPresenterImpl implements PlayersListPresenter, PlayersListInteractor.OnFinishedListener {
 
@@ -89,7 +89,7 @@ public class PlayersListPresenterImpl implements PlayersListPresenter, PlayersLi
     }
 
     @Override
-    public void onPlayersLoaded(ArrayList<Player> players) {
+    public void onPlayersLoaded(List<Player> players) {
         if (playersListView != null) {
             playersListView.setPlayersList(players);
         }

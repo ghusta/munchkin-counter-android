@@ -13,8 +13,8 @@ public class ChartsInteractorImpl implements ChartsInteractor {
     private PlayerServiceImpl playerService;
 
     public ChartsInteractorImpl(Context context) {
-        gameService = GameServiceImpl.getInstance(context.getApplicationContext());
-        playerService = PlayerServiceImpl.getInstance(context.getApplicationContext());
+        gameService = GameServiceImpl.getInstance(context);
+        playerService = PlayerServiceImpl.getInstance(context);
     }
 
     @Override

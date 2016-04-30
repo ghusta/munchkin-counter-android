@@ -20,7 +20,7 @@ import com.datarockets.mnchkn.fragments.dialogs.AddNewPlayerFragment;
 import com.datarockets.mnchkn.models.Player;
 import com.datarockets.mnchkn.utils.LogUtil;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static android.widget.Toast.makeText;
 
@@ -86,7 +86,7 @@ public class PlayersListActivity extends BaseActivity implements PlayersListView
     }
 
     @Override
-    public void setPlayersList(ArrayList<Player> players) {
+    public void setPlayersList(List<Player> players) {
         lvPlayerEditorListAdapter = new PlayerEditorListAdapter(this, players);
         lvPlayersList.setAdapter(lvPlayerEditorListAdapter);
     }

@@ -14,16 +14,16 @@ import com.datarockets.mnchkn.R;
 import com.datarockets.mnchkn.models.Player;
 import com.datarockets.mnchkn.utils.LogUtil;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerEditorListAdapter extends ArrayAdapter<Player> {
 
     public static final String TAG = LogUtil.makeLogTag(PlayerEditorListAdapter.class);
 
-    ArrayList<Player> playersList;
+    List<Player> playersList;
     Context context;
 
-    public PlayerEditorListAdapter(Context context, ArrayList<Player> players) {
+    public PlayerEditorListAdapter(Context context, List<Player> players) {
         super(context, 0, players);
         this.context = context;
         this.playersList = players;
