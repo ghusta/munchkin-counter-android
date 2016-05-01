@@ -3,7 +3,6 @@ package com.datarockets.mnchkn;
 import android.app.Application;
 
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
-import com.squareup.leakcanary.LeakCanary;
 
 public class MunchkinApplication extends Application {
 
@@ -13,7 +12,6 @@ public class MunchkinApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        LeakCanary.install(this);
     }
 
     public synchronized MixpanelAPI getMixpanel() {

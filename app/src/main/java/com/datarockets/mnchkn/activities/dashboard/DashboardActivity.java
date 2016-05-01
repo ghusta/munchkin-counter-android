@@ -19,7 +19,7 @@ import com.datarockets.mnchkn.fragments.players.PlayerFragment;
 import com.datarockets.mnchkn.models.Player;
 import com.datarockets.mnchkn.utils.LogUtil;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class DashboardActivity extends BaseActivity implements DashboardView,
         View.OnClickListener, AdapterView.OnItemClickListener, PlayerFragment.PlayerFragmentCallback {
@@ -87,7 +87,7 @@ public class DashboardActivity extends BaseActivity implements DashboardView,
     }
 
     @Override
-    public void setItems(ArrayList<Player> players) {
+    public void setItems(List<Player> players) {
         lvPlayerListAdapter = new PlayerListAdapter(this, players);
         lvPlayerList.setAdapter(lvPlayerListAdapter);
         lvPlayerList.setSelection(0);

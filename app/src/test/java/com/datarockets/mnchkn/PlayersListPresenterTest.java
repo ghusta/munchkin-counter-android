@@ -3,7 +3,6 @@ package com.datarockets.mnchkn;
 import android.os.Build;
 
 import com.datarockets.mnchkn.activities.players.PlayersListInteractorImpl;
-import com.datarockets.mnchkn.activities.players.PlayersListPresenter;
 import com.datarockets.mnchkn.activities.players.PlayersListPresenterImpl;
 import com.datarockets.mnchkn.activities.players.PlayersListView;
 import com.datarockets.mnchkn.models.Player;
@@ -42,7 +41,7 @@ public class PlayersListPresenterTest {
     @Mock
     ArrayList<Player> players;
 
-    private PlayersListPresenter playersListPresenter;
+    private PlayersListPresenterImpl playersListPresenter;
     private MunchkinDatabaseHelper munchkinDatabaseHelper;
 
     @Before
