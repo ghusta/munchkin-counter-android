@@ -76,6 +76,7 @@ task pmd(type: Pmd, group: 'Verification', description: 'Inspect sourcecode for 
 
     source 'src'
     include '**/*.java'
+    exclude '**/*Test.java'
     exclude '**/gen/**'
 
     reports {

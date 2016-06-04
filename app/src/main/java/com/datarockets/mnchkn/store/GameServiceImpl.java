@@ -128,7 +128,7 @@ public class GameServiceImpl implements GameService {
         mPreferencesEditor.apply();
     }
 
-    public boolean getGameStatus() {
+    public boolean isGameStarted() {
         return mPreferences.getBoolean(IS_GAME_STARTED, false);
     }
 

@@ -2,14 +2,18 @@ package com.datarockets.mnchkn.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.datarockets.mnchkn.MunchkinApplication;
+import com.datarockets.mnchkn.utils.LogUtil;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class BaseActivity extends AppCompatActivity {
+
+    private static final String TAG = LogUtil.makeLogTag(BaseActivity.class);
 
     private MunchkinApplication mApplication;
     private MixpanelAPI mMixpanel;
@@ -26,7 +30,7 @@ public class BaseActivity extends AppCompatActivity {
         try {
             props.put(propertyName, propertyData);
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Error while trying to send tracked event");
         }
         mMixpanel.track(title, props);
     }

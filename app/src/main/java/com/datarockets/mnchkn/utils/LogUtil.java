@@ -4,7 +4,7 @@ public class LogUtil {
     public static final String LOG_PREFIX = "mnchkn ";
     public static final int LOG_PREFIX_LENGTH = LOG_PREFIX.length();
     public static final int MAX_LOG_TAG_LENGTH = 23;
-    
+
     private LogUtil() {}
 
     public static String makeLogTag(String str) {

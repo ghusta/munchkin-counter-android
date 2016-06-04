@@ -35,7 +35,7 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_GAME_PLAYER_LEVEL = "player_level";
     private static final String KEY_GAME_PLAYER_STRENGTH = "player_strength";
 
-    private static String ORDER_BY = " ORDER BY ";
+    private static final String ORDER_BY = " ORDER BY ";
 
     private static final int ORDER_BY_ID = 0;
     private static final int ORDER_BY_LEVEL = 1;
@@ -105,7 +105,6 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
             Log.i(TAG, "Player id is " + playerId);
         } catch (Exception e) {
             Log.e(TAG, "Error while trying to add new player");
-            e.printStackTrace();
         } finally {
             db.endTransaction();
         }
@@ -165,7 +164,6 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
             }
         } catch (Exception e) {
             Log.e(TAG, "Error while getting players");
-            e.printStackTrace();
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -193,7 +191,6 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
             db.setTransactionSuccessful();
         } catch (Exception e) {
             Log.e(TAG, "Error while deleting player");
-            e.printStackTrace();
         } finally {
             db.endTransaction();
         }
@@ -237,7 +234,6 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
             db.setTransactionSuccessful();
         } catch (Exception e) {
             Log.e(TAG, "Error while trying to insert step to database");
-            e.printStackTrace();
         } finally {
             db.endTransaction();
         }
@@ -252,7 +248,6 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
             db.setTransactionSuccessful();
         } catch (Exception e) {
             Log.e(TAG, "Error while trying to delete game steps");
-            e.printStackTrace();
         } finally {
             db.endTransaction();
         }
@@ -286,7 +281,6 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
             }
         } catch (Exception e) {
             Log.e(TAG, "Error while getting game steps");
-            e.printStackTrace();
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();

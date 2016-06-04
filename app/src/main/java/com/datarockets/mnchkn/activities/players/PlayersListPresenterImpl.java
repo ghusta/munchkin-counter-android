@@ -123,10 +123,8 @@ public class PlayersListPresenterImpl implements PlayersListPresenter,
 
     @Override
     public void onGameStarted(boolean started) {
-        if (mPlayersListView != null) {
-            if (started) {
-                mPlayersListView.showStartContinueDialog();
-            }
+        if (mPlayersListView != null && started) {
+            mPlayersListView.showStartContinueDialog();
         }
     }
 

@@ -21,11 +21,6 @@ public class GameChooserAdapter extends BaseAdapter {
     public GameChooserAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
         mGames.add("punchkin");
-        mGames.add("punchkin");
-        mGames.add("punchkin");
-        mGames.add("punchkin");
-        mGames.add("punchkin");
-        mGames.add("punchkin");
     }
 
     @Override

@@ -26,7 +26,7 @@ public class PlayersListInteractorImpl implements PlayersListInteractor {
 
     @Override
     public void isGameStarted(Context context, OnFinishedListener listener) {
-        listener.onGameStarted(mGameService.getGameStatus());
+        listener.onGameStarted(mGameService.isGameStarted());
     }
 
     @Override

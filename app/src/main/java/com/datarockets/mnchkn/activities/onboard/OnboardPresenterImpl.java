@@ -36,10 +36,8 @@ public class OnboardPresenterImpl implements OnboardPresenter,
 
     @Override
     public void shouldShowOnboarding(boolean value) {
-        if (onboardView != null) {
-            if (!value) {
-                onboardView.openPlayersActivity();
-            }
+        if (onboardView != null && !value) {
+            onboardView.openPlayersActivity();
         }
     }
 }
