@@ -16,12 +16,15 @@ import com.datarockets.mnchkn.utils.LogUtil;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class PlayerEditorListAdapter extends ArrayAdapter<Player> {
 
     public static final String TAG = LogUtil.makeLogTag(PlayerEditorListAdapter.class);
 
-    List<Player> playersList;
-    Context context;
+    private List<Player> playersList;
+    private Context context;
 
     public PlayerEditorListAdapter(Context context, List<Player> players) {
         super(context, 0, players);
@@ -36,18 +39,32 @@ public class PlayerEditorListAdapter extends ArrayAdapter<Player> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
+
         Player player = playersList.get(position);
-        if (convertView == null) {
+        if (convertView != null) {
+            holder = (ViewHolder) convertView.getTag();
+        } else {
             convertView = LayoutInflater.from(context).inflate(R.layout.player_item, null);
+            holder = new ViewHolder(convertView);
+            convertView.setTag(holder);
         }
 
         int color = Color.parseColor(player.getColor());
         String capitalizedPlayerFirstLetter = player.getName().substring(0, 1).toUpperCase();
         TextDrawable drawable = TextDrawable.builder().buildRound(capitalizedPlayerFirstLetter, color);
-        ImageView ivPlayerImage = (ImageView) convertView.findViewById(R.id.iv_player_color);
-        ivPlayerImage.setImageDrawable(drawable);
-        TextView tvPlayerName = (TextView) convertView.findViewById(R.id.tv_player_name);
-        tvPlayerName.setText(player.getName());
+        holder.ivPlayerImage.setImageDrawable(drawable);
+        holder.tvPlayerName.setText(player.getName());
         return convertView;
     }
+
+    static final class ViewHolder {
+        @BindView(R.id.iv_player_color) ImageView ivPlayerImage;
+        @BindView(R.id.tv_player_name) TextView tvPlayerName;
+
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
+    }
+
 }

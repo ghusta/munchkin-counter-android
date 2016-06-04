@@ -1,5 +1,6 @@
 package com.datarockets.mnchkn.activities.players;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,8 +8,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,37 +21,38 @@ import com.datarockets.mnchkn.utils.LogUtil;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnItemLongClick;
+
 import static android.widget.Toast.makeText;
 
 public class PlayersListActivity extends BaseActivity implements PlayersListView,
-        AdapterView.OnItemLongClickListener, View.OnClickListener, AddNewPlayerFragment.AddNewPlayerDialogInterface {
+        AddNewPlayerFragment.AddNewPlayerDialogInterface {
 
     public static final String TAG = LogUtil.makeLogTag(PlayersListActivity.class);
 
     PlayersListPresenter presenter;
-    Toolbar toolbar;
-    ListView lvPlayersList;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.lv_player_list) ListView lvPlayersList;
     PlayerEditorListAdapter lvPlayerEditorListAdapter;
-    FloatingActionButton fabAddPlayer;
+    @BindView(R.id.fab_add_player) FloatingActionButton fabAddPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new PlayersListPresenterImpl(this, this);
         setContentView(R.layout.activity_players);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        lvPlayersList = (ListView) findViewById(R.id.lv_player_list);
-        lvPlayersList.setOnItemLongClickListener(this);
-        fabAddPlayer = (FloatingActionButton) findViewById(R.id.fab_add_player);
-        fabAddPlayer.setOnClickListener(this);
         presenter.onCreate();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        super.trackWithProperties("Current activity", "Activity name", TAG);
+        trackWithProperties("Current activity", "Activity name", TAG);
         presenter.onResume();
     }
 
@@ -105,31 +105,29 @@ public class PlayersListActivity extends BaseActivity implements PlayersListView
         finish();
     }
 
-    @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+    @OnItemLongClick(R.id.lv_player_list) boolean onItemLongClick(final int position) {
         AlertDialog alertDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_player_delete_title)
                 .setMessage(R.string.dialog_player_delete_message)
-                .setPositiveButton(R.string.button_yes, (dialog, which) -> {
-                    presenter.deletePlayerListItem(position, lvPlayerEditorListAdapter.getItem(position).getId());
+                .setPositiveButton(R.string.button_yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        presenter.deletePlayerListItem(position, lvPlayerEditorListAdapter.getItem(position).getId());
+                    }
                 })
-                .setNegativeButton(R.string.button_no, (dialog, which) -> {
-                    dialog.dismiss();
+                .setNegativeButton(R.string.button_no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
                 })
                 .create();
         alertDialog.show();
         return true;
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.fab_add_player:
-                showAddNewPlayerDialog();
-                break;
-            default:
-                break;
-        }
+    @OnClick(R.id.fab_add_player) void onClick() {
+        showAddNewPlayerDialog();
     }
 
     @Override
@@ -137,14 +135,20 @@ public class PlayersListActivity extends BaseActivity implements PlayersListView
         AlertDialog startContinueDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_start_continue_game_title)
                 .setMessage(R.string.dialog_start_continue_game_message)
-                .setPositiveButton(R.string.button_continue, (dialog, which) -> {
-                    launchDashboard();
+                .setPositiveButton(R.string.button_continue, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        launchDashboard();
+                    }
                 })
-                .setNegativeButton(R.string.button_start, (dialog, which) -> {
-                    dialog.dismiss();
-                    presenter.setGameFinished();
-                    presenter.clearPlayersStats();
-                    presenter.clearGameSteps();
+                .setNegativeButton(R.string.button_start, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        presenter.setGameFinished();
+                        presenter.clearPlayersStats();
+                        presenter.clearGameSteps();
+                    }
                 })
                 .setCancelable(false)
                 .create();

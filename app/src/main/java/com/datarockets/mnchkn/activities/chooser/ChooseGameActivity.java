@@ -9,24 +9,31 @@ import com.datarockets.mnchkn.adapters.GameChooserAdapter;
 import com.datarockets.mnchkn.fragments.dialogs.GameInfoFragment;
 import com.datarockets.mnchkn.utils.LogUtil;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnItemClick;
+
 public class ChooseGameActivity extends AppCompatActivity implements ChooseGameView {
 
     public static final String TAG = LogUtil.makeLogTag(ChooseGameActivity.class);
 
     ChooseGamePresenterImpl presenter;
-    GridView gvGameChooser;
+    GameChooserAdapter gameChooserAdapter;
+    @BindView(R.id.gv_game_chooser) GridView gvGameChooser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_game);
+        ButterKnife.bind(this);
         presenter = new ChooseGamePresenterImpl(this);
-        gvGameChooser = (GridView) findViewById(R.id.gv_game_chooser);
-        gvGameChooser.setAdapter(new GameChooserAdapter(this));
-        gvGameChooser.setOnItemClickListener((parent, view, position, id) -> {
-            GameInfoFragment gameInfoFragment = new GameInfoFragment();
-            gameInfoFragment.show(getSupportFragmentManager(), TAG);
-        });
+        gameChooserAdapter = new GameChooserAdapter(this);
+        gvGameChooser.setAdapter(gameChooserAdapter);
+    }
+
+    @OnItemClick(R.id.gv_game_chooser) void onItemClick(int position) {
+        GameInfoFragment gameInfoFragment = new GameInfoFragment();
+        gameInfoFragment.show(getSupportFragmentManager(), TAG);
     }
 
     @Override

@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
-apply from: '../config/quality/quality.gradle'
 apply plugin: 'jacoco-android'
+apply plugin: 'android-apt'
+apply from: '../config/quality/quality.gradle'
+
 
 android {
     compileSdkVersion 23
@@ -15,9 +17,6 @@ android {
         version "${version_code}"
         versionName "${version_name}"
         vectorDrawables.useSupportLibrary = true
-        jackOptions {
-            enabled true
-        }
     }
 
     buildTypes {
@@ -42,11 +41,6 @@ android {
         }
     }
 
-    compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
-    }
-
 }
 
 dependencies {
@@ -60,6 +54,8 @@ dependencies {
     compile 'com.mixpanel.android:mixpanel-android:4.+'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.github.lecho:hellocharts-library:1.5.8@aar'
+    compile 'com.jakewharton:butterknife:8.0.1'
+    apt 'com.jakewharton:butterknife-compiler:8.0.1'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
     testCompile 'junit:junit:4.10'
     testCompile 'org.assertj:assertj-core:1.7.0'

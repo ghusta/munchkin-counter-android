@@ -15,15 +15,18 @@ import com.datarockets.mnchkn.models.Player;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class PlayerChartListAdapter extends ArrayAdapter<Player> {
 
     private static final int ORDER_BY_LEVEL = 0;
     private static final int ORDER_BY_STRENGTH = 1;
     private static final int ORDER_BY_TOTAL = 2;
 
-    ArrayList<Player> playersList;
-    Context context;
-    int type;
+    private ArrayList<Player> playersList;
+    private Context context;
+    private int type;
 
     public PlayerChartListAdapter(Context context, ArrayList<Player> playersList, int type) {
         super(context, 0, playersList);
@@ -34,31 +37,50 @@ public class PlayerChartListAdapter extends ArrayAdapter<Player> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
+
         Player player = getItem(position);
-        if (convertView == null) {
+
+        if (convertView != null) {
+            holder = (ViewHolder) convertView.getTag();
+        } else {
             convertView = LayoutInflater.from(context).inflate(R.layout.player_chart_item, null);
+            holder = new ViewHolder(convertView);
+            convertView.setTag(holder);
         }
 
         int color = Color.parseColor(player.getColor());
         String capitalizedPlayerFirstLetter = player.getName().substring(0, 1).toUpperCase();
         TextDrawable drawable = TextDrawable.builder().buildRound(capitalizedPlayerFirstLetter, color);
-        ImageView ivPlayerColor = (ImageView) convertView.findViewById(R.id.iv_player_color);
-        ivPlayerColor.setImageDrawable(drawable);
-        TextView tvPlayerName = (TextView) convertView.findViewById(R.id.tv_player_name);
-        TextView tvPlayerScore = (TextView) convertView.findViewById(R.id.tv_player_score);
+
+        holder.ivPlayerColor.setImageDrawable(drawable);
+        holder.tvPlayerName.setText(player.getName());
         switch (type) {
             case ORDER_BY_LEVEL:
-                tvPlayerScore.setText(String.valueOf(player.getLevelScore()));
+                String levelScore = String.valueOf(player.getLevelScore());
+                holder.tvPlayerScore.setText(levelScore);
                 break;
             case ORDER_BY_STRENGTH:
-                tvPlayerScore.setText(String.valueOf(player.getStrengthScore()));
+                String strengthScore = String.valueOf(player.getStrengthScore());
+                holder.tvPlayerScore.setText(strengthScore);
                 break;
             case ORDER_BY_TOTAL:
-                tvPlayerScore.setText(String.valueOf(player.getLevelScore() + player.getStrengthScore()));
+                int totalScoreAmount = player.getLevelScore() + player.getStrengthScore();
+                String totalScore = String.valueOf(totalScoreAmount);
+                holder.tvPlayerScore.setText(totalScore);
                 break;
         }
-        tvPlayerName.setText(player.getName());
         return convertView;
+    }
+
+    static final class ViewHolder {
+        @BindView(R.id.iv_player_color) ImageView ivPlayerColor;
+        @BindView(R.id.tv_player_name) TextView tvPlayerName;
+        @BindView(R.id.tv_player_score) TextView tvPlayerScore;
+
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 
 

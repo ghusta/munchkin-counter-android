@@ -13,14 +13,17 @@ import com.datarockets.mnchkn.activities.players.PlayersListActivity;
 import com.datarockets.mnchkn.adapters.ChartsPagerAdapter;
 import com.datarockets.mnchkn.utils.LogUtil;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class GameResultActivity extends BaseActivity implements GameResultView {
 
     public static final String TAG = LogUtil.makeLogTag(GameResultActivity.class);
 
     GameResultPresenter presenter;
-    Toolbar toolbar;
-    ViewPager vpCharts;
-    TabLayout tlChartsTitle;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.vp_charts) ViewPager vpCharts;
+    @BindView(R.id.tl_charts_title) TabLayout tlChartsTitle;
     ChartsPagerAdapter vpChartsAdapter;
 
     @Override
@@ -28,7 +31,7 @@ public class GameResultActivity extends BaseActivity implements GameResultView {
         super.onCreate(savedInstanceState);
         presenter = new GameResultPresenterImpl(this, this);
         setContentView(R.layout.activity_game_result);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -37,18 +40,16 @@ public class GameResultActivity extends BaseActivity implements GameResultView {
 
     @Override
     public void loadChartFragments() {
-        vpCharts = (ViewPager) findViewById(R.id.vp_charts);
         vpChartsAdapter = new ChartsPagerAdapter(getSupportFragmentManager(), this);
         vpCharts.setAdapter(vpChartsAdapter);
         vpCharts.setOffscreenPageLimit(3);
-        tlChartsTitle = (TabLayout) findViewById(R.id.tl_charts_title);
         tlChartsTitle.setupWithViewPager(vpCharts);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        super.trackWithProperties("Current activity", "Activity name", TAG);
+        trackWithProperties("Current activity", "Activity name", TAG);
     }
 
     @Override

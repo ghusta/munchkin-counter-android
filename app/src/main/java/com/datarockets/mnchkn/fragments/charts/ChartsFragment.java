@@ -14,6 +14,8 @@ import com.datarockets.mnchkn.utils.LogUtil;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.view.LineChartView;
@@ -25,9 +27,9 @@ public class ChartsFragment extends Fragment implements ChartsView {
     private static final String CHART_TYPE = "chart_type";
 
     View chartsView;
-    LineChartView lineChartView;
+    @BindView(R.id.line_chart_view) LineChartView lineChartView;
     LineChartData lineChartData;
-    ListView lvPlayerList;
+    @BindView(R.id.lv_player_list) ListView lvPlayerList;
     PlayerChartListAdapter lvPlayerListAdapter;
     ChartsPresenterImpl presenter;
 
@@ -42,9 +44,10 @@ public class ChartsFragment extends Fragment implements ChartsView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        chartsView = inflater.inflate(R.layout.fragment_charts, container, false);
+        ButterKnife.bind(this, chartsView);
         presenter = new ChartsPresenterImpl(this, getActivity());
         lineChartData = presenter.loadChartData(getArguments().getInt(CHART_TYPE));
-        chartsView = inflater.inflate(R.layout.fragment_charts, container, false);
         return chartsView;
     }
 
@@ -52,8 +55,6 @@ public class ChartsFragment extends Fragment implements ChartsView {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        lvPlayerList = (ListView) view.findViewById(R.id.lv_player_list);
-        lineChartView = (LineChartView) view.findViewById(R.id.line_chart_view);
         lineChartData.setAxisXBottom(new Axis().setName(getResources().getString(R.string.text_steps)));
         lineChartData.setAxisYLeft(new Axis().setHasLines(true));
         lineChartView.setLineChartData(lineChartData);

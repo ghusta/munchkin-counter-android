@@ -2,23 +2,18 @@ package com.datarockets.mnchkn.fragments.players;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.datarockets.mnchkn.R;
-import com.datarockets.mnchkn.activities.dashboard.DashboardView;
 import com.datarockets.mnchkn.models.Player;
-import com.datarockets.mnchkn.utils.LogUtil;
 import com.datarockets.mnchkn.views.fonts.MunchkinTextView;
 
-import static android.widget.Toast.makeText;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class PlayerFragment extends Fragment implements PlayerView, View.OnClickListener {
 
@@ -27,8 +22,13 @@ public class PlayerFragment extends Fragment implements PlayerView, View.OnClick
 
     PlayerPresenter presenter;
     View currentPlayerView;
-    ImageButton btnLevelScoreUp, btnLevelScoreDown, btnStrengthScoreUp, btnStrengthScoreDown;
-    MunchkinTextView tvPlayerName, tvLevelScore, tvStrengthScore;
+    @BindView(R.id.btn_level_score_up) ImageButton btnLevelScoreUp;
+    @BindView(R.id.btn_level_score_down) ImageButton btnLevelScoreDown;
+    @BindView(R.id.btn_strength_score_up) ImageButton btnStrengthScoreUp;
+    @BindView(R.id.btn_strength_score_down) ImageButton btnStrengthScoreDown;
+    @BindView(R.id.tv_player_name) MunchkinTextView tvPlayerName;
+    @BindView(R.id.tv_level_score) MunchkinTextView tvLevelScore;
+    @BindView(R.id.tv_strength_score) MunchkinTextView tvStrengthScore;
     PlayerFragmentCallback callback;
 
     public interface PlayerFragmentCallback {
@@ -50,13 +50,7 @@ public class PlayerFragment extends Fragment implements PlayerView, View.OnClick
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         currentPlayerView = inflater.inflate(R.layout.fragment_player, container, false);
-        tvPlayerName = (MunchkinTextView) currentPlayerView.findViewById(R.id.tv_player_name);
-        tvLevelScore = (MunchkinTextView) currentPlayerView.findViewById(R.id.tv_level_score);
-        tvStrengthScore = (MunchkinTextView) currentPlayerView.findViewById(R.id.tv_strength_score);
-        btnLevelScoreUp = (ImageButton) currentPlayerView.findViewById(R.id.btn_level_score_up);
-        btnLevelScoreDown = (ImageButton) currentPlayerView.findViewById(R.id.btn_level_score_down);
-        btnStrengthScoreUp = (ImageButton) currentPlayerView.findViewById(R.id.btn_strength_score_up);
-        btnStrengthScoreDown = (ImageButton) currentPlayerView.findViewById(R.id.btn_strength_score_down);
+        ButterKnife.bind(this, currentPlayerView);
         btnLevelScoreUp.setOnClickListener(this);
         btnLevelScoreDown.setOnClickListener(this);
         btnStrengthScoreUp.setOnClickListener(this);

@@ -1,13 +1,12 @@
 package com.datarockets.mnchkn.activities.dashboard;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -21,16 +20,20 @@ import com.datarockets.mnchkn.utils.LogUtil;
 
 import java.util.List;
 
-public class DashboardActivity extends BaseActivity implements DashboardView,
-        View.OnClickListener, AdapterView.OnItemClickListener, PlayerFragment.PlayerFragmentCallback {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnItemClick;
+
+public class DashboardActivity extends BaseActivity implements DashboardView, PlayerFragment.PlayerFragmentCallback {
 
     public static final String TAG = LogUtil.makeLogTag(DashboardActivity.class);
 
     DashboardPresenter presenter;
-    Toolbar toolbar;
-    ListView lvPlayerList;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.lv_player_list) ListView lvPlayerList;
     PlayerListAdapter lvPlayerListAdapter;
-    Button btnNextStep;
+    @BindView(R.id.btn_next_step) Button btnNextStep;
     PlayerFragment playerFragment;
 
     @Override
@@ -38,19 +41,15 @@ public class DashboardActivity extends BaseActivity implements DashboardView,
         super.onCreate(savedInstanceState);
         presenter = new DashboardPresenterImpl(this, this);
         setContentView(R.layout.activity_dashboard);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        btnNextStep = (Button) findViewById(R.id.btn_next_step);
-        btnNextStep.setOnClickListener(this);
-        lvPlayerList = (ListView) findViewById(R.id.lv_player_list);
-        lvPlayerList.setOnItemClickListener(this);
         playerFragment = (PlayerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_player);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        super.trackWithProperties("Current activity", "Activity name", TAG);
+        trackWithProperties("Current activity", "Activity name", TAG);
         presenter.onResume();
     }
 
@@ -100,11 +99,17 @@ public class DashboardActivity extends BaseActivity implements DashboardView,
         AlertDialog.Builder confirmFinishGameDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_finish_game_title)
                 .setMessage(R.string.dialog_finish_game_message)
-                .setPositiveButton(R.string.button_yes, (dialog, which) -> {
-                    finishGame();
+                .setPositiveButton(R.string.button_yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finishGame();
+                    }
                 })
-                .setNegativeButton(R.string.button_no, (dialog, which) -> {
-                    dialog.dismiss();
+                .setNegativeButton(R.string.button_no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
                 });
         confirmFinishGameDialog.create().show();
     }
@@ -118,27 +123,21 @@ public class DashboardActivity extends BaseActivity implements DashboardView,
         lvPlayerListAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_next_step:
-                int position = lvPlayerList.getCheckedItemPosition();
-                if (position == lvPlayerList.getCount() - 1) {
-                    lvPlayerList.setItemChecked(0, true);
-                    lvPlayerList.setSelection(0);
-                    position = 0;
-                } else {
-                    position++;
-                    lvPlayerList.setItemChecked(position, true);
-                    lvPlayerList.setSelection(position);
-                }
-                playerFragment.loadPlayerScores(lvPlayerListAdapter.getItem(position), position);
-                break;
+    @OnClick(R.id.btn_next_step) void nextStep() {
+        int position = lvPlayerList.getCheckedItemPosition();
+        if (position == lvPlayerList.getCount() - 1) {
+            lvPlayerList.setItemChecked(0, true);
+            lvPlayerList.setSelection(0);
+            position = 0;
+        } else {
+            position++;
+            lvPlayerList.setItemChecked(position, true);
+            lvPlayerList.setSelection(position);
         }
+        playerFragment.loadPlayerScores(lvPlayerListAdapter.getItem(position), position);
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    @OnItemClick(R.id.lv_player_list) void onItemClick(int position) {
         lvPlayerList.setItemChecked(position, true);
         playerFragment.loadPlayerScores(lvPlayerListAdapter.getItem(position), position);
     }
