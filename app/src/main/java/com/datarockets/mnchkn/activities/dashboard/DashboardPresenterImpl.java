@@ -5,7 +5,6 @@ import android.content.Context;
 import com.datarockets.mnchkn.models.Player;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DashboardPresenterImpl implements DashboardPresenter, DashboardInteractor.OnLoadPlayerListener {
 
@@ -17,13 +16,6 @@ public class DashboardPresenterImpl implements DashboardPresenter, DashboardInte
         this.dashboardView = dashboardView;
         this.context = context;
         this.interactor = new DashboardInteractorImpl(context);
-    }
-
-    @Override
-    public void clearPlayersStats() {
-        if (dashboardView != null) {
-            interactor.clearPlayersStats();
-        }
     }
 
     @Override
@@ -65,6 +57,13 @@ public class DashboardPresenterImpl implements DashboardPresenter, DashboardInte
     public void setGameFinished() {
         if (dashboardView != null) {
             interactor.setGameFinished();
+        }
+    }
+
+    @Override
+    public void insertStep(Player player) {
+        if (dashboardView != null) {
+            interactor.insertStep(player);
         }
     }
 

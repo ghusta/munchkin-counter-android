@@ -20,10 +20,13 @@
     <string name="dialog.player_delete.message">Do you want to delete this player?</string>
     <string name="dialog.start_continue_game.title">Continue or start?</string>
     <string name="dialog.start_continue_game.message">Would you like to continue or start a new game?</string>
+    <string name="progress_dialog.stats_loader.title">Loading</string>
+    <string name="progress_dialog.stats_loader.message">Wait while we are loading your stats</string>
     <string name="text.player_add_warning">Please, add two or more players and press Start icon</string>
     <string name="text.player_name">Player Name</string>
     <string name="text.level">Level</string>
     <string name="text.strength">Strength</string>
+    <string name="text.steps">Steps</string>
     <string name="settings.max_level">Maximum level</string>
     <string name="tab.level">Level</string>
     <string name="tab.strength">Strength</string>

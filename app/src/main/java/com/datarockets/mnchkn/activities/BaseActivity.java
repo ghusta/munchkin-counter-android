@@ -21,32 +21,17 @@ public class BaseActivity extends AppCompatActivity {
         mixpanel = application.getMixpanel();
     }
 
-    public void trackCurrentActivity(String activityName) {
+    public void trackWithProperties(String title, String propertyName, String propertyData) {
         JSONObject props = new JSONObject();
         try {
-            props.put("Activity name", activityName);
+            props.put(propertyName, propertyData);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        mixpanel.track("Current Activity", props);
+        mixpanel.track(title, props);
     }
 
-    public void trackUserTap(String category, String action) {
-        JSONObject props = new JSONObject();
-        try {
-            props.put("Category", category);
-            props.put("Action", action);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        mixpanel.track("User tap", props);
-    }
-
-    public void startTrackTimeEvent(String eventName) {
-        mixpanel.timeEvent(eventName);
-    }
-
-    public void stopTrackTimeEvent(String eventName) {
+    public void trackWithoutProperties(String eventName) {
         mixpanel.track(eventName);
     }
 

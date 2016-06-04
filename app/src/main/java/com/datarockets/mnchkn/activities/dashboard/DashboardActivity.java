@@ -13,13 +13,13 @@ import android.widget.ListView;
 
 import com.datarockets.mnchkn.R;
 import com.datarockets.mnchkn.activities.BaseActivity;
-import com.datarockets.mnchkn.activities.players.PlayersListActivity;
+import com.datarockets.mnchkn.activities.result.GameResultActivity;
 import com.datarockets.mnchkn.adapters.PlayerListAdapter;
 import com.datarockets.mnchkn.fragments.players.PlayerFragment;
 import com.datarockets.mnchkn.models.Player;
 import com.datarockets.mnchkn.utils.LogUtil;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class DashboardActivity extends BaseActivity implements DashboardView,
         View.OnClickListener, AdapterView.OnItemClickListener, PlayerFragment.PlayerFragmentCallback {
@@ -50,6 +50,7 @@ public class DashboardActivity extends BaseActivity implements DashboardView,
     @Override
     protected void onResume() {
         super.onResume();
+        super.trackWithProperties("Current activity", "Activity name", TAG);
         presenter.onResume();
     }
 
@@ -80,13 +81,13 @@ public class DashboardActivity extends BaseActivity implements DashboardView,
     @Override
     public void finishGame() {
         presenter.setGameFinished();
-        Intent intent = new Intent(this, PlayersListActivity.class);
+        Intent intent = new Intent(this, GameResultActivity.class);
         startActivity(intent);
         finish();
     }
 
     @Override
-    public void setItems(ArrayList<Player> players) {
+    public void setItems(List<Player> players) {
         lvPlayerListAdapter = new PlayerListAdapter(this, players);
         lvPlayerList.setAdapter(lvPlayerListAdapter);
         lvPlayerList.setSelection(0);
@@ -101,7 +102,6 @@ public class DashboardActivity extends BaseActivity implements DashboardView,
                 .setMessage(R.string.dialog_finish_game_message)
                 .setPositiveButton(R.string.button_yes, (dialog, which) -> {
                     finishGame();
-                    presenter.clearPlayersStats();
                 })
                 .setNegativeButton(R.string.button_no, (dialog, which) -> {
                     dialog.dismiss();
@@ -146,6 +146,7 @@ public class DashboardActivity extends BaseActivity implements DashboardView,
     @Override
     public void onScoreChanged(Player player, int index) {
         presenter.updatePlayerListItem(player, index);
+        presenter.insertStep(player);
     }
 
 }

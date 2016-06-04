@@ -3,22 +3,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/list_item_height"
+    android:layout_height="@dimen/list_item_with_avatar_height"
     android:paddingLeft="@dimen/list_item_side_padding"
     android:paddingRight="@dimen/list_item_side_padding"
-    android:gravity="center_vertical">
+    android:minHeight="@dimen/list_item_with_avatar_height">
 
     <ImageView
         android:id="@+id/iv_player_color"
-        android:background="?attr/colorPrimary"
-        android:layout_width="30dp"
-        android:layout_height="30dp" />
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="fitXY"
+        android:layout_gravity="center_vertical"/>
 
     <TextView
         android:id="@+id/tv_player_name"
-        android:paddingLeft="@dimen/list_item_side_padding"
+        android:layout_marginLeft="@dimen/list_item_side_padding"
         android:text="Player Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:layout_gravity="center_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -26,6 +28,7 @@
         android:id="@+id/tv_player_score"
         android:text="0"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:layout_gravity="center_vertical"
         android:gravity="end"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

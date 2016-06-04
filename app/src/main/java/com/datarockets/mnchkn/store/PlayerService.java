@@ -3,7 +3,6 @@ package com.datarockets.mnchkn.store;
 import com.datarockets.mnchkn.models.Player;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public interface PlayerService {
     /**
@@ -37,6 +36,13 @@ public interface PlayerService {
      */
     void clearPlayersStats();
 
-    List<Player> getPlayersList();
+    ArrayList<Player> getPlayersList();
+    /**
+     * An action to get players by id, score, strength or total sum of scores
+     *
+     * @param orderValue - type of data to sort
+     * @return players list
+     */
+    ArrayList<Player> getPlayersList(int orderValue);
 
 }

@@ -15,13 +15,12 @@ import android.widget.Toast;
 import com.datarockets.mnchkn.R;
 import com.datarockets.mnchkn.activities.BaseActivity;
 import com.datarockets.mnchkn.activities.dashboard.DashboardActivity;
-import com.datarockets.mnchkn.activities.settings.SettingsActivity;
 import com.datarockets.mnchkn.adapters.PlayerEditorListAdapter;
 import com.datarockets.mnchkn.fragments.dialogs.AddNewPlayerFragment;
 import com.datarockets.mnchkn.models.Player;
 import com.datarockets.mnchkn.utils.LogUtil;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static android.widget.Toast.makeText;
 
@@ -53,6 +52,7 @@ public class PlayersListActivity extends BaseActivity implements PlayersListView
     @Override
     protected void onResume() {
         super.onResume();
+        super.trackWithProperties("Current activity", "Activity name", TAG);
         presenter.onResume();
     }
 
@@ -86,7 +86,7 @@ public class PlayersListActivity extends BaseActivity implements PlayersListView
     }
 
     @Override
-    public void setPlayersList(ArrayList<Player> players) {
+    public void setPlayersList(List<Player> players) {
         lvPlayerEditorListAdapter = new PlayerEditorListAdapter(this, players);
         lvPlayersList.setAdapter(lvPlayerEditorListAdapter);
     }
@@ -144,6 +144,7 @@ public class PlayersListActivity extends BaseActivity implements PlayersListView
                     dialog.dismiss();
                     presenter.setGameFinished();
                     presenter.clearPlayersStats();
+                    presenter.clearGameSteps();
                 })
                 .setCancelable(false)
                 .create();
@@ -161,17 +162,10 @@ public class PlayersListActivity extends BaseActivity implements PlayersListView
             case R.id.item_start_game:
                 presenter.checkIsEnoughPlayers();
                 break;
-            case R.id.item_settings:
-                launchSettings();
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void launchSettings() {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
     }
 
     @Override

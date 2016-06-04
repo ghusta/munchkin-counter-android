@@ -1,9 +1,6 @@
 package com.datarockets.mnchkn.activities.players;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.datarockets.mnchkn.store.GameServiceImpl;
 import com.datarockets.mnchkn.store.PlayerServiceImpl;
@@ -37,7 +34,6 @@ public class PlayersListInteractorImpl implements PlayersListInteractor {
         listener.onPlayersCountChecked(playerService.getPlayersList().size() >= 2);
     }
 
-
     @Override
     public void getPlayers(OnFinishedListener listener) {
         listener.onPlayersLoaded(playerService.getPlayersList());
@@ -53,11 +49,14 @@ public class PlayersListInteractorImpl implements PlayersListInteractor {
         listener.onPlayerDeleted(playerService.deletePlayer(position, id));
     }
 
-
-
     @Override
     public void setGameStatus(boolean started) {
         gameService.setGameStatus(started);
+    }
+
+    @Override
+    public void clearGameSteps() {
+        gameService.clearSteps();
     }
 
 }

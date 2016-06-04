@@ -27,9 +27,16 @@ public class DashboardInteractorImpl implements DashboardInteractor {
     }
 
     @Override
+    public void insertStep(Player player) {
+        gameService.insertStep(player);
+    }
+
+    @Override
     public void clearPlayersStats() {
         playerService.clearPlayersStats();
     }
+
+
 
     @Override
     public void setGameFinished() {

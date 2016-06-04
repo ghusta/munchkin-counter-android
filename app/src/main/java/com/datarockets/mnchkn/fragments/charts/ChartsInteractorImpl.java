@@ -3,23 +3,28 @@ package com.datarockets.mnchkn.fragments.charts;
 import android.content.Context;
 
 import com.datarockets.mnchkn.store.GameServiceImpl;
+import com.datarockets.mnchkn.store.PlayerServiceImpl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import lecho.lib.hellocharts.model.Line;
+import lecho.lib.hellocharts.model.LineChartData;
 
 public class ChartsInteractorImpl implements ChartsInteractor {
 
     private GameServiceImpl gameService;
+    private PlayerServiceImpl playerService;
 
     public ChartsInteractorImpl(Context context) {
-        gameService = GameServiceImpl.getInstance(context.getApplicationContext());
+        gameService = GameServiceImpl.getInstance(context);
+        playerService = PlayerServiceImpl.getInstance(context);
     }
 
     @Override
-    public List<Line> loadChartData(int type, OnChartLoadedListener listener) {
-        return new ArrayList<Line>();
+    public LineChartData loadLineChartData(int type) {
+        return gameService.createScoresChartData(type, gameService.getScoresChartData());
+    }
+
+    @Override
+    public void loadPlayers(int type, OnChartLoadedListener listener) {
+        listener.showPlayers(playerService.getPlayersList(type));
     }
 
 }

@@ -40,7 +40,7 @@ public class OnboardActivity extends OnboarderActivity implements OnboardView {
 
     @Override
     public void onSkipButtonPressed() {
-
+        super.onSkipButtonPressed();
     }
 
     @Override

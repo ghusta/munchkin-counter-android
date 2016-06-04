@@ -10,13 +10,13 @@ import android.widget.TextView;
 import com.datarockets.mnchkn.R;
 import com.datarockets.mnchkn.models.Player;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerListAdapter extends ArrayAdapter<Player>{
 
-    ArrayList<Player> players;
+    List<Player> players;
 
-    public PlayerListAdapter(Context context, ArrayList<Player> players) {
+    public PlayerListAdapter(Context context, List<Player> players) {
         super(context, 0, players);
         this.players = players;
     }

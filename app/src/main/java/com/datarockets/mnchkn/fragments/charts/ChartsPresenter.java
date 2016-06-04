@@ -1,7 +1,9 @@
 package com.datarockets.mnchkn.fragments.charts;
 
+import lecho.lib.hellocharts.model.LineChartData;
+
 public interface ChartsPresenter {
-    void loadChartData(int type);
-    void onViewCreated();
+    void loadPlayersList(int type);
+    LineChartData loadChartData(int type);
     void onDestroy();
 }

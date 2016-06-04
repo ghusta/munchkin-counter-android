@@ -5,8 +5,4 @@
         app:showAsAction="ifRoom|withText"
         android:id="@+id/item_start_game"
         android:title="@string/button.start"/>
-    <item
-        android:id="@+id/item_settings"
-        app:showAsAction="collapseActionView"
-        android:title="@string/menu.settings"/>
 </menu>
