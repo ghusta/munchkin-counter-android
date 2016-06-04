@@ -2,7 +2,8 @@ package com.datarockets.mnchkn.activities.onboard;
 
 import android.content.Context;
 
-public class OnboardPresenterImpl implements OnboardPresenter, OnboardInteractorImpl.OnFinishedChecking {
+public class OnboardPresenterImpl implements OnboardPresenter,
+        OnboardInteractorImpl.OnFinishedChecking {
 
     OnboardView onboardView;
     OnboardInteractorImpl interactor;

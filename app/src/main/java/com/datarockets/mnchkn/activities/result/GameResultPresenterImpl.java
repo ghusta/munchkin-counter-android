@@ -2,7 +2,8 @@ package com.datarockets.mnchkn.activities.result;
 
 import android.content.Context;
 
-public class GameResultPresenterImpl implements GameResultPresenter, GameResultInteractorImpl.OnResultsLoaded {
+public class GameResultPresenterImpl implements GameResultPresenter,
+        GameResultInteractorImpl.OnResultsLoaded {
 
     GameResultView gameResultView;
     GameResultInteractorImpl interactor;

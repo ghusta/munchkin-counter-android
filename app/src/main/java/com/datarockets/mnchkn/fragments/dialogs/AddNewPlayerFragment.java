@@ -19,10 +19,10 @@ import butterknife.OnEditorAction;
 
 public class AddNewPlayerFragment extends BottomSheetDialogFragment {
 
-    private View addNewPlayerView;
+    private View mAddNewPlayerView;
     @BindView(R.id.et_player_name) EditText etPlayerName;
     @BindView(R.id.btn_add_new_player) Button btnAddNewPlayer;
-    private AddNewPlayerDialogInterface listener;
+    private AddNewPlayerDialogInterface mListener;
 
     public interface AddNewPlayerDialogInterface {
         void onFinishEditDialog(String inputName);
@@ -31,14 +31,14 @@ public class AddNewPlayerFragment extends BottomSheetDialogFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        listener = (AddNewPlayerDialogInterface) getActivity();
+        mListener = (AddNewPlayerDialogInterface) getActivity();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        addNewPlayerView = inflater.inflate(R.layout.fragment_add_player, container);
-        ButterKnife.bind(this, addNewPlayerView);
-        return addNewPlayerView;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
+        mAddNewPlayerView = inflater.inflate(R.layout.fragment_add_player, container);
+        ButterKnife.bind(this, mAddNewPlayerView);
+        return mAddNewPlayerView;
     }
 
     @OnClick(R.id.btn_add_new_player)
@@ -58,7 +58,7 @@ public class AddNewPlayerFragment extends BottomSheetDialogFragment {
     private void passNameToActivity() {
         String name = etPlayerName.getText().toString();
         if (!name.isEmpty()) {
-            listener.onFinishEditDialog(name);
+            mListener.onFinishEditDialog(name);
             dismiss();
         }
     }

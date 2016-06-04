@@ -8,39 +8,39 @@ import com.datarockets.mnchkn.store.PlayerServiceImpl;
 
 public class DashboardInteractorImpl implements DashboardInteractor {
 
-    private PlayerServiceImpl playerService;
-    private GameServiceImpl gameService;
+    private PlayerServiceImpl mPlayerService;
+    private GameServiceImpl mGameService;
 
     public DashboardInteractorImpl(Context context) {
-        playerService = PlayerServiceImpl.getInstance(context);
-        gameService = GameServiceImpl.getInstance(context);
+        mPlayerService = PlayerServiceImpl.getInstance(context);
+        mGameService = GameServiceImpl.getInstance(context);
     }
 
     @Override
     public void loadPlayersList(OnLoadPlayerListener listener) {
-        listener.onFinished(playerService.getPlayersList());
+        listener.onFinished(mPlayerService.getPlayersList());
     }
 
     @Override
     public void updatePlayer(Player player, int position, OnLoadPlayerListener listener) {
-        listener.onPlayerUpdated(playerService.updatePlayer(player), position);
+        listener.onPlayerUpdated(mPlayerService.updatePlayer(player), position);
     }
 
     @Override
     public void insertStep(Player player) {
-        gameService.insertStep(player);
+        mGameService.insertStep(player);
     }
 
     @Override
     public void clearPlayersStats() {
-        playerService.clearPlayersStats();
+        mPlayerService.clearPlayersStats();
     }
 
 
 
     @Override
     public void setGameFinished() {
-        gameService.setGameStatus(false);
+        mGameService.setGameStatus(false);
     }
 
 

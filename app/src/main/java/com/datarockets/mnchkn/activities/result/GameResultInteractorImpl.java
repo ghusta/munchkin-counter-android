@@ -7,28 +7,28 @@ import com.datarockets.mnchkn.store.PlayerServiceImpl;
 
 public class GameResultInteractorImpl implements GameResultInteractor {
 
-    private GameServiceImpl gameService;
-    private PlayerServiceImpl playerService;
+    private GameServiceImpl mGameService;
+    private PlayerServiceImpl mPlayerService;
 
     public GameResultInteractorImpl(Context context) {
-        gameService = GameServiceImpl.getInstance(context.getApplicationContext());
-        playerService = PlayerServiceImpl.getInstance(context.getApplicationContext());
+        mGameService = GameServiceImpl.getInstance(context.getApplicationContext());
+        mPlayerService = PlayerServiceImpl.getInstance(context.getApplicationContext());
     }
 
     @Override
     public void loadGameResults(OnResultsLoaded listener) {
-        gameService.createPlayerIdGameStepsMap();
+        mGameService.createPlayerIdGameStepsMap();
         listener.notifyChartDataPrepared();
     }
 
     @Override
     public void clearSteps() {
-        gameService.clearSteps();
+        mGameService.clearSteps();
     }
 
     @Override
     public void clearPlayerStats() {
-        playerService.clearPlayersStats();
+        mPlayerService.clearPlayersStats();
     }
 
 }

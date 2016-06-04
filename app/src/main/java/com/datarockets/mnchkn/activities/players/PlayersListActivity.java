@@ -112,7 +112,8 @@ public class PlayersListActivity extends BaseActivity implements PlayersListView
                 .setPositiveButton(R.string.button_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        presenter.deletePlayerListItem(position, lvPlayerEditorListAdapter.getItem(position).getId());
+                        presenter.deletePlayerListItem(position,
+                                lvPlayerEditorListAdapter.getItem(position).getId());
                     }
                 })
                 .setNegativeButton(R.string.button_no, new DialogInterface.OnClickListener() {

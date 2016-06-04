@@ -15,12 +15,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PlayerListAdapter extends ArrayAdapter<Player>{
+public class PlayerListAdapter extends ArrayAdapter<Player> {
 
     List<Player> players;
+    Context context;
 
     public PlayerListAdapter(Context context, List<Player> players) {
         super(context, 0, players);
+        this.context = context;
         this.players = players;
     }
 
@@ -37,7 +39,8 @@ public class PlayerListAdapter extends ArrayAdapter<Player>{
         if (convertView != null) {
             holder = (ViewHolder) convertView.getTag();
         } else {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.player_list_item, parent, false);
+            convertView = LayoutInflater.from(context)
+                    .inflate(R.layout.player_list_item, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         }

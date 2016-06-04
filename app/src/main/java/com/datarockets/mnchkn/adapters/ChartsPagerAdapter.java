@@ -10,12 +10,17 @@ import com.datarockets.mnchkn.fragments.charts.ChartsFragment;
 
 public class ChartsPagerAdapter extends FragmentStatePagerAdapter {
 
-    private int titles[] = new int[] { R.string.tab_level, R.string.tab_strength, R.string.tab_summary };
-    private Context context;
+    private int[] mTitles = new int[] {
+            R.string.tab_level,
+            R.string.tab_strength,
+            R.string.tab_summary
+    };
+
+    private Context mContext;
 
     public ChartsPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
-        this.context = context;
+        this.mContext = context;
     }
 
     @Override
@@ -25,11 +30,11 @@ public class ChartsPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return titles.length;
+        return mTitles.length;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return context.getResources().getString(titles[position]);
+        return mContext.getResources().getString(mTitles[position]);
     }
 }

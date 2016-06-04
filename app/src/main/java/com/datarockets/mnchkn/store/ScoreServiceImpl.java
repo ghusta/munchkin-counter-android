@@ -1,6 +1,6 @@
 package com.datarockets.mnchkn.store;
 
-public class ScoreServiceImpl implements ScoreService{
+public class ScoreServiceImpl implements ScoreService {
     private static ScoreServiceImpl instance;
 
     private ScoreServiceImpl() {}

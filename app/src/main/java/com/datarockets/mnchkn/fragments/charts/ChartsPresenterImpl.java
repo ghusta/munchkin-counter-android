@@ -8,7 +8,8 @@ import java.util.ArrayList;
 
 import lecho.lib.hellocharts.model.LineChartData;
 
-public class ChartsPresenterImpl implements ChartsPresenter, ChartsInteractor.OnChartLoadedListener {
+public class ChartsPresenterImpl implements ChartsPresenter,
+        ChartsInteractor.OnChartLoadedListener {
 
     ChartsView chartsView;
     ChartsInteractorImpl interactor;

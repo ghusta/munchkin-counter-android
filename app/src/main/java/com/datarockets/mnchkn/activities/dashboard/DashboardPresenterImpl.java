@@ -6,7 +6,8 @@ import com.datarockets.mnchkn.models.Player;
 
 import java.util.ArrayList;
 
-public class DashboardPresenterImpl implements DashboardPresenter, DashboardInteractor.OnLoadPlayerListener {
+public class DashboardPresenterImpl implements DashboardPresenter,
+        DashboardInteractor.OnLoadPlayerListener {
 
     DashboardView dashboardView;
     DashboardInteractor interactor;

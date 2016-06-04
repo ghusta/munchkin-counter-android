@@ -22,14 +22,14 @@ public class GameServiceImpl implements GameService {
 
     private static final String IS_GAME_STARTED = "is_game_started";
 
-    private MunchkinDatabaseHelper database;
-    private SharedPreferences preferences;
-    private SharedPreferences.Editor preferencesEditor;
-    private Map<Player, List<GameStep>> gameStepsMap;
+    private MunchkinDatabaseHelper mDatabase;
+    private SharedPreferences mPreferences;
+    private SharedPreferences.Editor mPreferencesEditor;
+    private Map<Player, List<GameStep>> mGameStepsMap;
 
     private GameServiceImpl(Context context) {
-        database = MunchkinDatabaseHelper.getInstance(context);
-        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        mDatabase = MunchkinDatabaseHelper.getInstance(context);
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public static GameServiceImpl getInstance(Context context) {
@@ -45,13 +45,13 @@ public class GameServiceImpl implements GameService {
         gameStep.setPlayerId(player.getId());
         gameStep.setPlayerLevel(player.getLevelScore());
         gameStep.setPlayerStrength(player.getStrengthScore());
-        database.insertStep(gameStep);
+        mDatabase.insertStep(gameStep);
     }
 
     @Override
     public void createPlayerIdGameStepsMap() {
-        List<Player> playersList = database.getPlayers();
-        List<GameStep> gameSteps = database.getGameSteps();
+        List<Player> playersList = mDatabase.getPlayers();
+        List<GameStep> gameSteps = mDatabase.getGameSteps();
 
         Map<Player, List<GameStep>> playerGameStepsMap = new HashMap<>();
         for (Player player : playersList) {
@@ -63,37 +63,41 @@ public class GameServiceImpl implements GameService {
             }
             playerGameStepsMap.put(player, playerSteps);
         }
-        gameStepsMap = playerGameStepsMap;
+        mGameStepsMap = playerGameStepsMap;
     }
 
     @Override
     public Map<Player, List<GameStep>> getScoresChartData() {
-        return gameStepsMap;
+        return mGameStepsMap;
     }
 
     @Override
-    public LineChartData createScoresChartData(int type, Map<Player, List<GameStep>> playerGameStepsMap) {
+    public LineChartData createScoresChartData(int type, Map<Player, List<GameStep>> gameStepsMap) {
         List<Line> playersLines = new ArrayList<>();
         List<String> playerColors = new ArrayList<>();
         LineChartData lineChartData;
 
-        for (Player player : playerGameStepsMap.keySet()) {
+        for (Player player : gameStepsMap.keySet()) {
             String color = player.getColor();
             playerColors.add(color);
         }
 
-        for (List<GameStep> gameSteps : playerGameStepsMap.values()) {
+        for (List<GameStep> gameSteps : gameStepsMap.values()) {
             List<PointValue> pointValues = new ArrayList<>();
             for (int i = 0; i < gameSteps.size(); i++) {
                 switch (type) {
                     case 0:
-                        pointValues.add(new PointValue(i, gameSteps.get(i).getPlayerLevel()));
+                        int playerLevel = gameSteps.get(i).getPlayerLevel();
+                        pointValues.add(new PointValue(i, playerLevel));
                         break;
                     case 1:
-                        pointValues.add(new PointValue(i, gameSteps.get(i).getPlayerStrength()));
+                        int playerStrength = gameSteps.get(i).getPlayerStrength();
+                        pointValues.add(new PointValue(i, playerStrength));
                         break;
                     case 2:
-                        pointValues.add(new PointValue(i, gameSteps.get(i).getPlayerLevel() + gameSteps.get(i).getPlayerStrength()));
+                        int playerTotal = gameSteps.get(i).getPlayerLevel() +
+                                gameSteps.get(i).getPlayerStrength();
+                        pointValues.add(new PointValue(i, playerTotal));
                         break;
                 }
             }
@@ -115,17 +119,17 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public void clearSteps() {
-        database.clearSteps();
+        mDatabase.clearSteps();
     }
 
     public void setGameStatus(boolean status) {
-        preferencesEditor = preferences.edit();
-        preferencesEditor.putBoolean(IS_GAME_STARTED, status);
-        preferencesEditor.apply();
+        mPreferencesEditor = mPreferences.edit();
+        mPreferencesEditor.putBoolean(IS_GAME_STARTED, status);
+        mPreferencesEditor.apply();
     }
 
     public boolean getGameStatus() {
-        return preferences.getBoolean(IS_GAME_STARTED, false);
+        return mPreferences.getBoolean(IS_GAME_STARTED, false);
     }
 
 }

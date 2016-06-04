@@ -2,8 +2,6 @@ package com.datarockets.mnchkn.fragments.dialogs;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -16,9 +14,8 @@ import com.datarockets.mnchkn.R;
 
 public class GameInfoFragment extends DialogFragment {
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         View gameInfoView = inflater.inflate(R.layout.fragment_game_info, container, false);
         Toolbar toolbar = (Toolbar) gameInfoView.findViewById(R.id.toolbar);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -32,7 +29,6 @@ public class GameInfoFragment extends DialogFragment {
         return gameInfoView;
     }
 
-    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);

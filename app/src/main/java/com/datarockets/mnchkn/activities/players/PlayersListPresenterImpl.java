@@ -6,125 +6,126 @@ import com.datarockets.mnchkn.models.Player;
 
 import java.util.List;
 
-public class PlayersListPresenterImpl implements PlayersListPresenter, PlayersListInteractor.OnFinishedListener {
+public class PlayersListPresenterImpl implements PlayersListPresenter,
+        PlayersListInteractor.OnFinishedListener {
 
-    private PlayersListView playersListView;
-    private PlayersListInteractorImpl interactor;
-    private Context context;
+    private PlayersListView mPlayersListView;
+    private PlayersListInteractorImpl mInteractor;
+    private Context mContext;
 
     public PlayersListPresenterImpl(PlayersListView playersListView, Context context) {
-        this.context = context;
-        this.playersListView = playersListView;
-        this.interactor = new PlayersListInteractorImpl(context);
+        this.mContext = context;
+        this.mPlayersListView = playersListView;
+        this.mInteractor = new PlayersListInteractorImpl(context);
     }
 
     @Override
     public void checkIsEnoughPlayers() {
-        if (playersListView != null) {
-            interactor.checkIsEnoughPlayer(this);
+        if (mPlayersListView != null) {
+            mInteractor.checkIsEnoughPlayer(this);
         }
     }
 
     @Override
     public void addPlayer(String name) {
-        if (playersListView != null) {
-            interactor.addPlayer(name, this);
+        if (mPlayersListView != null) {
+            mInteractor.addPlayer(name, this);
         }
     }
 
     @Override
     public void deletePlayerListItem(int position, long id) {
-        if (playersListView != null) {
-            interactor.deletePlayer(position, id, this);
+        if (mPlayersListView != null) {
+            mInteractor.deletePlayer(position, id, this);
         }
     }
 
     @Override
     public void clearPlayersStats() {
-        if (playersListView != null) {
-            interactor.clearPlayersStats(this);
+        if (mPlayersListView != null) {
+            mInteractor.clearPlayersStats(this);
         }
     }
 
     @Override
     public void clearGameSteps() {
-        if (playersListView != null) {
-            interactor.clearGameSteps();
+        if (mPlayersListView != null) {
+            mInteractor.clearGameSteps();
         }
     }
 
     @Override
     public void setGameStarted() {
-        if (playersListView != null) {
-            interactor.setGameStatus(true);
+        if (mPlayersListView != null) {
+            mInteractor.setGameStatus(true);
         }
     }
 
     @Override
     public void setGameFinished() {
-        if (playersListView != null) {
-            interactor.setGameStatus(false);
+        if (mPlayersListView != null) {
+            mInteractor.setGameStatus(false);
         }
     }
 
     @Override
     public void onCreate() {
-        if (playersListView != null) {
-            interactor.isGameStarted(context, this);
+        if (mPlayersListView != null) {
+            mInteractor.isGameStarted(mContext, this);
         }
     }
 
     @Override
     public void onResume() {
-        if (playersListView != null) {
-            interactor.getPlayers(this);
+        if (mPlayersListView != null) {
+            mInteractor.getPlayers(this);
         }
     }
 
     @Override
     public void onDestroy() {
-        if (playersListView != null) {
-            playersListView = null;
+        if (mPlayersListView != null) {
+            mPlayersListView = null;
         }
     }
 
     @Override
     public void onPlayersLoaded(List<Player> players) {
-        if (playersListView != null) {
-            playersListView.setPlayersList(players);
+        if (mPlayersListView != null) {
+            mPlayersListView.setPlayersList(players);
         }
     }
 
     @Override
     public void onPlayerAdded(Player player) {
-        if (playersListView != null) {
-            playersListView.addPlayerToList(player);
+        if (mPlayersListView != null) {
+            mPlayersListView.addPlayerToList(player);
         }
     }
 
     @Override
     public void onPlayerDeleted(int position) {
-        if (playersListView != null) {
-            playersListView.deletePlayerFromList(position);
+        if (mPlayersListView != null) {
+            mPlayersListView.deletePlayerFromList(position);
         }
     }
 
     @Override
     public void onPlayersCountChecked(boolean enough) {
-        if (playersListView != null) {
+        if (mPlayersListView != null) {
             if (enough) {
-                playersListView.launchDashboard();
+                mPlayersListView.launchDashboard();
             } else {
-                playersListView.showWarning();
+                mPlayersListView.showWarning();
             }
         }
     }
 
     @Override
     public void onGameStarted(boolean started) {
-        if (playersListView != null) {
+        if (mPlayersListView != null) {
             if (started) {
-                playersListView.showStartContinueDialog();
+                mPlayersListView.showStartContinueDialog();
             }
         }
     }

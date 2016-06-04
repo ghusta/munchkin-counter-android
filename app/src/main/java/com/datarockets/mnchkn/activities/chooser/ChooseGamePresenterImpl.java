@@ -1,25 +1,23 @@
 package com.datarockets.mnchkn.activities.chooser;
 
-public class ChooseGamePresenterImpl implements ChooseGamePresenter{
+public class ChooseGamePresenterImpl implements ChooseGamePresenter {
 
-    private ChooseGameView chooseGameView;
-    private ChooseGameInteractorImpl interactor;
+    private ChooseGameView mChooseGameView;
+    private ChooseGameInteractorImpl mInteractor;
 
     public ChooseGamePresenterImpl(ChooseGameView chooseGameView) {
-        this.chooseGameView = chooseGameView;
-        this.interactor = new ChooseGameInteractorImpl();
+        this.mChooseGameView = chooseGameView;
+        this.mInteractor = new ChooseGameInteractorImpl();
     }
 
     @Override
     public void onResume() {
-        if (chooseGameView != null) {
-        }
     }
 
     @Override
     public void onDestroy() {
-        if (chooseGameView != null) {
-            chooseGameView = null;
+        if (mChooseGameView != null) {
+            mChooseGameView = null;
         }
     }
 

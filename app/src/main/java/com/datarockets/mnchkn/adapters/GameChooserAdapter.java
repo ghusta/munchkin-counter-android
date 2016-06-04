@@ -15,27 +15,27 @@ import java.util.List;
 
 public class GameChooserAdapter extends BaseAdapter {
 
-    private final List<String> games = new ArrayList<String>();
-    private final LayoutInflater inflater;
+    private final List<String> mGames = new ArrayList<>();
+    private final LayoutInflater mInflater;
 
     public GameChooserAdapter(Context context) {
-        inflater = LayoutInflater.from(context);
-        games.add("punchkin");
-        games.add("punchkin");
-        games.add("punchkin");
-        games.add("punchkin");
-        games.add("punchkin");
-        games.add("punchkin");
+        mInflater = LayoutInflater.from(context);
+        mGames.add("punchkin");
+        mGames.add("punchkin");
+        mGames.add("punchkin");
+        mGames.add("punchkin");
+        mGames.add("punchkin");
+        mGames.add("punchkin");
     }
 
     @Override
     public int getCount() {
-        return games.size();
+        return mGames.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return games.get(position);
+        return mGames.get(position);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class GameChooserAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView textView;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.choose_game_item, parent, false);
+            convertView = mInflater.inflate(R.layout.choose_game_item, parent, false);
         }
         textView = (TextView) convertView.findViewById(R.id.tv_game_title);
         textView.setText("Munchkin");

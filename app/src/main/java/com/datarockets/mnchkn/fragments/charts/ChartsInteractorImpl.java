@@ -9,22 +9,22 @@ import lecho.lib.hellocharts.model.LineChartData;
 
 public class ChartsInteractorImpl implements ChartsInteractor {
 
-    private GameServiceImpl gameService;
-    private PlayerServiceImpl playerService;
+    private GameServiceImpl mGameService;
+    private PlayerServiceImpl mPlayerService;
 
     public ChartsInteractorImpl(Context context) {
-        gameService = GameServiceImpl.getInstance(context);
-        playerService = PlayerServiceImpl.getInstance(context);
+        mGameService = GameServiceImpl.getInstance(context);
+        mPlayerService = PlayerServiceImpl.getInstance(context);
     }
 
     @Override
     public LineChartData loadLineChartData(int type) {
-        return gameService.createScoresChartData(type, gameService.getScoresChartData());
+        return mGameService.createScoresChartData(type, mGameService.getScoresChartData());
     }
 
     @Override
     public void loadPlayers(int type, OnChartLoadedListener listener) {
-        listener.showPlayers(playerService.getPlayersList(type));
+        listener.showPlayers(mPlayerService.getPlayersList(type));
     }
 
 }

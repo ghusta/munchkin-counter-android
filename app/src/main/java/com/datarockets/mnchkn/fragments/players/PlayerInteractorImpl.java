@@ -4,30 +4,30 @@ import com.datarockets.mnchkn.store.ScoreServiceImpl;
 
 public class PlayerInteractorImpl implements PlayerInteractor {
 
-    private ScoreServiceImpl scoreService;
+    private ScoreServiceImpl mScoreService;
 
     public PlayerInteractorImpl() {
-        this.scoreService = ScoreServiceImpl.getInstance();
+        this.mScoreService = ScoreServiceImpl.getInstance();
     }
 
     @Override
     public void increaseLevelScore(int score, OnUpdatedListener listener) {
-        listener.onUpdateLevel(scoreService.increaseScore(score));
+        listener.onUpdateLevel(mScoreService.increaseScore(score));
     }
 
     @Override
     public void decreaseLevelScore(int score, OnUpdatedListener listener) {
-        listener.onUpdateLevel(scoreService.decreaseScore(score));
+        listener.onUpdateLevel(mScoreService.decreaseScore(score));
     }
 
     @Override
     public void increaseStrengthScore(int score, OnUpdatedListener listener) {
-        listener.onUpdateStrength(scoreService.increaseScore(score));
+        listener.onUpdateStrength(mScoreService.increaseScore(score));
     }
 
     @Override
     public void decreaseStrengthScore(int score, OnUpdatedListener listener) {
-        listener.onUpdateStrength(scoreService.decreaseScore(score));
+        listener.onUpdateStrength(mScoreService.decreaseScore(score));
     }
 
 }

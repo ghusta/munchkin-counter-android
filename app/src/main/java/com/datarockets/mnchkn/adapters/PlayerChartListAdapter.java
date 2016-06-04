@@ -24,15 +24,15 @@ public class PlayerChartListAdapter extends ArrayAdapter<Player> {
     private static final int ORDER_BY_STRENGTH = 1;
     private static final int ORDER_BY_TOTAL = 2;
 
-    private ArrayList<Player> playersList;
-    private Context context;
-    private int type;
+    private ArrayList<Player> mPlayersList;
+    private Context mContext;
+    private int mType;
 
     public PlayerChartListAdapter(Context context, ArrayList<Player> playersList, int type) {
         super(context, 0, playersList);
-        this.context = context;
-        this.playersList = playersList;
-        this.type = type;
+        this.mContext = context;
+        this.mPlayersList = playersList;
+        this.mType = type;
     }
 
     @Override
@@ -44,18 +44,19 @@ public class PlayerChartListAdapter extends ArrayAdapter<Player> {
         if (convertView != null) {
             holder = (ViewHolder) convertView.getTag();
         } else {
-            convertView = LayoutInflater.from(context).inflate(R.layout.player_chart_item, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.player_chart_item, null);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         }
 
         int color = Color.parseColor(player.getColor());
         String capitalizedPlayerFirstLetter = player.getName().substring(0, 1).toUpperCase();
-        TextDrawable drawable = TextDrawable.builder().buildRound(capitalizedPlayerFirstLetter, color);
+        TextDrawable drawable = TextDrawable.builder().
+                buildRound(capitalizedPlayerFirstLetter, color);
 
         holder.ivPlayerColor.setImageDrawable(drawable);
         holder.tvPlayerName.setText(player.getName());
-        switch (type) {
+        switch (mType) {
             case ORDER_BY_LEVEL:
                 String levelScore = String.valueOf(player.getLevelScore());
                 holder.tvPlayerScore.setText(levelScore);

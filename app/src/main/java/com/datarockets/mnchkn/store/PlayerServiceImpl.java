@@ -13,10 +13,10 @@ public class PlayerServiceImpl implements PlayerService {
 
     public static final String TAG = LogUtil.makeLogTag(PlayerServiceImpl.class);
 
-    private MunchkinDatabaseHelper playerDatabase;
+    private MunchkinDatabaseHelper mPlayerDatabase;
 
     private PlayerServiceImpl(Context context) {
-        playerDatabase = MunchkinDatabaseHelper.getInstance(context);
+        mPlayerDatabase = MunchkinDatabaseHelper.getInstance(context);
     }
 
     public static PlayerServiceImpl getInstance(Context context) {
@@ -33,35 +33,35 @@ public class PlayerServiceImpl implements PlayerService {
         player.setLevelScore(1);
         player.setStrengthScore(1);
         player.setColor(ColorUtil.generatePlayerAvatarColor());
-        long id = playerDatabase.addPlayer(player);
+        long id = mPlayerDatabase.addPlayer(player);
         player.setId(id);
         return player;
     }
 
     @Override
     public int deletePlayer(int position, long id) {
-        playerDatabase.deletePlayer(id);
+        mPlayerDatabase.deletePlayer(id);
         return position;
     }
 
     @Override
     public Player updatePlayer(Player player) {
-        return playerDatabase.updatePlayer(player);
+        return mPlayerDatabase.updatePlayer(player);
     }
 
     @Override
     public void clearPlayersStats() {
-        playerDatabase.clearPlayersStats();
+        mPlayerDatabase.clearPlayersStats();
     }
 
     @Override
     public ArrayList<Player> getPlayersList() {
-        return playerDatabase.getPlayers();
+        return mPlayerDatabase.getPlayers();
     }
 
     @Override
     public ArrayList<Player> getPlayersList(int orderValue) {
-        return playerDatabase.getPlayers(orderValue);
+        return mPlayerDatabase.getPlayers(orderValue);
     }
 
 }

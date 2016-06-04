@@ -10,53 +10,53 @@ public class PlayersListInteractorImpl implements PlayersListInteractor {
 
     private static final String TAG = LogUtil.makeLogTag(PlayersListInteractorImpl.class);
 
-    private PlayerServiceImpl playerService;
-    private GameServiceImpl gameService;
+    private PlayerServiceImpl mPlayerService;
+    private GameServiceImpl mGameService;
 
     public PlayersListInteractorImpl(Context context) {
-        this.playerService = PlayerServiceImpl.getInstance(context);
-        this.gameService = GameServiceImpl.getInstance(context);
+        this.mPlayerService = PlayerServiceImpl.getInstance(context);
+        this.mGameService = GameServiceImpl.getInstance(context);
     }
 
     @Override
     public void clearPlayersStats(OnFinishedListener listener) {
-        playerService.clearPlayersStats();
-        listener.onPlayersLoaded(playerService.getPlayersList());
+        mPlayerService.clearPlayersStats();
+        listener.onPlayersLoaded(mPlayerService.getPlayersList());
     }
 
     @Override
     public void isGameStarted(Context context, OnFinishedListener listener) {
-        listener.onGameStarted(gameService.getGameStatus());
+        listener.onGameStarted(mGameService.getGameStatus());
     }
 
     @Override
     public void checkIsEnoughPlayer(OnFinishedListener listener) {
-        listener.onPlayersCountChecked(playerService.getPlayersList().size() >= 2);
+        listener.onPlayersCountChecked(mPlayerService.getPlayersList().size() >= 2);
     }
 
     @Override
     public void getPlayers(OnFinishedListener listener) {
-        listener.onPlayersLoaded(playerService.getPlayersList());
+        listener.onPlayersLoaded(mPlayerService.getPlayersList());
     }
 
     @Override
     public void addPlayer(String name, OnFinishedListener listener) {
-        listener.onPlayerAdded(playerService.addPlayer(name));
+        listener.onPlayerAdded(mPlayerService.addPlayer(name));
     }
 
     @Override
     public void deletePlayer(int position, long id, OnFinishedListener listener) {
-        listener.onPlayerDeleted(playerService.deletePlayer(position, id));
+        listener.onPlayerDeleted(mPlayerService.deletePlayer(position, id));
     }
 
     @Override
     public void setGameStatus(boolean started) {
-        gameService.setGameStatus(started);
+        mGameService.setGameStatus(started);
     }
 
     @Override
     public void clearGameSteps() {
-        gameService.clearSteps();
+        mGameService.clearSteps();
     }
 
 }

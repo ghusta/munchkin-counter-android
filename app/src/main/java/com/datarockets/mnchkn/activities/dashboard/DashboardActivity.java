@@ -25,7 +25,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 
-public class DashboardActivity extends BaseActivity implements DashboardView, PlayerFragment.PlayerFragmentCallback {
+public class DashboardActivity extends BaseActivity implements DashboardView,
+        PlayerFragment.PlayerFragmentCallback {
 
     public static final String TAG = LogUtil.makeLogTag(DashboardActivity.class);
 
@@ -43,7 +44,8 @@ public class DashboardActivity extends BaseActivity implements DashboardView, Pl
         setContentView(R.layout.activity_dashboard);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        playerFragment = (PlayerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_player);
+        playerFragment = (PlayerFragment)
+                getSupportFragmentManager().findFragmentById(R.id.fragment_player);
     }
 
     @Override

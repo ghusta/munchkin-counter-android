@@ -42,8 +42,8 @@ public class ChartsFragment extends Fragment implements ChartsView {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
+        super.onCreateView(inflater, container, bundle);
         chartsView = inflater.inflate(R.layout.fragment_charts, container, false);
         ButterKnife.bind(this, chartsView);
         presenter = new ChartsPresenterImpl(this, getActivity());
@@ -55,7 +55,8 @@ public class ChartsFragment extends Fragment implements ChartsView {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        lineChartData.setAxisXBottom(new Axis().setName(getResources().getString(R.string.text_steps)));
+        lineChartData.setAxisXBottom(new Axis().setName(
+                getResources().getString(R.string.text_steps)));
         lineChartData.setAxisYLeft(new Axis().setHasLines(true));
         lineChartView.setLineChartData(lineChartData);
         presenter.loadPlayersList(getArguments().getInt(CHART_TYPE) + 1);
@@ -64,7 +65,8 @@ public class ChartsFragment extends Fragment implements ChartsView {
 
     @Override
     public void showPlayersList(ArrayList<Player> players) {
-        lvPlayerListAdapter = new PlayerChartListAdapter(getActivity(), players, getArguments().getInt(CHART_TYPE));
+        lvPlayerListAdapter = new PlayerChartListAdapter(getActivity(), players,
+                getArguments().getInt(CHART_TYPE));
         lvPlayerList.setAdapter(lvPlayerListAdapter);
     }
 

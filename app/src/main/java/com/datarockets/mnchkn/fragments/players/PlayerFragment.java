@@ -17,8 +17,8 @@ import butterknife.ButterKnife;
 
 public class PlayerFragment extends Fragment implements PlayerView, View.OnClickListener {
 
-    private int playerPosition;
-    private Player player;
+    private int mPlayerPosition;
+    private Player mPlayer;
 
     PlayerPresenter presenter;
     View currentPlayerView;
@@ -48,7 +48,7 @@ public class PlayerFragment extends Fragment implements PlayerView, View.OnClick
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         currentPlayerView = inflater.inflate(R.layout.fragment_player, container, false);
         ButterKnife.bind(this, currentPlayerView);
         btnLevelScoreUp.setOnClickListener(this);
@@ -78,14 +78,14 @@ public class PlayerFragment extends Fragment implements PlayerView, View.OnClick
             default:
                 break;
         }
-        player.setStrengthScore(Integer.valueOf(tvStrengthScore.getText().toString()));
-        player.setLevelScore(Integer.valueOf(tvLevelScore.getText().toString()));
-        callback.onScoreChanged(player, playerPosition);
+        mPlayer.setStrengthScore(Integer.valueOf(tvStrengthScore.getText().toString()));
+        mPlayer.setLevelScore(Integer.valueOf(tvLevelScore.getText().toString()));
+        callback.onScoreChanged(mPlayer, mPlayerPosition);
     }
 
     public void loadPlayerScores(Player player, int index) {
-        this.player = player;
-        this.playerPosition = index;
+        this.mPlayer = player;
+        this.mPlayerPosition = index;
         tvPlayerName.setText(player.getName());
         tvLevelScore.setText(String.valueOf(player.getLevelScore()));
         tvStrengthScore.setText(String.valueOf(player.getStrengthScore()));

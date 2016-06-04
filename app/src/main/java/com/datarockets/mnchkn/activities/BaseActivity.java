@@ -11,14 +11,14 @@ import org.json.JSONObject;
 
 public class BaseActivity extends AppCompatActivity {
 
-    private MunchkinApplication application;
-    private MixpanelAPI mixpanel;
+    private MunchkinApplication mApplication;
+    private MixpanelAPI mMixpanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        application = (MunchkinApplication) getApplication();
-        mixpanel = application.getMixpanel();
+        mApplication = (MunchkinApplication) getApplication();
+        mMixpanel = mApplication.getMixpanel();
     }
 
     public void trackWithProperties(String title, String propertyName, String propertyData) {
@@ -28,16 +28,16 @@ public class BaseActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        mixpanel.track(title, props);
+        mMixpanel.track(title, props);
     }
 
     public void trackWithoutProperties(String eventName) {
-        mixpanel.track(eventName);
+        mMixpanel.track(eventName);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mixpanel.flush();
+        mMixpanel.flush();
     }
 }

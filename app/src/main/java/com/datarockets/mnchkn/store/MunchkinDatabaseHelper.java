@@ -35,6 +35,8 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_GAME_PLAYER_LEVEL = "player_level";
     private static final String KEY_GAME_PLAYER_STRENGTH = "player_strength";
 
+    private static String ORDER_BY = " ORDER BY ";
+
     private static final int ORDER_BY_ID = 0;
     private static final int ORDER_BY_LEVEL = 1;
     private static final int ORDER_BY_STRENGTH = 2;
@@ -55,7 +57,7 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_PLAYERS_TABLE = "CREATE TABLE " + TABLE_PLAYERS +
+        String createPlayersTableQuery = "CREATE TABLE " + TABLE_PLAYERS +
                 "(" +
                 KEY_PLAYER_ID + " INTEGER PRIMARY KEY," +
                 KEY_PLAYER_NAME + " TEXT," +
@@ -63,21 +65,23 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
                 KEY_PLAYER_STRENGTH + " INTEGER," +
                 KEY_PLAYER_COLOR + " TEXT" +
                 ")";
-        String CREATE_GAME_TABLE = "CREATE TABLE " + TABLE_GAME +
+        String createGameTableQuery = "CREATE TABLE " + TABLE_GAME +
                 "(" +
                 KEY_GAME_PLAYER_ID + " INTEGER REFERENCES " + TABLE_PLAYERS + "," +
                 KEY_GAME_PLAYER_LEVEL + " INTEGER," +
                 KEY_GAME_PLAYER_STRENGTH + " INTEGER" +
                 ")";
-        db.execSQL(CREATE_PLAYERS_TABLE);
-        db.execSQL(CREATE_GAME_TABLE);
+        db.execSQL(createPlayersTableQuery);
+        db.execSQL(createGameTableQuery);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         switch (oldVersion) {
             case 1:
-                db.execSQL("ALTER TABLE " + TABLE_PLAYERS + " ADD COLUMN " + KEY_PLAYER_COLOR + " TEXT");
+                db.execSQL("ALTER TABLE "
+                        + TABLE_PLAYERS + " ADD COLUMN "
+                        + KEY_PLAYER_COLOR + " TEXT");
                 if (!isTableEmpty(db, TABLE_PLAYERS)) {
                     addColorsToUpdatedPlayers(db);
                 }
@@ -115,41 +119,47 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
     public ArrayList<Player> getPlayers(int orderValue) {
         ArrayList<Player> playersList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        String ORDER_BY = " ORDER BY ";
+        String orderByQuery = null;
         switch (orderValue) {
             case ORDER_BY_ID:
-                ORDER_BY = ORDER_BY + KEY_PLAYER_ID;
+                orderByQuery = ORDER_BY + KEY_PLAYER_ID;
                 break;
             case ORDER_BY_LEVEL:
-                ORDER_BY = ORDER_BY + KEY_PLAYER_LEVEL;
+                orderByQuery = ORDER_BY + KEY_PLAYER_LEVEL;
                 break;
             case ORDER_BY_STRENGTH:
-                ORDER_BY = ORDER_BY + KEY_PLAYER_STRENGTH;
+                orderByQuery = ORDER_BY + KEY_PLAYER_STRENGTH;
                 break;
             case ORDER_BY_TOTAL:
-                ORDER_BY = ORDER_BY + KEY_PLAYER_TOTAL;
+                orderByQuery = ORDER_BY + KEY_PLAYER_TOTAL;
                 break;
         }
-        String PLAYERS_TOTAL_QUERY = "SELECT "
+        String playersTotalQuery = "SELECT "
                 + KEY_PLAYER_ID + ", "
                 + KEY_PLAYER_NAME + ", "
                 + KEY_PLAYER_LEVEL + ", "
                 + KEY_PLAYER_STRENGTH + ", "
                 + KEY_PLAYER_COLOR + ", ("
                 + KEY_PLAYER_LEVEL + " + " + KEY_PLAYER_STRENGTH + ") AS " + KEY_PLAYER_TOTAL
-                + " FROM " + TABLE_PLAYERS + ORDER_BY + " DESC";
-        Log.v(TAG, PLAYERS_TOTAL_QUERY);
-        Cursor cursor = db.rawQuery(PLAYERS_TOTAL_QUERY, null);
+                + " FROM " + TABLE_PLAYERS + orderByQuery + " DESC";
+        Log.v(TAG, playersTotalQuery);
+        Cursor cursor = db.rawQuery(playersTotalQuery, null);
         try {
             if (cursor.moveToFirst()) {
                 do {
                     Player player = new Player();
-                    player.setId(cursor.getLong(cursor.getColumnIndex(KEY_PLAYER_ID)));
-                    player.setName(cursor.getString(cursor.getColumnIndex(KEY_PLAYER_NAME)));
-                    player.setColor(cursor.getString(cursor.getColumnIndex(KEY_PLAYER_COLOR)));
-                    player.setLevelScore(cursor.getInt(cursor.getColumnIndex(KEY_PLAYER_LEVEL)));
-                    player.setStrengthScore(cursor.getInt(cursor.getColumnIndex(KEY_PLAYER_STRENGTH)));
-                    player.setTotalScore(cursor.getInt(cursor.getColumnIndex(KEY_PLAYER_TOTAL)));
+                    player.setId(cursor.getLong(cursor.
+                            getColumnIndex(KEY_PLAYER_ID)));
+                    player.setName(cursor.getString(cursor.
+                            getColumnIndex(KEY_PLAYER_NAME)));
+                    player.setColor(cursor.getString(cursor.
+                            getColumnIndex(KEY_PLAYER_COLOR)));
+                    player.setLevelScore(cursor.getInt(cursor.
+                            getColumnIndex(KEY_PLAYER_LEVEL)));
+                    player.setStrengthScore(cursor.getInt(cursor.
+                            getColumnIndex(KEY_PLAYER_STRENGTH)));
+                    player.setTotalScore(cursor.getInt(cursor.
+                            getColumnIndex(KEY_PLAYER_TOTAL)));
                     playersList.add(player);
                 } while (cursor.moveToNext());
             }
@@ -169,7 +179,8 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_PLAYER_LEVEL, player.levelScore);
         values.put(KEY_PLAYER_STRENGTH, player.strengthScore);
-        db.update(TABLE_PLAYERS, values, KEY_PLAYER_ID + " = ?", new String[] {String.valueOf(player.id)});
+        db.update(TABLE_PLAYERS, values, KEY_PLAYER_ID + " = ?",
+                new String[] {String.valueOf(player.id)});
         return player;
     }
 
@@ -251,22 +262,25 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
         Log.v(TAG, "GET GAME STEPS");
         ArrayList<GameStep> gameSteps = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        String LINE_CHART_QUERY = "SELECT "
+        String lineChartQuery = "SELECT "
                 + KEY_GAME_PLAYER_ID + ", "
                 + KEY_GAME_PLAYER_LEVEL + ", "
                 + KEY_GAME_PLAYER_STRENGTH + ", "
                 + KEY_PLAYER_NAME + ", "
                 + KEY_PLAYER_COLOR + " FROM " + TABLE_GAME
                 + " INNER JOIN " + TABLE_PLAYERS + " ON players.id = " + KEY_GAME_PLAYER_ID;
-        Log.v("TAG", LINE_CHART_QUERY);
-        Cursor cursor = db.rawQuery(LINE_CHART_QUERY, null);
+        Log.v("TAG", lineChartQuery);
+        Cursor cursor = db.rawQuery(lineChartQuery, null);
         try {
             if (cursor.moveToFirst()) {
                 do {
                     GameStep gameStep = new GameStep();
-                    gameStep.setPlayerId(cursor.getLong(cursor.getColumnIndex(KEY_GAME_PLAYER_ID)));
-                    gameStep.setPlayerLevel(cursor.getInt(cursor.getColumnIndex(KEY_GAME_PLAYER_LEVEL)));
-                    gameStep.setPlayerStrength(cursor.getInt(cursor.getColumnIndex(KEY_GAME_PLAYER_STRENGTH)));
+                    gameStep.setPlayerId(cursor.getLong(cursor.
+                            getColumnIndex(KEY_GAME_PLAYER_ID)));
+                    gameStep.setPlayerLevel(cursor.getInt(cursor.
+                            getColumnIndex(KEY_GAME_PLAYER_LEVEL)));
+                    gameStep.setPlayerStrength(cursor.getInt(cursor.
+                            getColumnIndex(KEY_GAME_PLAYER_STRENGTH)));
                     gameSteps.add(gameStep);
                 } while (cursor.moveToNext());
             }

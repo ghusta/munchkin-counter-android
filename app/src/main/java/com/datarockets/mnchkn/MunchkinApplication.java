@@ -6,7 +6,7 @@ import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 public class MunchkinApplication extends Application {
 
-    private MixpanelAPI mixpanel;
+    private MixpanelAPI mMixpanel;
     private static final String PROJECT_TOKEN = BuildConfig.MIXPANEL_API_KEY;
 
     @Override
@@ -15,10 +15,10 @@ public class MunchkinApplication extends Application {
     }
 
     public synchronized MixpanelAPI getMixpanel() {
-        if (mixpanel == null) {
-            mixpanel = MixpanelAPI.getInstance(this, PROJECT_TOKEN);
+        if (mMixpanel == null) {
+            mMixpanel = MixpanelAPI.getInstance(this, PROJECT_TOKEN);
         }
-        return mixpanel;
+        return mMixpanel;
 
     }
 

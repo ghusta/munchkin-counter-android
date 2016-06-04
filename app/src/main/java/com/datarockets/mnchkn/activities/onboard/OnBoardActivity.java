@@ -23,13 +23,19 @@ public class OnboardActivity extends OnboarderActivity implements OnboardView {
         presenter = new OnboardPresenterImpl(this, this);
         presenter.checkIsUserSeenOnboarding();
         onboarderPages = new ArrayList<>();
-        onboarderPageOne = new OnboarderPage(R.string.onboarder_page1_title, R.string.onboarder_page1_description,
+        onboarderPageOne = new OnboarderPage(
+                R.string.onboarder_page1_title,
+                R.string.onboarder_page1_description,
                 R.drawable.ic_munchkin);
         onboarderPageOne.setBackgroundColor(R.color.card_general);
-        onboarderPageTwo = new OnboarderPage(R.string.onboarder_page2_title, R.string.onboarder_page2_description,
+        onboarderPageTwo = new OnboarderPage(
+                R.string.onboarder_page2_title,
+                R.string.onboarder_page2_description,
                 R.drawable.ic_infinite);
         onboarderPageTwo.setBackgroundColor(R.color.card_light);
-        onboarderPageThree = new OnboarderPage(R.string.onboarder_page3_title, R.string.onboarder_page3_description,
+        onboarderPageThree = new OnboarderPage(
+                R.string.onboarder_page3_title,
+                R.string.onboarder_page3_description,
                 R.drawable.ic_dice);
         onboarderPageThree.setBackgroundColor(R.color.card_corner);
         onboarderPages.add(onboarderPageOne);

@@ -9,11 +9,11 @@ public class SettingsServiceImpl implements SettingsService {
 
     private static final String IS_ONBOARDING_SEEN = "is_onboarding_seen";
 
-    private SharedPreferences preferences;
-    private SharedPreferences.Editor preferencesEditor;
+    private SharedPreferences mPreferences;
+    private SharedPreferences.Editor mPreferencesEditor;
 
     private SettingsServiceImpl(Context context) {
-        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public static SettingsServiceImpl getInstance(Context context) {
@@ -25,13 +25,13 @@ public class SettingsServiceImpl implements SettingsService {
 
     @Override
     public boolean checkIsUserSeenOnboarding() {
-        return preferences.getBoolean(IS_ONBOARDING_SEEN, false);
+        return mPreferences.getBoolean(IS_ONBOARDING_SEEN, false);
     }
 
     public void setOnboardingSeen() {
-        preferencesEditor = preferences.edit();
-        preferencesEditor.putBoolean(IS_ONBOARDING_SEEN, true);
-        preferencesEditor.apply();
+        mPreferencesEditor = mPreferences.edit();
+        mPreferencesEditor.putBoolean(IS_ONBOARDING_SEEN, true);
+        mPreferencesEditor.apply();
     }
 
 }

@@ -6,20 +6,20 @@ import com.datarockets.mnchkn.store.SettingsServiceImpl;
 
 public class OnboardInteractorImpl implements OnboardInteractor {
 
-    private SettingsServiceImpl settingsService;
+    private SettingsServiceImpl mSettingsService;
 
     public OnboardInteractorImpl(Context context) {
-        settingsService = SettingsServiceImpl.getInstance(context);
+        mSettingsService = SettingsServiceImpl.getInstance(context);
     }
 
     @Override
     public void isUserSeenOnboarding(OnFinishedChecking listener) {
-        listener.shouldShowOnboarding(!settingsService.checkIsUserSeenOnboarding());
+        listener.shouldShowOnboarding(!mSettingsService.checkIsUserSeenOnboarding());
     }
 
     @Override
     public void setOnboardingSeen() {
-        settingsService.setOnboardingSeen();
+        mSettingsService.setOnboardingSeen();
     }
 
 }

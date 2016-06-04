@@ -1,33 +1,33 @@
 package com.datarockets.mnchkn.models;
 
 public class GameStep  {
-    private long playerId;
-    private int playerLevel;
-    private int playerStrength;
+    private long mPlayerId;
+    private int mPlayerLevel;
+    private int mPlayerStrength;
 
 
     public long getPlayerId() {
-        return playerId;
+        return mPlayerId;
     }
 
     public void setPlayerId(long playerId) {
-        this.playerId = playerId;
+        this.mPlayerId = playerId;
     }
 
     public int getPlayerLevel() {
-        return playerLevel;
+        return mPlayerLevel;
     }
 
     public void setPlayerLevel(int playerLevel) {
-        this.playerLevel = playerLevel;
+        this.mPlayerLevel = playerLevel;
     }
 
     public int getPlayerStrength() {
-        return playerStrength;
+        return mPlayerStrength;
     }
 
     public void setPlayerStrength(int playerStrength) {
-        this.playerStrength = playerStrength;
+        this.mPlayerStrength = playerStrength;
     }
 
 }
