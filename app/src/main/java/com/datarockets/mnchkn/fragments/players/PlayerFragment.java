@@ -60,8 +60,8 @@ public class PlayerFragment extends Fragment implements PlayerView, View.OnClick
 
     @Override
     public void onClick(View v) {
-        int currentLevel = Integer.valueOf(tvLevelScore.getText().toString());
-        int currentStrength = Integer.valueOf(tvStrengthScore.getText().toString());
+        int currentLevel = Integer.parseInt(tvLevelScore.getText().toString());
+        int currentStrength = Integer.parseInt(tvStrengthScore.getText().toString());
         switch (v.getId()) {
             case R.id.btn_level_score_up:
                 presenter.increaseLevelScore(currentLevel);
@@ -78,8 +78,8 @@ public class PlayerFragment extends Fragment implements PlayerView, View.OnClick
             default:
                 break;
         }
-        mPlayer.setStrengthScore(Integer.valueOf(tvStrengthScore.getText().toString()));
-        mPlayer.setLevelScore(Integer.valueOf(tvLevelScore.getText().toString()));
+        mPlayer.setStrengthScore(Integer.parseInt(tvStrengthScore.getText().toString()));
+        mPlayer.setLevelScore(Integer.parseInt(tvLevelScore.getText().toString()));
         callback.onScoreChanged(mPlayer, mPlayerPosition);
     }
 
