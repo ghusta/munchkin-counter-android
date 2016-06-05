@@ -1,59 +1,59 @@
 package com.datarockets.mnchkn.models;
 
 public class Player {
-    private long id;
-    private String name;
-    private int levelScore;
-    private int strengthScore;
-    private int totalScore;
-    private String color;
+    private long mId;
+    private String mName;
+    private int mLevelScore;
+    private int mStrengthScore;
+    private int mTotalScore;
+    private String mColor;
 
     public long getId() {
-        return id;
+        return mId;
     }
 
     public void setId(long id) {
-        this.id = id;
+        this.mId = id;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public int getLevelScore() {
-        return levelScore;
+        return mLevelScore;
     }
 
     public int getStrengthScore() {
-        return strengthScore;
+        return mStrengthScore;
     }
 
     public String getColor() {
-        return color;
+        return mColor;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.mName = name;
     }
 
     public void setLevelScore(int levelScore) {
-        this.levelScore = levelScore;
+        this.mLevelScore = levelScore;
     }
 
     public void setStrengthScore(int strengthScore) {
-        this.strengthScore = strengthScore;
+        this.mStrengthScore = strengthScore;
     }
 
     public void setColor(String color) {
-        this.color = color;
+        this.mColor = color;
     }
 
     public int getTotalScore() {
-        return totalScore;
+        return mTotalScore;
     }
 
     public void setTotalScore(int totalScore) {
-        this.totalScore = totalScore;
+        this.mTotalScore = totalScore;
     }
 
 }

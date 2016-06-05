@@ -15,11 +15,16 @@ import com.datarockets.mnchkn.R;
 import com.datarockets.mnchkn.activities.BaseActivity;
 import com.datarockets.mnchkn.activities.dashboard.DashboardActivity;
 import com.datarockets.mnchkn.adapters.PlayerEditorListAdapter;
+import com.datarockets.mnchkn.di.AppComponent;
+import com.datarockets.mnchkn.di.DaggerPlayersListComponent;
+import com.datarockets.mnchkn.di.PlayersListModule;
 import com.datarockets.mnchkn.fragments.dialogs.AddNewPlayerFragment;
 import com.datarockets.mnchkn.models.Player;
 import com.datarockets.mnchkn.utils.LogUtil;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +38,7 @@ public class PlayersListActivity extends BaseActivity implements PlayersListView
 
     public static final String TAG = LogUtil.makeLogTag(PlayersListActivity.class);
 
+    @Inject
     PlayersListPresenter presenter;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.lv_player_list) ListView lvPlayersList;
@@ -42,11 +48,19 @@ public class PlayersListActivity extends BaseActivity implements PlayersListView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new PlayersListPresenterImpl(this, this);
         setContentView(R.layout.activity_players);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         presenter.onCreate();
+    }
+
+    @Override
+    protected void setupComponent(AppComponent appComponent) {
+        DaggerPlayersListComponent.builder()
+                .appComponent(appComponent)
+                .playersListModule(new PlayersListModule(this, this))
+                .build()
+                .inject(this);
     }
 
     @Override

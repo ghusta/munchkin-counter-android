@@ -5,39 +5,39 @@ import android.content.Context;
 public class OnboardPresenterImpl implements OnboardPresenter,
         OnboardInteractorImpl.OnFinishedChecking {
 
-    private OnboardView onboardView;
-    private OnboardInteractor interactor;
+    private OnboardView mOnboardView;
+    private OnboardInteractor mOnboardInteractor;
 
     public OnboardPresenterImpl(OnboardView onboardView, Context context) {
-        this.onboardView = onboardView;
-        this.interactor = new OnboardInteractorImpl(context);
+        this.mOnboardView = onboardView;
+        this.mOnboardInteractor = new OnboardInteractorImpl(context);
     }
 
     @Override
     public void checkIsUserSeenOnboarding() {
-        if (onboardView != null) {
-            interactor.isUserSeenOnboarding(this);
+        if (mOnboardView != null) {
+            mOnboardInteractor.isUserSeenOnboarding(this);
         }
     }
 
     @Override
     public void setOnboardingSeen() {
-        if (onboardView != null) {
-            interactor.setOnboardingSeen();
+        if (mOnboardView != null) {
+            mOnboardInteractor.setOnboardingSeen();
         }
     }
 
     @Override
     public void onDestroy() {
-        if (onboardView != null) {
-            onboardView = null;
+        if (mOnboardView != null) {
+            mOnboardView = null;
         }
     }
 
     @Override
     public void shouldShowOnboarding(boolean value) {
-        if (onboardView != null && !value) {
-            onboardView.openPlayersActivity();
+        if (mOnboardView != null && !value) {
+            mOnboardView.openPlayersActivity();
         }
     }
 }

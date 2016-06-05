@@ -3,42 +3,42 @@ package com.datarockets.mnchkn.fragments.players;
 
 public class PlayerPresenterImpl implements PlayerPresenter, PlayerInteractor.OnUpdatedListener {
 
-    private PlayerView playerView;
-    private PlayerInteractor interactor;
+    private PlayerView mPlayerView;
+    private PlayerInteractor mPlayerinteractor;
 
     public PlayerPresenterImpl(PlayerView playerView) {
-        this.playerView = playerView;
-        this.interactor = new PlayerInteractorImpl();
+        this.mPlayerView = playerView;
+        this.mPlayerinteractor = new PlayerInteractorImpl();
     }
 
     @Override
     public void increaseLevelScore(int score) {
-        interactor.increaseLevelScore(score, this);
+        mPlayerinteractor.increaseLevelScore(score, this);
     }
 
     @Override
     public void decreaseLevelScore(int score) {
-        interactor.decreaseLevelScore(score, this);
+        mPlayerinteractor.decreaseLevelScore(score, this);
     }
 
     @Override
     public void increaseStrengthScore(int score) {
-        interactor.increaseStrengthScore(score, this);
+        mPlayerinteractor.increaseStrengthScore(score, this);
     }
 
     @Override
     public void decreaseStrengthScore(int score) {
-        interactor.decreaseStrengthScore(score, this);
+        mPlayerinteractor.decreaseStrengthScore(score, this);
     }
 
     @Override
     public void onUpdateLevel(int score) {
-        playerView.setLevelScore(String.valueOf(score));
+        mPlayerView.setLevelScore(String.valueOf(score));
     }
 
     @Override
     public void onUpdateStrength(int score) {
-        playerView.setStrengthScore(String.valueOf(score));
+        mPlayerView.setStrengthScore(String.valueOf(score));
     }
 
 }

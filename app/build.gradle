@@ -56,6 +56,8 @@ dependencies {
     compile 'com.github.lecho:hellocharts-library:1.5.8@aar'
     compile 'com.jakewharton:butterknife:8.0.1'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    compile 'com.google.dagger:dagger:2.2'
+    apt 'com.google.dagger:dagger-compiler:2.2'
     testCompile 'junit:junit:4.10'
     testCompile 'org.assertj:assertj-core:1.7.0'
     testCompile 'org.robolectric:robolectric:3.0'

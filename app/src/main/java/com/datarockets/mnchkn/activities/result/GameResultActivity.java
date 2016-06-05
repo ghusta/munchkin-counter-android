@@ -11,7 +11,12 @@ import com.datarockets.mnchkn.R;
 import com.datarockets.mnchkn.activities.BaseActivity;
 import com.datarockets.mnchkn.activities.players.PlayersListActivity;
 import com.datarockets.mnchkn.adapters.ChartsPagerAdapter;
+import com.datarockets.mnchkn.di.AppComponent;
+import com.datarockets.mnchkn.di.DaggerGameResultComponent;
+import com.datarockets.mnchkn.di.GameResultModule;
 import com.datarockets.mnchkn.utils.LogUtil;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,6 +25,7 @@ public class GameResultActivity extends BaseActivity implements GameResultView {
 
     public static final String TAG = LogUtil.makeLogTag(GameResultActivity.class);
 
+    @Inject
     GameResultPresenter presenter;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.vp_charts) ViewPager vpCharts;
@@ -29,13 +35,21 @@ public class GameResultActivity extends BaseActivity implements GameResultView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new GameResultPresenterImpl(this, this);
         setContentView(R.layout.activity_game_result);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         presenter.onCreate();
+    }
+
+    @Override
+    protected void setupComponent(AppComponent appComponent) {
+        DaggerGameResultComponent.builder()
+                .appComponent(appComponent)
+                .gameResultModule(new GameResultModule(this, this))
+                .build()
+                .inject(this);
     }
 
     @Override
