@@ -3,7 +3,7 @@ package com.datarockets.mnchkn.activities.chooser;
 public class ChooseGamePresenterImpl implements ChooseGamePresenter {
 
     private ChooseGameView mChooseGameView;
-    private ChooseGameInteractorImpl mInteractor;
+    private ChooseGameInteractor mInteractor;
 
     public ChooseGamePresenterImpl(ChooseGameView chooseGameView) {
         this.mChooseGameView = chooseGameView;

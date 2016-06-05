@@ -5,8 +5,8 @@ import android.content.Context;
 public class OnboardPresenterImpl implements OnboardPresenter,
         OnboardInteractorImpl.OnFinishedChecking {
 
-    OnboardView onboardView;
-    OnboardInteractorImpl interactor;
+    private OnboardView onboardView;
+    private OnboardInteractor interactor;
 
     public OnboardPresenterImpl(OnboardView onboardView, Context context) {
         this.onboardView = onboardView;

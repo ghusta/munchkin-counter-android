@@ -11,8 +11,8 @@ import lecho.lib.hellocharts.model.LineChartData;
 public class ChartsPresenterImpl implements ChartsPresenter,
         ChartsInteractor.OnChartLoadedListener {
 
-    ChartsView chartsView;
-    ChartsInteractorImpl interactor;
+    private ChartsView chartsView;
+    private ChartsInteractor interactor;
 
     public ChartsPresenterImpl(ChartsView chartsView, Context context) {
         this.chartsView = chartsView;

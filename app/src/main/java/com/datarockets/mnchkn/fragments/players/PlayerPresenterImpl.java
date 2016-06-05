@@ -3,8 +3,8 @@ package com.datarockets.mnchkn.fragments.players;
 
 public class PlayerPresenterImpl implements PlayerPresenter, PlayerInteractor.OnUpdatedListener {
 
-    PlayerView playerView;
-    PlayerInteractorImpl interactor;
+    private PlayerView playerView;
+    private PlayerInteractor interactor;
 
     public PlayerPresenterImpl(PlayerView playerView) {
         this.playerView = playerView;

@@ -1,10 +1,11 @@
 package com.datarockets.mnchkn.fragments.players;
 
+import com.datarockets.mnchkn.store.ScoreService;
 import com.datarockets.mnchkn.store.ScoreServiceImpl;
 
 public class PlayerInteractorImpl implements PlayerInteractor {
 
-    private ScoreServiceImpl mScoreService;
+    private ScoreService mScoreService;
 
     public PlayerInteractorImpl() {
         this.mScoreService = ScoreServiceImpl.getInstance();

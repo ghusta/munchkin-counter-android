@@ -1,12 +1,12 @@
 package com.datarockets.mnchkn.models;
 
 public class Player {
-    public long id;
-    public String name;
-    public int levelScore;
-    public int strengthScore;
-    public int totalScore;
-    public String color;
+    private long id;
+    private String name;
+    private int levelScore;
+    private int strengthScore;
+    private int totalScore;
+    private String color;
 
     public long getId() {
         return id;

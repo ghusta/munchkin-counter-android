@@ -5,8 +5,8 @@ import android.content.Context;
 public class GameResultPresenterImpl implements GameResultPresenter,
         GameResultInteractorImpl.OnResultsLoaded {
 
-    GameResultView gameResultView;
-    GameResultInteractorImpl interactor;
+    private GameResultView gameResultView;
+    private GameResultInteractor interactor;
 
     public GameResultPresenterImpl(GameResultView gameResultView, Context context) {
         this.gameResultView = gameResultView;

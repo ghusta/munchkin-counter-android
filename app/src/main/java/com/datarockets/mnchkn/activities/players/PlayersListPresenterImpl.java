@@ -10,7 +10,7 @@ public class PlayersListPresenterImpl implements PlayersListPresenter,
         PlayersListInteractor.OnFinishedListener {
 
     private PlayersListView mPlayersListView;
-    private PlayersListInteractorImpl mInteractor;
+    private PlayersListInteractor mInteractor;
     private Context mContext;
 
     public PlayersListPresenterImpl(PlayersListView playersListView, Context context) {

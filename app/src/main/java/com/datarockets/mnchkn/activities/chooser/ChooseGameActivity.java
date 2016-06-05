@@ -17,7 +17,7 @@ public class ChooseGameActivity extends AppCompatActivity implements ChooseGameV
 
     public static final String TAG = LogUtil.makeLogTag(ChooseGameActivity.class);
 
-    ChooseGamePresenterImpl presenter;
+    ChooseGamePresenter presenter;
     GameChooserAdapter gameChooserAdapter;
     @BindView(R.id.gv_game_chooser) GridView gvGameChooser;
 

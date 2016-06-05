@@ -2,11 +2,12 @@ package com.datarockets.mnchkn.activities.onboard;
 
 import android.content.Context;
 
+import com.datarockets.mnchkn.store.SettingsService;
 import com.datarockets.mnchkn.store.SettingsServiceImpl;
 
 public class OnboardInteractorImpl implements OnboardInteractor {
 
-    private SettingsServiceImpl mSettingsService;
+    private SettingsService mSettingsService;
 
     public OnboardInteractorImpl(Context context) {
         mSettingsService = SettingsServiceImpl.getInstance(context);

@@ -3,13 +3,15 @@ package com.datarockets.mnchkn.activities.dashboard;
 import android.content.Context;
 
 import com.datarockets.mnchkn.models.Player;
+import com.datarockets.mnchkn.store.GameService;
 import com.datarockets.mnchkn.store.GameServiceImpl;
+import com.datarockets.mnchkn.store.PlayerService;
 import com.datarockets.mnchkn.store.PlayerServiceImpl;
 
 public class DashboardInteractorImpl implements DashboardInteractor {
 
-    private PlayerServiceImpl mPlayerService;
-    private GameServiceImpl mGameService;
+    private PlayerService mPlayerService;
+    private GameService mGameService;
 
     public DashboardInteractorImpl(Context context) {
         mPlayerService = PlayerServiceImpl.getInstance(context);

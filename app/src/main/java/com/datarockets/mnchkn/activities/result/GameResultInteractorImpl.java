@@ -2,13 +2,15 @@ package com.datarockets.mnchkn.activities.result;
 
 import android.content.Context;
 
+import com.datarockets.mnchkn.store.GameService;
 import com.datarockets.mnchkn.store.GameServiceImpl;
+import com.datarockets.mnchkn.store.PlayerService;
 import com.datarockets.mnchkn.store.PlayerServiceImpl;
 
 public class GameResultInteractorImpl implements GameResultInteractor {
 
-    private GameServiceImpl mGameService;
-    private PlayerServiceImpl mPlayerService;
+    private GameService mGameService;
+    private PlayerService mPlayerService;
 
     public GameResultInteractorImpl(Context context) {
         mGameService = GameServiceImpl.getInstance(context.getApplicationContext());

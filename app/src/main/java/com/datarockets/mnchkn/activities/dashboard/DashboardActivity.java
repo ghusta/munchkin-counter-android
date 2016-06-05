@@ -120,8 +120,8 @@ public class DashboardActivity extends BaseActivity implements DashboardView,
     @Override
     public void updatePlayerData(Player player, int position) {
         Player playerToUpdate = lvPlayerListAdapter.getItem(position);
-        playerToUpdate.levelScore = player.levelScore;
-        playerToUpdate.strengthScore = player.strengthScore;
+        playerToUpdate.setLevelScore(player.getLevelScore());
+        playerToUpdate.setStrengthScore(player.getStrengthScore());
         lvPlayerListAdapter.notifyDataSetChanged();
     }
 
