@@ -13,7 +13,7 @@ android {
         applicationId "com.datarockets.mnchkn"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 5
+        versionCode 6
         version "${version_code}"
         versionName "${version_name}"
         vectorDrawables.useSupportLibrary = true
@@ -52,7 +52,6 @@ dependencies {
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     compile 'com.github.chyrta:AndroidOnboarder:0.6'
     compile 'com.mixpanel.android:mixpanel-android:4.+'
-    compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.github.lecho:hellocharts-library:1.5.8@aar'
     compile 'com.jakewharton:butterknife:8.0.1'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
