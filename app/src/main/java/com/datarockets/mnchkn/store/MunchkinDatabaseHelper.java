@@ -18,7 +18,7 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = LogUtil.makeLogTag(MunchkinDatabaseHelper.class);
 
     private static final String DATABASE_NAME = "players_db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 6;
 
     private static final String TABLE_PLAYERS = "players";
 

@@ -6,14 +6,14 @@ apply from: '../config/quality/quality.gradle'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '24.0.0'
+    buildToolsVersion '24.0.1'
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "com.datarockets.mnchkn"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 5
+        versionCode 6
         version "${version_code}"
         versionName "${version_name}"
         vectorDrawables.useSupportLibrary = true
