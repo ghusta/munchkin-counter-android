@@ -3,17 +3,32 @@ package com.datarockets.mnchkn.activities.dashboard;
 import android.content.Context;
 
 import com.datarockets.mnchkn.models.Player;
+import com.datarockets.mnchkn.store.GameService;
 import com.datarockets.mnchkn.store.GameServiceImpl;
+import com.datarockets.mnchkn.store.PlayerService;
 import com.datarockets.mnchkn.store.PlayerServiceImpl;
+import com.datarockets.mnchkn.store.SettingsService;
+import com.datarockets.mnchkn.store.SettingsServiceImpl;
 
 public class DashboardInteractorImpl implements DashboardInteractor {
 
-    private PlayerServiceImpl mPlayerService;
-    private GameServiceImpl mGameService;
+    private PlayerService mPlayerService;
+    private GameService mGameService;
+    private SettingsService mSettingsService;
 
     public DashboardInteractorImpl(Context context) {
         mPlayerService = PlayerServiceImpl.getInstance(context);
         mGameService = GameServiceImpl.getInstance(context);
+        mSettingsService = SettingsServiceImpl.getInstance(context);
+    }
+
+    @Override
+    public void isScreenShouldBeOn(OnScreenStatusListener listener) {
+        if (mSettingsService.isWakeLockActive()) {
+            listener.onKeepScreenOn();
+        } else {
+            listener.onKeepScreenOff();
+        }
     }
 
     @Override

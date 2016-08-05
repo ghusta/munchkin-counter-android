@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -46,6 +47,7 @@ public class DashboardActivity extends BaseActivity implements DashboardView,
         setSupportActionBar(toolbar);
         playerFragment = (PlayerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_player);
+        presenter.onCreate();
     }
 
     @Override
@@ -123,6 +125,15 @@ public class DashboardActivity extends BaseActivity implements DashboardView,
         playerToUpdate.levelScore = player.levelScore;
         playerToUpdate.strengthScore = player.strengthScore;
         lvPlayerListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void keepScreenOn(boolean keepActive) {
+        if (keepActive) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        } else {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
     }
 
     @OnClick(R.id.btn_next_step) void nextStep() {

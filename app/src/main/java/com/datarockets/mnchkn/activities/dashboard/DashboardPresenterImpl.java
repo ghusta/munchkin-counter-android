@@ -7,7 +7,8 @@ import com.datarockets.mnchkn.models.Player;
 import java.util.ArrayList;
 
 public class DashboardPresenterImpl implements DashboardPresenter,
-        DashboardInteractor.OnLoadPlayerListener {
+        DashboardInteractor.OnLoadPlayerListener,
+        DashboardInteractor.OnScreenStatusListener {
 
     DashboardView dashboardView;
     DashboardInteractor interactor;
@@ -23,6 +24,13 @@ public class DashboardPresenterImpl implements DashboardPresenter,
     public void updatePlayerListItem(Player player, int position) {
         if (dashboardView != null) {
             interactor.updatePlayer(player, position, this);
+        }
+    }
+
+    @Override
+    public void onCreate() {
+        if (dashboardView != null) {
+            interactor.isScreenShouldBeOn(this);
         }
     }
 
@@ -69,4 +77,17 @@ public class DashboardPresenterImpl implements DashboardPresenter,
     }
 
 
+    @Override
+    public void onKeepScreenOn() {
+        if (dashboardView != null) {
+            dashboardView.keepScreenOn(true);
+        }
+    }
+
+    @Override
+    public void onKeepScreenOff() {
+        if (dashboardView != null) {
+            dashboardView.keepScreenOn(false);
+        }
+    }
 }

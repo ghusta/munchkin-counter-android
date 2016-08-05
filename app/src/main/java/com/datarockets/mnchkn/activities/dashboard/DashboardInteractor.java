@@ -11,6 +11,12 @@ public interface DashboardInteractor {
         void onPlayerUpdated(Player player, int position);
     }
 
+    interface OnScreenStatusListener {
+        void onKeepScreenOn();
+        void onKeepScreenOff();
+    }
+
+    void isScreenShouldBeOn(OnScreenStatusListener listener);
     void loadPlayersList(OnLoadPlayerListener listener);
     void updatePlayer(Player player, int position, OnLoadPlayerListener listener);
     void insertStep(Player player);

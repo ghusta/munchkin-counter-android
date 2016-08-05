@@ -9,4 +9,5 @@ public interface DashboardView {
     void setItems(List<Player> players);
     void showConfirmFinishGameDialog();
     void updatePlayerData(Player player, int position);
+    void keepScreenOn(boolean keepActive);
 }

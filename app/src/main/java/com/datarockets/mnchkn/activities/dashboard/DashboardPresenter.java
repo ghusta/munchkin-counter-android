@@ -4,6 +4,7 @@ import com.datarockets.mnchkn.models.Player;
 
 public interface DashboardPresenter {
     void updatePlayerListItem(Player player, int position);
+    void onCreate();
     void onResume();
     void onDestroy();
     void setGameFinished();
