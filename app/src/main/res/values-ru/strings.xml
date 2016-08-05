@@ -37,4 +37,5 @@
     <string name="onboarder.page2.description">Добавьте столько игроков, сколько хотите</string>
     <string name="onboarder.page3.title">Удобство</string>
     <string name="onboarder.page3.description">Управляйте количеством очков других игроков</string>
+    <string name="settings.keep_screen_on">Держать экран включенным</string>
 </resources>
