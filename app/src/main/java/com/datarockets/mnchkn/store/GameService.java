@@ -12,6 +12,7 @@ public interface GameService {
     void insertStep(Player player);
     void clearSteps();
     void createPlayerIdGameStepsMap();
+    void setGameStatus(boolean gameStatus);
     Map<Player, List<GameStep>> getScoresChartData();
     LineChartData createScoresChartData(int type, Map<Player, List<GameStep>> playerGameStepsMap);
 }

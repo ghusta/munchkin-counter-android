@@ -122,6 +122,7 @@ public class GameServiceImpl implements GameService {
         mDatabase.clearSteps();
     }
 
+    @Override
     public void setGameStatus(boolean status) {
         mPreferencesEditor = mPreferences.edit();
         mPreferencesEditor.putBoolean(IS_GAME_STARTED, status);
