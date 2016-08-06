@@ -64,3 +64,17 @@ dependencies {
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.5.4'
 }
+
+jacocoAndroidUnitTestReport {
+    excludes += ['**/R.class',
+                 '**/R$*.class',
+                 '**/Manifest*.*',
+                 'android/**/*.*',
+                 '**/BuildConfig.*',
+                 '**/*$ViewBinder*.*',
+                 '**/*$ViewInjector*.*',
+                 '**/Lambda$*.class',
+                 '**/Lambda.class',
+                 '**/*Lambda.class',
+                 '**/*Lambda*.class']
+}

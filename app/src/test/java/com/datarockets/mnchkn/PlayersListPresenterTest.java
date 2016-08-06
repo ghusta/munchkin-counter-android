@@ -12,6 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.robolectric.RobolectricGradleTestRunner;
@@ -22,8 +23,10 @@ import org.robolectric.shadows.ShadowApplication;
 
 import java.util.ArrayList;
 
-import static org.mockito.Matchers.any;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -54,15 +57,17 @@ public class PlayersListPresenterTest {
 
     @Test
     public void shouldLoadPlayersList() throws Exception {
+        ArgumentCaptor<Player> captor = ArgumentCaptor.forClass(Player.class);
         playersListPresenter.addPlayer("Dzmitry");
-        verify(playersListView).addPlayerToList(any(Player.class));
+        verify(playersListView, times(1)).addPlayerToList(captor.capture());
+        assertThat(captor.getValue().getName(), is("Dzmitry"));
     }
 
     @Test
     public void shouldDeletePlayerListItem() throws Exception {
         playersListPresenter.addPlayer("Dzmitry");
         playersListPresenter.deletePlayerListItem(0, 0);
-        verify(playersListView).deletePlayerFromList(0);
+        verify(playersListView, times(1)).deletePlayerFromList(0);
     }
 
     @Test
