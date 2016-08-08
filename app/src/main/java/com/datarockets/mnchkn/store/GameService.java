@@ -11,6 +11,7 @@ import lecho.lib.hellocharts.model.LineChartData;
 public interface GameService {
     void insertStep(Player player);
     void clearSteps();
+    boolean isGameStarted();
     void createPlayerIdGameStepsMap();
     void setGameStatus(boolean gameStatus);
     Map<Player, List<GameStep>> getScoresChartData();

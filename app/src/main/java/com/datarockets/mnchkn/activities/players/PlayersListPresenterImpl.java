@@ -1,22 +1,20 @@
 package com.datarockets.mnchkn.activities.players;
 
-import android.content.Context;
-
+import com.datarockets.mnchkn.activities.BasePresenter;
 import com.datarockets.mnchkn.models.Player;
 
 import java.util.List;
 
-public class PlayersListPresenterImpl implements PlayersListPresenter,
+public class PlayersListPresenterImpl extends BasePresenter implements PlayersListPresenter,
         PlayersListInteractor.OnFinishedListener {
 
     private PlayersListView mPlayersListView;
-    private PlayersListInteractorImpl mInteractor;
-    private Context mContext;
+    private PlayersListInteractor mInteractor;
 
-    public PlayersListPresenterImpl(PlayersListView playersListView, Context context) {
-        this.mContext = context;
+    public PlayersListPresenterImpl(PlayersListView playersListView,
+                                    PlayersListInteractor playersListInteractor) {
         this.mPlayersListView = playersListView;
-        this.mInteractor = new PlayersListInteractorImpl(context);
+        this.mInteractor = playersListInteractor;
     }
 
     @Override
@@ -71,7 +69,7 @@ public class PlayersListPresenterImpl implements PlayersListPresenter,
     @Override
     public void onCreate() {
         if (mPlayersListView != null) {
-            mInteractor.isGameStarted(mContext, this);
+            mInteractor.isGameStarted(this);
         }
     }
 

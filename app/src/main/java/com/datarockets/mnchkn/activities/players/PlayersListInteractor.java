@@ -1,7 +1,5 @@
 package com.datarockets.mnchkn.activities.players;
 
-import android.content.Context;
-
 import com.datarockets.mnchkn.models.Player;
 
 import java.util.List;
@@ -17,7 +15,7 @@ public interface PlayersListInteractor {
     }
 
     void clearPlayersStats(OnFinishedListener listener);
-    void isGameStarted(Context context, OnFinishedListener listener);
+    void isGameStarted(OnFinishedListener listener);
     void checkIsEnoughPlayer(OnFinishedListener listener);
     void getPlayers(OnFinishedListener listener);
     void addPlayer(String name, OnFinishedListener listener);

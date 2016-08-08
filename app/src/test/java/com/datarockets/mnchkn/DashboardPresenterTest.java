@@ -2,6 +2,7 @@ package com.datarockets.mnchkn;
 
 import android.os.Build;
 
+import com.datarockets.mnchkn.activities.dashboard.DashboardInteractor;
 import com.datarockets.mnchkn.activities.dashboard.DashboardPresenter;
 import com.datarockets.mnchkn.activities.dashboard.DashboardPresenterImpl;
 import com.datarockets.mnchkn.activities.dashboard.DashboardView;
@@ -30,6 +31,9 @@ public class DashboardPresenterTest {
     @Mock
     DashboardView dashboardView;
 
+    @Mock
+    DashboardInteractor dashboardInteractor;
+
     DashboardPresenter dashboardPresenter;
 
     MunchkinDatabaseHelper munchkinDatabaseHelper;
@@ -38,8 +42,8 @@ public class DashboardPresenterTest {
     public void setUp() throws Exception {
         initMocks(this);
         ShadowApplication context = Shadows.shadowOf(RuntimeEnvironment.application);
-        munchkinDatabaseHelper = MunchkinDatabaseHelper.getInstance(context.getApplicationContext());
-        dashboardPresenter = new DashboardPresenterImpl(dashboardView, context.getApplicationContext());
+        munchkinDatabaseHelper = new MunchkinDatabaseHelper(context.getApplicationContext());
+        dashboardPresenter = new DashboardPresenterImpl(dashboardView, dashboardInteractor);
     }
 
     @Test

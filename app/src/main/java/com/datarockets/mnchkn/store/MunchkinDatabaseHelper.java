@@ -13,6 +13,9 @@ import com.datarockets.mnchkn.utils.LogUtil;
 
 import java.util.ArrayList;
 
+import javax.inject.Singleton;
+
+@Singleton
 public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TAG = LogUtil.makeLogTag(MunchkinDatabaseHelper.class);
@@ -42,16 +45,7 @@ public class MunchkinDatabaseHelper extends SQLiteOpenHelper {
     private static final int ORDER_BY_STRENGTH = 2;
     private static final int ORDER_BY_TOTAL = 3;
 
-    private static MunchkinDatabaseHelper instance;
-
-    public static synchronized MunchkinDatabaseHelper getInstance(Context context) {
-        if (instance == null) {
-            instance = new MunchkinDatabaseHelper(context.getApplicationContext());
-        }
-        return instance;
-    }
-
-    private MunchkinDatabaseHelper(Context context) {
+    public MunchkinDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

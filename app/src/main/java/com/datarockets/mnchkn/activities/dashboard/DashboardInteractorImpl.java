@@ -2,24 +2,31 @@ package com.datarockets.mnchkn.activities.dashboard;
 
 import android.content.Context;
 
+import com.datarockets.mnchkn.MunchkinApplication;
+import com.datarockets.mnchkn.activities.BaseInteractor;
 import com.datarockets.mnchkn.models.Player;
 import com.datarockets.mnchkn.store.GameService;
-import com.datarockets.mnchkn.store.GameServiceImpl;
 import com.datarockets.mnchkn.store.PlayerService;
-import com.datarockets.mnchkn.store.PlayerServiceImpl;
 import com.datarockets.mnchkn.store.SettingsService;
-import com.datarockets.mnchkn.store.SettingsServiceImpl;
 
-public class DashboardInteractorImpl implements DashboardInteractor {
+import javax.inject.Inject;
 
-    private PlayerService mPlayerService;
-    private GameService mGameService;
-    private SettingsService mSettingsService;
+public class DashboardInteractorImpl extends BaseInteractor implements DashboardInteractor {
+
+    @Inject
+    PlayerService mPlayerService;
+    @Inject
+    GameService mGameService;
+    @Inject
+    SettingsService mSettingsService;
 
     public DashboardInteractorImpl(Context context) {
-        mPlayerService = PlayerServiceImpl.getInstance(context);
-        mGameService = GameServiceImpl.getInstance(context);
-        mSettingsService = SettingsServiceImpl.getInstance(context);
+        super(context);
+    }
+
+    @Override
+    protected void setUpComponent(Context context) {
+        MunchkinApplication.get(context).getAppComponent().inject(this);
     }
 
     @Override

@@ -1,25 +1,49 @@
 package com.datarockets.mnchkn;
 
 import android.app.Application;
+import android.content.Context;
 
+import com.datarockets.mnchkn.di.AppComponent;
+import com.datarockets.mnchkn.di.AppModule;
+import com.datarockets.mnchkn.di.DaggerAppComponent;
+import com.datarockets.mnchkn.di.DomainModule;
+import com.datarockets.mnchkn.di.InteractorsModule;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 public class MunchkinApplication extends Application {
 
+    private AppComponent mAppComponent;
     private MixpanelAPI mMixpanel;
-    private static final String PROJECT_TOKEN = BuildConfig.MIXPANEL_API_KEY;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        setUpGraph();
     }
 
     public synchronized MixpanelAPI getMixpanel() {
         if (mMixpanel == null) {
-            mMixpanel = MixpanelAPI.getInstance(this, PROJECT_TOKEN);
+            mMixpanel = MixpanelAPI.getInstance(this, BuildConfig.MIXPANEL_API_KEY);
         }
         return mMixpanel;
+    }
 
+    private void setUpGraph() {
+        mAppComponent = DaggerAppComponent.builder()
+                .appModule(new AppModule(this))
+                .domainModule(new DomainModule(this))
+                .interactorsModule(new InteractorsModule(this))
+                .build();
+        mAppComponent.inject(this);
+    }
+
+    public AppComponent getAppComponent() {
+        return mAppComponent;
+    }
+
+
+    public static MunchkinApplication get(Context context) {
+        return (MunchkinApplication) context.getApplicationContext();
     }
 
 }

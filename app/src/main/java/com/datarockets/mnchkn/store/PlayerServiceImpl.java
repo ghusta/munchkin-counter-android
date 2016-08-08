@@ -8,6 +8,10 @@ import com.datarockets.mnchkn.utils.LogUtil;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class PlayerServiceImpl implements PlayerService {
     private static PlayerServiceImpl instance;
 
@@ -15,15 +19,9 @@ public class PlayerServiceImpl implements PlayerService {
 
     private MunchkinDatabaseHelper mPlayerDatabase;
 
-    private PlayerServiceImpl(Context context) {
-        mPlayerDatabase = MunchkinDatabaseHelper.getInstance(context);
-    }
-
-    public static PlayerServiceImpl getInstance(Context context) {
-        if (instance == null) {
-            instance = new PlayerServiceImpl(context);
-        }
-        return instance;
+    @Inject
+    public PlayerServiceImpl(Context context) {
+        mPlayerDatabase = new MunchkinDatabaseHelper(context);
     }
 
     @Override

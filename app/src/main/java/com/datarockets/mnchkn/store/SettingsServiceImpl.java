@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class SettingsServiceImpl implements SettingsService {
-    private static SettingsServiceImpl instance;
 
     private static final String IS_ONBOARDING_SEEN = "is_onboarding_seen";
     private static final String IS_WAKELOCK_ACTIVE = "is_wakelock_active";
@@ -13,16 +12,9 @@ public class SettingsServiceImpl implements SettingsService {
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mPreferencesEditor;
 
-    private SettingsServiceImpl(Context context) {
+    public SettingsServiceImpl(Context context) {
         mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         mPreferencesEditor = mPreferences.edit();
-    }
-
-    public static SettingsServiceImpl getInstance(Context context) {
-        if (instance == null) {
-            instance = new SettingsServiceImpl(context);
-        }
-        return instance;
     }
 
     @Override

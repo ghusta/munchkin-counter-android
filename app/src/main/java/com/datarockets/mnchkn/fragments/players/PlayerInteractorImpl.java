@@ -1,13 +1,20 @@
 package com.datarockets.mnchkn.fragments.players;
 
-import com.datarockets.mnchkn.store.ScoreServiceImpl;
+import android.content.Context;
 
-public class PlayerInteractorImpl implements PlayerInteractor {
+import com.datarockets.mnchkn.MunchkinApplication;
+import com.datarockets.mnchkn.activities.BaseInteractor;
+import com.datarockets.mnchkn.store.ScoreService;
 
-    private ScoreServiceImpl mScoreService;
+import javax.inject.Inject;
 
-    public PlayerInteractorImpl() {
-        this.mScoreService = ScoreServiceImpl.getInstance();
+public class PlayerInteractorImpl extends BaseInteractor implements PlayerInteractor {
+
+    @Inject
+    ScoreService mScoreService;
+
+    public PlayerInteractorImpl(Context context) {
+        super(context);
     }
 
     @Override
@@ -30,4 +37,8 @@ public class PlayerInteractorImpl implements PlayerInteractor {
         listener.onUpdateStrength(mScoreService.decreaseScore(score));
     }
 
+    @Override
+    protected void setUpComponent(Context context) {
+        MunchkinApplication.get(context).getAppComponent().inject(this);
+    }
 }

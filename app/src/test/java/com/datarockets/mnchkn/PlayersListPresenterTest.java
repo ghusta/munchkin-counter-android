@@ -2,7 +2,7 @@ package com.datarockets.mnchkn;
 
 import android.os.Build;
 
-import com.datarockets.mnchkn.activities.players.PlayersListInteractorImpl;
+import com.datarockets.mnchkn.activities.players.PlayersListInteractor;
 import com.datarockets.mnchkn.activities.players.PlayersListPresenterImpl;
 import com.datarockets.mnchkn.activities.players.PlayersListView;
 import com.datarockets.mnchkn.models.Player;
@@ -40,7 +40,7 @@ public class PlayersListPresenterTest {
     @Mock
     Player player;
     @Mock
-    PlayersListInteractorImpl interactor;
+    PlayersListInteractor interactor;
     @Mock
     ArrayList<Player> players;
 
@@ -51,8 +51,8 @@ public class PlayersListPresenterTest {
     public void setUp() {
         initMocks(this);
         ShadowApplication context = Shadows.shadowOf(RuntimeEnvironment.application);
-        munchkinDatabaseHelper = MunchkinDatabaseHelper.getInstance(context.getApplicationContext());
-        playersListPresenter = new PlayersListPresenterImpl(playersListView, context.getApplicationContext());
+        munchkinDatabaseHelper = new MunchkinDatabaseHelper(context.getApplicationContext());
+        playersListPresenter = new PlayersListPresenterImpl(playersListView, interactor);
     }
 
     @Test

@@ -39,8 +39,6 @@ public class PlayersListInteractorTest {
     @Mock
     GameService gameService;
 
-    GameServiceImpl gameServiceImpl;
-
     @Captor
     ArgumentCaptor<Player> captorPlayer;
     @Captor
@@ -60,9 +58,9 @@ public class PlayersListInteractorTest {
         initMocks(this);
         application = Shadows.shadowOf(RuntimeEnvironment.application);
         context = application.getApplicationContext();
-        munchkinDatabaseHelper = MunchkinDatabaseHelper.getInstance(context);
+        munchkinDatabaseHelper = new MunchkinDatabaseHelper(context);
         interactor = new PlayersListInteractorImpl(context);
-        gameServiceImpl = spy(GameServiceImpl.getInstance(context));
+        gameService = spy(new GameServiceImpl(context));
     }
 
     @Test
@@ -77,7 +75,7 @@ public class PlayersListInteractorTest {
 
     @Test
     public void shouldCheckIsGameNotStarted() {
-        interactor.isGameStarted(context, listener);
+        interactor.isGameStarted(listener);
         verify(listener).onGameStarted(captorBooleanValue.capture());
         boolean isGameStarted = captorBooleanValue.getValue();
         assertEquals(false, isGameStarted);
@@ -86,7 +84,7 @@ public class PlayersListInteractorTest {
     @Test
     public void shouldCheckIsGameStarted() {
         interactor.setGameStatus(true);
-        interactor.isGameStarted(context, listener);
+        interactor.isGameStarted(listener);
         verify(listener).onGameStarted(captorBooleanValue.capture());
         boolean isGameStarted = captorBooleanValue.getValue();
         assertEquals(true, isGameStarted);

@@ -2,17 +2,27 @@ package com.datarockets.mnchkn.activities.result;
 
 import android.content.Context;
 
-import com.datarockets.mnchkn.store.GameServiceImpl;
-import com.datarockets.mnchkn.store.PlayerServiceImpl;
+import com.datarockets.mnchkn.MunchkinApplication;
+import com.datarockets.mnchkn.activities.BaseInteractor;
+import com.datarockets.mnchkn.store.GameService;
+import com.datarockets.mnchkn.store.PlayerService;
 
-public class GameResultInteractorImpl implements GameResultInteractor {
+import javax.inject.Inject;
 
-    private GameServiceImpl mGameService;
-    private PlayerServiceImpl mPlayerService;
+public class GameResultInteractorImpl extends BaseInteractor implements GameResultInteractor {
+
+    @Inject
+    GameService mGameService;
+    @Inject
+    PlayerService mPlayerService;
 
     public GameResultInteractorImpl(Context context) {
-        mGameService = GameServiceImpl.getInstance(context.getApplicationContext());
-        mPlayerService = PlayerServiceImpl.getInstance(context.getApplicationContext());
+        super(context);
+    }
+
+    @Override
+    protected void setUpComponent(Context context) {
+        MunchkinApplication.get(context).getAppComponent().inject(this);
     }
 
     @Override

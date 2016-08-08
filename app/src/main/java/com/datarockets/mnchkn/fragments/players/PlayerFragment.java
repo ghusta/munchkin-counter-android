@@ -2,25 +2,30 @@ package com.datarockets.mnchkn.fragments.players;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.datarockets.mnchkn.R;
+import com.datarockets.mnchkn.di.AppComponent;
+import com.datarockets.mnchkn.fragments.BaseFragment;
+import com.datarockets.mnchkn.fragments.players.di.DaggerPlayerComponent;
+import com.datarockets.mnchkn.fragments.players.di.PlayerModule;
 import com.datarockets.mnchkn.models.Player;
 import com.datarockets.mnchkn.views.fonts.MunchkinTextView;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PlayerFragment extends Fragment implements PlayerView, View.OnClickListener {
+public class PlayerFragment extends BaseFragment implements PlayerView, View.OnClickListener {
 
     private int mPlayerPosition;
     private Player mPlayer;
 
-    PlayerPresenter presenter;
+    @Inject PlayerPresenter presenter;
     View currentPlayerView;
     @BindView(R.id.btn_level_score_up) ImageButton btnLevelScoreUp;
     @BindView(R.id.btn_level_score_down) ImageButton btnLevelScoreDown;
@@ -38,7 +43,6 @@ public class PlayerFragment extends Fragment implements PlayerView, View.OnClick
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new PlayerPresenterImpl(this);
     }
 
     @Override
@@ -56,6 +60,15 @@ public class PlayerFragment extends Fragment implements PlayerView, View.OnClick
         btnStrengthScoreUp.setOnClickListener(this);
         btnStrengthScoreDown.setOnClickListener(this);
         return currentPlayerView;
+    }
+
+    @Override
+    protected void setUpComponent(AppComponent appComponent) {
+        DaggerPlayerComponent.builder()
+                .appComponent(appComponent)
+                .playerModule(new PlayerModule(this))
+                .build()
+                .inject(this);
     }
 
     @Override

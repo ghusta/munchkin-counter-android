@@ -18,7 +18,6 @@ import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
 
 public class GameServiceImpl implements GameService {
-    private static GameServiceImpl instance;
 
     private static final String IS_GAME_STARTED = "is_game_started";
 
@@ -27,16 +26,9 @@ public class GameServiceImpl implements GameService {
     private SharedPreferences.Editor mPreferencesEditor;
     private Map<Player, List<GameStep>> mGameStepsMap;
 
-    private GameServiceImpl(Context context) {
-        mDatabase = MunchkinDatabaseHelper.getInstance(context);
+    public GameServiceImpl(Context context) {
+        mDatabase = new MunchkinDatabaseHelper(context);
         mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-    }
-
-    public static GameServiceImpl getInstance(Context context) {
-        if (instance == null) {
-            instance = new GameServiceImpl(context);
-        }
-        return instance;
     }
 
     @Override

@@ -1,55 +1,54 @@
 package com.datarockets.mnchkn.activities.result;
 
-import android.content.Context;
-
 public class GameResultPresenterImpl implements GameResultPresenter,
         GameResultInteractorImpl.OnResultsLoaded {
 
-    GameResultView gameResultView;
-    GameResultInteractorImpl interactor;
+    private GameResultView mGameResultView;
+    private GameResultInteractor mGameResultInteractor;
 
-    public GameResultPresenterImpl(GameResultView gameResultView, Context context) {
-        this.gameResultView = gameResultView;
-        this.interactor = new GameResultInteractorImpl(context);
+    public GameResultPresenterImpl(GameResultView gameResultView,
+                                   GameResultInteractor gameResultInteractor) {
+        this.mGameResultView = gameResultView;
+        this.mGameResultInteractor = gameResultInteractor;
     }
 
 
     @Override
     public void onCreate() {
-        if (gameResultView != null) {
-            interactor.loadGameResults(this);
+        if (mGameResultView != null) {
+            mGameResultInteractor.loadGameResults(this);
         }
     }
 
     @Override
     public void notifyChartDataPrepared() {
-        if (gameResultView != null) {
-            gameResultView.loadChartFragments();
+        if (mGameResultView != null) {
+            mGameResultView.loadChartFragments();
         }
     }
 
     @Override
     public void onBackPressed() {
-        if (gameResultView != null) {
-            interactor.clearSteps();
-            interactor.clearPlayerStats();
+        if (mGameResultView != null) {
+            mGameResultInteractor.clearSteps();
+            mGameResultInteractor.clearPlayerStats();
         }
     }
 
     @Override
     public void onStop() {
-        if (gameResultView != null) {
-            interactor.clearSteps();
-            interactor.clearPlayerStats();
+        if (mGameResultView != null) {
+            mGameResultInteractor.clearSteps();
+            mGameResultInteractor.clearPlayerStats();
         }
     }
 
     @Override
     public void onDestroy() {
-        if (gameResultView != null) {
-            interactor.clearSteps();
-            interactor.clearPlayerStats();
-            gameResultView = null;
+        if (mGameResultView != null) {
+            mGameResultInteractor.clearSteps();
+            mGameResultInteractor.clearPlayerStats();
+            mGameResultView = null;
         }
     }
 

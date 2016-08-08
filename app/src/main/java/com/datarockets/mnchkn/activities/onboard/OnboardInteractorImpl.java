@@ -9,7 +9,7 @@ public class OnboardInteractorImpl implements OnboardInteractor {
     private SettingsServiceImpl mSettingsService;
 
     public OnboardInteractorImpl(Context context) {
-        mSettingsService = SettingsServiceImpl.getInstance(context);
+        mSettingsService = new SettingsServiceImpl(context);
     }
 
     @Override

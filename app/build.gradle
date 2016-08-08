@@ -5,14 +5,14 @@ apply from: '../config/quality/quality.gradle'
 
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 24
     buildToolsVersion '24.0.1'
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "com.datarockets.mnchkn"
         minSdkVersion 14
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode 6
         version "${version_code}"
         versionName "${version_name}"
@@ -55,6 +55,8 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.github.lecho:hellocharts-library:1.5.8@aar'
     compile 'com.jakewharton:butterknife:8.0.1'
+    compile 'com.google.dagger:dagger:2.6'
+    apt 'com.google.dagger:dagger-compiler:2.6'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
     testCompile 'junit:junit:4.10'

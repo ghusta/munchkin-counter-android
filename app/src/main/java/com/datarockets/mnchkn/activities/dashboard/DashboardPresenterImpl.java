@@ -1,93 +1,92 @@
 package com.datarockets.mnchkn.activities.dashboard;
 
-import android.content.Context;
-
+import com.datarockets.mnchkn.activities.BasePresenter;
 import com.datarockets.mnchkn.models.Player;
 
 import java.util.ArrayList;
 
-public class DashboardPresenterImpl implements DashboardPresenter,
+public class DashboardPresenterImpl extends BasePresenter implements DashboardPresenter,
         DashboardInteractor.OnLoadPlayerListener,
         DashboardInteractor.OnScreenStatusListener {
 
-    DashboardView dashboardView;
-    DashboardInteractor interactor;
-    Context context;
+    private DashboardView mDashboardView;
+    private DashboardInteractor mDashboardInteractor;
 
-    public DashboardPresenterImpl(DashboardView dashboardView, Context context) {
-        this.dashboardView = dashboardView;
-        this.context = context;
-        this.interactor = new DashboardInteractorImpl(context);
+    public DashboardPresenterImpl(DashboardView dashboardView,
+                                  DashboardInteractor dashboardInteractor) {
+        this.mDashboardView = dashboardView;
+        this.mDashboardInteractor = dashboardInteractor;
     }
 
     @Override
     public void updatePlayerListItem(Player player, int position) {
-        if (dashboardView != null) {
-            interactor.updatePlayer(player, position, this);
+        if (mDashboardView != null) {
+            mDashboardInteractor.updatePlayer(player, position, this);
         }
     }
 
     @Override
     public void onCreate() {
-        if (dashboardView != null) {
-            interactor.isScreenShouldBeOn(this);
+        if (mDashboardView != null) {
+            mDashboardInteractor.isScreenShouldBeOn(this);
         }
     }
 
     @Override
     public void onResume() {
-        if (dashboardView != null) {
-            interactor.loadPlayersList(this);
+        if (mDashboardView != null) {
+            mDashboardInteractor.loadPlayersList(this);
         }
     }
 
     @Override
     public void onFinished(ArrayList<Player> players) {
-        if (dashboardView != null) {
-            dashboardView.setItems(players);
+        if (mDashboardView != null) {
+            mDashboardView.setItems(players);
         }
     }
 
     @Override
     public void onPlayerUpdated(Player player, int position) {
-        if (dashboardView != null) {
-            dashboardView.updatePlayerData(player, position);
+        if (mDashboardView != null) {
+            mDashboardView.updatePlayerData(player, position);
         }
     }
 
     @Override
     public void onDestroy() {
-        if (dashboardView != null) {
-            dashboardView = null;
+        if (mDashboardView != null) {
+            mDashboardView = null;
         }
     }
 
     @Override
     public void setGameFinished() {
-        if (dashboardView != null) {
-            interactor.setGameFinished();
+        if (mDashboardView != null) {
+            mDashboardInteractor.setGameFinished();
         }
     }
 
     @Override
     public void insertStep(Player player) {
-        if (dashboardView != null) {
-            interactor.insertStep(player);
+        if (mDashboardView != null) {
+            mDashboardInteractor.insertStep(player);
         }
     }
 
 
     @Override
     public void onKeepScreenOn() {
-        if (dashboardView != null) {
-            dashboardView.keepScreenOn(true);
+        if (mDashboardView != null) {
+            mDashboardView.keepScreenOn(true);
         }
     }
 
     @Override
     public void onKeepScreenOff() {
-        if (dashboardView != null) {
-            dashboardView.keepScreenOn(false);
+        if (mDashboardView != null) {
+            mDashboardView.keepScreenOn(false);
         }
     }
+
 }

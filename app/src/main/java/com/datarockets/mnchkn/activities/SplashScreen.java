@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.datarockets.mnchkn.R;
 import com.datarockets.mnchkn.activities.onboard.OnboardActivity;
+import com.datarockets.mnchkn.di.AppComponent;
 import com.datarockets.mnchkn.utils.LogUtil;
 
 public class SplashScreen extends BaseActivity {
@@ -15,6 +16,11 @@ public class SplashScreen extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+
+    }
+
+    @Override
+    protected void setUpActivityComponent(AppComponent appComponent) {
 
     }
 

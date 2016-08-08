@@ -5,13 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.datarockets.mnchkn.MunchkinApplication;
+import com.datarockets.mnchkn.di.AppComponent;
 import com.datarockets.mnchkn.utils.LogUtil;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     private static final String TAG = LogUtil.makeLogTag(BaseActivity.class);
 
@@ -23,6 +24,7 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mApplication = (MunchkinApplication) getApplication();
         mMixpanel = mApplication.getMixpanel();
+        setUpActivityComponent(MunchkinApplication.get(this).getAppComponent());
     }
 
     public void trackWithProperties(String title, String propertyName, String propertyData) {
@@ -44,4 +46,6 @@ public class BaseActivity extends AppCompatActivity {
         super.onDestroy();
         mMixpanel.flush();
     }
+
+    protected abstract void setUpActivityComponent(AppComponent appComponent);
 }

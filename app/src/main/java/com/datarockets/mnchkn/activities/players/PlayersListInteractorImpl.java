@@ -2,20 +2,30 @@ package com.datarockets.mnchkn.activities.players;
 
 import android.content.Context;
 
-import com.datarockets.mnchkn.store.GameServiceImpl;
-import com.datarockets.mnchkn.store.PlayerServiceImpl;
+import com.datarockets.mnchkn.MunchkinApplication;
+import com.datarockets.mnchkn.activities.BaseInteractor;
+import com.datarockets.mnchkn.store.GameService;
+import com.datarockets.mnchkn.store.PlayerService;
 import com.datarockets.mnchkn.utils.LogUtil;
 
-public class PlayersListInteractorImpl implements PlayersListInteractor {
+import javax.inject.Inject;
+
+public class PlayersListInteractorImpl extends BaseInteractor implements PlayersListInteractor {
 
     private static final String TAG = LogUtil.makeLogTag(PlayersListInteractorImpl.class);
 
-    private PlayerServiceImpl mPlayerService;
-    private GameServiceImpl mGameService;
+    @Inject
+    PlayerService mPlayerService;
+    @Inject
+    GameService mGameService;
 
     public PlayersListInteractorImpl(Context context) {
-        this.mPlayerService = PlayerServiceImpl.getInstance(context);
-        this.mGameService = GameServiceImpl.getInstance(context);
+        super(context);
+    }
+
+    @Override
+    protected void setUpComponent(Context context) {
+        MunchkinApplication.get(context).getAppComponent().inject(this);
     }
 
     @Override
@@ -25,7 +35,7 @@ public class PlayersListInteractorImpl implements PlayersListInteractor {
     }
 
     @Override
-    public void isGameStarted(Context context, OnFinishedListener listener) {
+    public void isGameStarted(OnFinishedListener listener) {
         listener.onGameStarted(mGameService.isGameStarted());
     }
 
@@ -58,5 +68,6 @@ public class PlayersListInteractorImpl implements PlayersListInteractor {
     public void clearGameSteps() {
         mGameService.clearSteps();
     }
+
 
 }

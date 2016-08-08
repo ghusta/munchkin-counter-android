@@ -13,13 +13,18 @@ import android.widget.ListView;
 
 import com.datarockets.mnchkn.R;
 import com.datarockets.mnchkn.activities.BaseActivity;
+import com.datarockets.mnchkn.activities.dashboard.di.DaggerDashboardComponent;
+import com.datarockets.mnchkn.activities.dashboard.di.DashboardModule;
 import com.datarockets.mnchkn.activities.result.GameResultActivity;
 import com.datarockets.mnchkn.adapters.PlayerListAdapter;
+import com.datarockets.mnchkn.di.AppComponent;
 import com.datarockets.mnchkn.fragments.players.PlayerFragment;
 import com.datarockets.mnchkn.models.Player;
 import com.datarockets.mnchkn.utils.LogUtil;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +36,7 @@ public class DashboardActivity extends BaseActivity implements DashboardView,
 
     public static final String TAG = LogUtil.makeLogTag(DashboardActivity.class);
 
+    @Inject
     DashboardPresenter presenter;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.lv_player_list) ListView lvPlayerList;
@@ -41,7 +47,6 @@ public class DashboardActivity extends BaseActivity implements DashboardView,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new DashboardPresenterImpl(this, this);
         setContentView(R.layout.activity_dashboard);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
@@ -61,6 +66,15 @@ public class DashboardActivity extends BaseActivity implements DashboardView,
     protected void onDestroy() {
         super.onDestroy();
         presenter.onDestroy();
+    }
+
+    @Override
+    protected void setUpActivityComponent(AppComponent appComponent) {
+        DaggerDashboardComponent.builder()
+                .appComponent(appComponent)
+                .dashboardModule(new DashboardModule(this))
+                .build()
+                .inject(this);
     }
 
     @Override
