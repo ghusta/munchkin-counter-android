@@ -6,8 +6,6 @@ import android.content.Context;
 import com.datarockets.mnchkn.di.AppComponent;
 import com.datarockets.mnchkn.di.AppModule;
 import com.datarockets.mnchkn.di.DaggerAppComponent;
-import com.datarockets.mnchkn.di.DomainModule;
-import com.datarockets.mnchkn.di.InteractorsModule;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 public class MunchkinApplication extends Application {
@@ -31,8 +29,6 @@ public class MunchkinApplication extends Application {
     private void setUpGraph() {
         mAppComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
-                .domainModule(new DomainModule(this))
-                .interactorsModule(new InteractorsModule(this))
                 .build();
         mAppComponent.inject(this);
     }

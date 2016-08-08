@@ -1,11 +1,10 @@
 package com.datarockets.mnchkn.activities.players;
 
-import com.datarockets.mnchkn.activities.BasePresenter;
 import com.datarockets.mnchkn.models.Player;
 
 import java.util.List;
 
-public class PlayersListPresenterImpl extends BasePresenter implements PlayersListPresenter,
+public class PlayersListPresenterImpl implements PlayersListPresenter,
         PlayersListInteractor.OnFinishedListener {
 
     private PlayersListView mPlayersListView;

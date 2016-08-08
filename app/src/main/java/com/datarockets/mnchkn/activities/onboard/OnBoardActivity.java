@@ -5,14 +5,21 @@ import android.os.Bundle;
 
 import com.chyrta.onboarder.OnboarderActivity;
 import com.chyrta.onboarder.OnboarderPage;
+import com.datarockets.mnchkn.MunchkinApplication;
 import com.datarockets.mnchkn.R;
+import com.datarockets.mnchkn.activities.onboard.di.DaggerOnboardComponent;
+import com.datarockets.mnchkn.activities.onboard.di.OnboardModule;
 import com.datarockets.mnchkn.activities.players.PlayersListActivity;
+import com.datarockets.mnchkn.di.AppComponent;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class OnboardActivity extends OnboarderActivity implements OnboardView {
 
+    @Inject
     OnboardPresenter presenter;
     List<OnboarderPage> onboarderPages;
     OnboarderPage onboarderPageOne, onboarderPageTwo, onboarderPageThree;
@@ -20,7 +27,14 @@ public class OnboardActivity extends OnboarderActivity implements OnboardView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new OnboardPresenterImpl(this, this);
+        AppComponent appComponent = MunchkinApplication.get(this).getAppComponent();
+
+        DaggerOnboardComponent.builder()
+                .appComponent(appComponent)
+                .onboardModule(new OnboardModule(this))
+                .build()
+                .inject(this);
+
         presenter.checkIsUserSeenOnboarding();
         onboarderPages = new ArrayList<>();
         onboarderPageOne = new OnboarderPage(

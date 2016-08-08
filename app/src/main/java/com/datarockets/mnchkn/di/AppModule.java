@@ -1,5 +1,7 @@
 package com.datarockets.mnchkn.di;
 
+import android.content.Context;
+
 import com.datarockets.mnchkn.MunchkinApplication;
 
 import javax.inject.Singleton;
@@ -20,6 +22,12 @@ public class AppModule {
     @Singleton
     public MunchkinApplication providesApplication() {
         return mApplication;
+    }
+
+    @Provides
+    @Singleton
+    public Context providesContext() {
+        return mApplication.getApplicationContext();
     }
 
 }

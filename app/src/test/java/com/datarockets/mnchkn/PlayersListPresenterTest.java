@@ -3,6 +3,7 @@ package com.datarockets.mnchkn;
 import android.os.Build;
 
 import com.datarockets.mnchkn.activities.players.PlayersListInteractor;
+import com.datarockets.mnchkn.activities.players.PlayersListInteractorImpl;
 import com.datarockets.mnchkn.activities.players.PlayersListPresenterImpl;
 import com.datarockets.mnchkn.activities.players.PlayersListView;
 import com.datarockets.mnchkn.models.Player;
@@ -13,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.robolectric.RobolectricGradleTestRunner;
@@ -37,30 +39,36 @@ public class PlayersListPresenterTest {
 
     @Mock
     PlayersListView playersListView;
+
     @Mock
     Player player;
-    @Mock
+
     PlayersListInteractor interactor;
+
     @Mock
     ArrayList<Player> players;
 
+    @Captor
+    ArgumentCaptor<Player> captorPlayer;
+
     private PlayersListPresenterImpl playersListPresenter;
+
+    @Mock
     private MunchkinDatabaseHelper munchkinDatabaseHelper;
 
     @Before
     public void setUp() {
         initMocks(this);
         ShadowApplication context = Shadows.shadowOf(RuntimeEnvironment.application);
-        munchkinDatabaseHelper = new MunchkinDatabaseHelper(context.getApplicationContext());
+        interactor = new PlayersListInteractorImpl(context.getApplicationContext());
         playersListPresenter = new PlayersListPresenterImpl(playersListView, interactor);
     }
 
     @Test
     public void shouldLoadPlayersList() throws Exception {
-        ArgumentCaptor<Player> captor = ArgumentCaptor.forClass(Player.class);
         playersListPresenter.addPlayer("Dzmitry");
-        verify(playersListView, times(1)).addPlayerToList(captor.capture());
-        assertThat(captor.getValue().getName(), is("Dzmitry"));
+        verify(playersListView, times(1)).addPlayerToList(captorPlayer.capture());
+        assertThat(captorPlayer.getValue().getName(), is("Dzmitry"));
     }
 
     @Test
@@ -128,7 +136,7 @@ public class PlayersListPresenterTest {
     @Test
     public void shouldDestroy() {
         playersListPresenter.onDestroy();
-        verify(playersListView).equals(Matchers.isNull());
+        verify(playersListView).equals(null);
     }
 
     @After

@@ -3,8 +3,8 @@ package com.datarockets.mnchkn.store;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.preference.PreferenceManager;
 
+import com.datarockets.mnchkn.MunchkinApplication;
 import com.datarockets.mnchkn.models.GameStep;
 import com.datarockets.mnchkn.models.Player;
 
@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.inject.Inject;
 
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
@@ -21,14 +23,17 @@ public class GameServiceImpl implements GameService {
 
     private static final String IS_GAME_STARTED = "is_game_started";
 
-    private MunchkinDatabaseHelper mDatabase;
-    private SharedPreferences mPreferences;
-    private SharedPreferences.Editor mPreferencesEditor;
+    @Inject
+    MunchkinDatabaseHelper mDatabase;
+    @Inject
+    SharedPreferences mPreferences;
+    @Inject
+    SharedPreferences.Editor mPreferencesEditor;
+
     private Map<Player, List<GameStep>> mGameStepsMap;
 
     public GameServiceImpl(Context context) {
-        mDatabase = new MunchkinDatabaseHelper(context);
-        mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        MunchkinApplication.get(context).getAppComponent().inject(this);
     }
 
     @Override

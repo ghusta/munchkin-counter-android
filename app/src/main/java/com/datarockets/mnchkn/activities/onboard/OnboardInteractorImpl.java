@@ -2,14 +2,18 @@ package com.datarockets.mnchkn.activities.onboard;
 
 import android.content.Context;
 
-import com.datarockets.mnchkn.store.SettingsServiceImpl;
+import com.datarockets.mnchkn.MunchkinApplication;
+import com.datarockets.mnchkn.store.SettingsService;
+
+import javax.inject.Inject;
 
 public class OnboardInteractorImpl implements OnboardInteractor {
 
-    private SettingsServiceImpl mSettingsService;
+    @Inject
+    SettingsService mSettingsService;
 
     public OnboardInteractorImpl(Context context) {
-        mSettingsService = new SettingsServiceImpl(context);
+        MunchkinApplication.get(context).getAppComponent().inject(this);
     }
 
     @Override

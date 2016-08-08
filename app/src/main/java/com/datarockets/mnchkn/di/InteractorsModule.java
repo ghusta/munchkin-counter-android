@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.datarockets.mnchkn.activities.dashboard.DashboardInteractor;
 import com.datarockets.mnchkn.activities.dashboard.DashboardInteractorImpl;
+import com.datarockets.mnchkn.activities.onboard.OnboardInteractor;
+import com.datarockets.mnchkn.activities.onboard.OnboardInteractorImpl;
 import com.datarockets.mnchkn.activities.players.PlayersListInteractor;
 import com.datarockets.mnchkn.activities.players.PlayersListInteractorImpl;
 import com.datarockets.mnchkn.activities.result.GameResultInteractor;
@@ -19,35 +21,34 @@ import dagger.Provides;
 @Module
 public class InteractorsModule {
 
-    private Context mContext;
-
-    public InteractorsModule(Context context) {
-        this.mContext = context;
+    @Provides
+    public PlayersListInteractor providesPlayersListInteractor(Context context) {
+        return new PlayersListInteractorImpl(context);
     }
 
     @Provides
-    public PlayersListInteractor providesPlayersListInteractor() {
-        return new PlayersListInteractorImpl(mContext);
+    public DashboardInteractor providesDashboardInteractor(Context context) {
+        return new DashboardInteractorImpl(context);
     }
 
     @Provides
-    public DashboardInteractor providesDashboardInteractor() {
-        return new DashboardInteractorImpl(mContext);
+    public GameResultInteractor providesGameResultInteractor(Context context) {
+        return new GameResultInteractorImpl(context);
     }
 
     @Provides
-    public GameResultInteractor providesGameResultInteractor() {
-        return new GameResultInteractorImpl(mContext);
+    public ChartsInteractor providesChartsInteractor(Context context) {
+        return new ChartsInteractorImpl(context);
     }
 
     @Provides
-    public ChartsInteractor providesChartsInteractor() {
-        return new ChartsInteractorImpl(mContext);
+    public PlayerInteractor providesPlayerInteractor(Context context) {
+        return new PlayerInteractorImpl(context);
     }
 
     @Provides
-    public PlayerInteractor providesPlayerInteractor() {
-        return new PlayerInteractorImpl(mContext);
+    public OnboardInteractor providesOnboardInteractor(Context context) {
+        return new OnboardInteractorImpl(context);
     }
 
 }

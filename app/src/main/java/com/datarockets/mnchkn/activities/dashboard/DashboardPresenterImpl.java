@@ -1,11 +1,10 @@
 package com.datarockets.mnchkn.activities.dashboard;
 
-import com.datarockets.mnchkn.activities.BasePresenter;
 import com.datarockets.mnchkn.models.Player;
 
 import java.util.ArrayList;
 
-public class DashboardPresenterImpl extends BasePresenter implements DashboardPresenter,
+public class DashboardPresenterImpl implements DashboardPresenter,
         DashboardInteractor.OnLoadPlayerListener,
         DashboardInteractor.OnScreenStatusListener {
 

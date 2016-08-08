@@ -2,6 +2,7 @@ package com.datarockets.mnchkn.store;
 
 import android.content.Context;
 
+import com.datarockets.mnchkn.MunchkinApplication;
 import com.datarockets.mnchkn.models.Player;
 import com.datarockets.mnchkn.utils.ColorUtil;
 import com.datarockets.mnchkn.utils.LogUtil;
@@ -9,19 +10,16 @@ import com.datarockets.mnchkn.utils.LogUtil;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
-@Singleton
 public class PlayerServiceImpl implements PlayerService {
-    private static PlayerServiceImpl instance;
 
     public static final String TAG = LogUtil.makeLogTag(PlayerServiceImpl.class);
 
-    private MunchkinDatabaseHelper mPlayerDatabase;
-
     @Inject
+    MunchkinDatabaseHelper mPlayerDatabase;
+
     public PlayerServiceImpl(Context context) {
-        mPlayerDatabase = new MunchkinDatabaseHelper(context);
+        MunchkinApplication.get(context).getAppComponent().inject(this);
     }
 
     @Override
