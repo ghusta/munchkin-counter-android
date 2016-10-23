@@ -4,14 +4,22 @@ import android.content.Intent
 import android.os.Bundle
 import com.chyrta.onboarder.OnboarderActivity
 import com.chyrta.onboarder.OnboarderPage
+import com.datarockets.mnchkn.MunchkinApplication
 import com.datarockets.mnchkn.R
+import com.datarockets.mnchkn.data.DataManager
+import com.datarockets.mnchkn.injection.component.ActivityComponent
+import com.datarockets.mnchkn.injection.component.DaggerActivityComponent
+import com.datarockets.mnchkn.injection.module.ActivityModule
+import com.datarockets.mnchkn.ui.base.BaseActivity
 import com.datarockets.mnchkn.ui.playerslist.PlayersListActivity
 import java.util.*
 import javax.inject.Inject
 
 class OnboardActivity : OnboarderActivity(), OnboardView {
 
-    lateinit var presenter: OnboardPresenter
+    private var mActivityComponent: ActivityComponent? = null
+
+    @Inject lateinit var presenter: OnboardPresenter
     lateinit var onboarderPages: MutableList<OnboarderPage>
     lateinit var onboarderPageOne: OnboarderPage
     lateinit var onboarderPageTwo: OnboarderPage
@@ -19,7 +27,8 @@ class OnboardActivity : OnboarderActivity(), OnboardView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = OnboardPresenterImpl(this, OnboardInteractorImpl(this))
+        activityComponent().inject(this)
+        presenter.attachView(this)
 
         presenter.checkIsUserSeenOnboarding()
         onboarderPages = ArrayList<OnboarderPage>()
@@ -42,6 +51,7 @@ class OnboardActivity : OnboarderActivity(), OnboardView {
         onboarderPages.add(onboarderPageTwo)
         onboarderPages.add(onboarderPageThree)
         setOnboardPagesReady(onboarderPages)
+
     }
 
     public override fun onSkipButtonPressed() {
@@ -57,6 +67,21 @@ class OnboardActivity : OnboarderActivity(), OnboardView {
         val intent = Intent(this, PlayersListActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    fun activityComponent() : ActivityComponent {
+        if (mActivityComponent == null) {
+            mActivityComponent = DaggerActivityComponent.builder()
+                    .activityModule(ActivityModule(this))
+                    .applicationComponent(MunchkinApplication.get(this).getComponent())
+                    .build()
+        }
+        return mActivityComponent!!
+    }
+
+    override fun onDestroy() {
+        presenter.detachView()
+        super.onDestroy()
     }
 
 }

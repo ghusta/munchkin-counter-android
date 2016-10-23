@@ -3,25 +3,29 @@ package com.datarockets.mnchkn.data.local
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import android.util.Log
 import com.datarockets.mnchkn.injection.ApplicationContext
+import com.datarockets.mnchkn.utils.LogUtil
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class PreferenceHelper
-@Inject constructor(@ApplicationContext context: Context) {
+@Inject constructor(@ApplicationContext mContext: Context) {
 
     private val mPref: SharedPreferences
 
     init {
-        mPref = PreferenceManager.getDefaultSharedPreferences(context)
+        mPref = PreferenceManager.getDefaultSharedPreferences(mContext)
     }
 
     fun clear() {
         mPref.edit().clear().apply()
     }
 
-    fun isUserSeenOnboarding(): Boolean = mPref.getBoolean(IS_ONBOARDING_SEEN, false)
+    fun isUserSeenOnboarding(): Boolean {
+        return mPref.getBoolean(IS_ONBOARDING_SEEN, false)
+    }
 
     fun setOnboardingSeen() {
         mPref.edit().putBoolean(IS_ONBOARDING_SEEN, true).apply()
@@ -40,6 +44,7 @@ class PreferenceHelper
     }
 
     companion object {
+
         private val IS_ONBOARDING_SEEN = "is_onboarding_seen"
         private val IS_WAKELOCK_ACTIVE = "is_wakelock_active"
         private val IS_GAME_STARTED = "is_game_started"

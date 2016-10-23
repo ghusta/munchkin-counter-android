@@ -1,5 +1,7 @@
 package com.datarockets.mnchkn.ui.onboard
 
-interface OnboardView {
+import com.datarockets.mnchkn.ui.base.BaseView
+
+interface OnboardView : BaseView {
     fun openPlayersActivity()
 }
