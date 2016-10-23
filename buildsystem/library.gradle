@@ -1,0 +1,45 @@
+ext.version = [
+        kotlin       : "1.0.4",
+        support      : "24.2.0",
+        rxandroid    : "1.2.1",
+        rxjava       : "1.1.6",
+        play_services: "8.4.0",
+        dagger       : "2.5",
+        butterknife  : "8.1.0",
+        javax        : "1.0",
+        hello_charts : "1.5.8@aar",
+        mixpanel     : "4.+",
+        onboarder    : "0.6",
+        text_drawable: "1.0.1",
+        sql_brite    : "0.8.0",
+        mockito      : "1.10.19",
+        junit        : "4.12"
+]
+
+def version = ext.version;
+
+ext.library = [
+        kotlin              : "org.jetbrains.kotlin:kotlin-stdlib:${version.kotlin}",
+        kotlin_reflect      : "org.jetbrains.kotlin:kotlin-reflect:${version.kotlin}",
+        gson                : "com.google.code.gson:gson:${version.gson}",
+        support_compat      : "com.android.support:appcompat-v7:${version.support}",
+        support_design      : "com.android.support:design:${version.support}",
+        support_cardview    : "com.android.support:cardview-v7:${version.support}",
+        support_recyclerview: "com.android.support:recyclerview-v7:${version.support}",
+        support_v4          : "com.android.support:support-v4:${version.support}",
+        rxandroid           : "io.reactivex:rxandroid:${version.rxandroid}",
+        rxjava              : "io.reactivex:rxjava:${version.rxjava}",
+        dagger              : "com.google.dagger:dagger:${version.dagger}",
+        dagger_compiler     : "com.google.dagger:dagger-compiler:${version.dagger}",
+        javax               : "javax.annotation:jsr250-api:${version.javax}",
+        butterknife         : "com.jakewharton:butterknife:${version.butterknife}",
+        butterknife_compiler: "com.jakewharton:butterknife-compiler:${version.butterknife}",
+        hello_charts        : "com.github.lecho:hellocharts-library:${version.hello_charts}",
+        junit               : "junit:junit:${version.junit}",
+        mixpanel            : "com.mixpanel.android:mixpanel-android:${version.mixpanel}",
+        onboarder           : "com.github.chyrta:AndroidOnboarder:${version.onboarder}",
+        text_drawable       : "com.amulyakhare:com.amulyakhare.textdrawable:${version.text_drawable}",
+        sql_brite           : "com.squareup.sqlbrite:sqlbrite:${version.sql_brite}",
+        mockito             : "org.mockito:mockito-core:${version.mockito}",
+        multidex            : "com.android.support:multidex:${version.multidex}"
+]

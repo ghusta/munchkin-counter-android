@@ -2,34 +2,29 @@ package com.datarockets.mnchkn
 
 import android.app.Application
 import android.content.Context
-
-import com.datarockets.mnchkn.di.AppComponent
-import com.datarockets.mnchkn.di.AppModule
-import com.datarockets.mnchkn.di.DaggerAppComponent
+import com.datarockets.mnchkn.injection.component.ApplicationComponent
+import com.datarockets.mnchkn.injection.component.DaggerApplicationComponent
+import com.datarockets.mnchkn.injection.module.ApplicationModule
 import com.mixpanel.android.mpmetrics.MixpanelAPI
 
 class MunchkinApplication : Application() {
 
-    lateinit var appComponent: AppComponent
+    lateinit var mApplicationComponent: ApplicationComponent
 
-    private var mMixpanel: MixpanelAPI? = null
+//    val mMixpanel: MixpanelAPI = MixpanelAPI.getInstance(this, BuildConfig.MIXPANEL_API_KEY)
 
     override fun onCreate() {
         super.onCreate()
-        setUpGraph()
+        mApplicationComponent = DaggerApplicationComponent.builder()
+            .applicationModule(ApplicationModule(this))
+            .build()
+        mApplicationComponent.inject(this)
     }
 
-    val mixpanel: MixpanelAPI
-        @Synchronized get() {
-            if (mMixpanel == null) {
-                mMixpanel = MixpanelAPI.getInstance(this, BuildConfig.MIXPANEL_API_KEY)
-            }
-            return mMixpanel!!
-        }
+    fun getComponent() : ApplicationComponent = mApplicationComponent
 
-    private fun setUpGraph() {
-        appComponent = DaggerAppComponent.builder().appModule(AppModule(this)).build()
-        appComponent.inject(this)
+    fun setComponent(applicationComponent: ApplicationComponent) {
+        mApplicationComponent = applicationComponent
     }
 
     companion object {

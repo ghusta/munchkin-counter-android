@@ -23,27 +23,27 @@
 
         <activity
             android:theme="@style/SplashScreenTheme"
-            android:name=".activities.SplashScreen">
+            android:name=".ui.SplashScreen">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER"/>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.onboard.OnboardActivity"/>
+        <activity android:name="com.datarockets.mnchkn.ui.onboard.OnboardActivity"/>
         <activity
             android:label="@string/title.players_editor"
-            android:name=".activities.players.PlayersListActivity"/>
-        <activity android:name=".activities.chooser.ChooseGameActivity"/>
-        <activity android:screenOrientation="portrait" android:name=".activities.dashboard.DashboardActivity"/>
+            android:name=".ui.playerslist.PlayersListActivity"/>
+        <activity android:name="com.datarockets.mnchkn.ui.chooser.ChooseGameActivity"/>
+        <activity android:screenOrientation="portrait" android:name=".ui.dashboard.DashboardActivity"/>
         <activity
             android:label="@string/title.analytics"
-            android:name=".activities.result.GameResultActivity"
-            android:parentActivityName=".activities.dashboard.DashboardActivity"/>
+            android:name="com.datarockets.mnchkn.ui.result.GameResultActivity"
+            android:parentActivityName=".ui.dashboard.DashboardActivity"/>
         <activity
             android:label="@string/title.settings"
-            android:name=".activities.settings.SettingsActivity"
-            android:parentActivityName=".activities.dashboard.DashboardActivity"/>
+            android:name="com.datarockets.mnchkn.ui.settings.SettingsActivity"
+            android:parentActivityName=".ui.dashboard.DashboardActivity"/>
 
     </application>
 

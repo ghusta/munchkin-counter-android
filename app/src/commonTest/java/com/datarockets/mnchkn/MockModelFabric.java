@@ -1,7 +1,7 @@
 package com.datarockets.mnchkn;
 
-import com.datarockets.mnchkn.models.GameStep;
-import com.datarockets.mnchkn.models.Player;
+import com.datarockets.mnchkn.data.model.GameStep;
+import com.datarockets.mnchkn.data.model.Player;
 
 public class MockModelFabric {
 
