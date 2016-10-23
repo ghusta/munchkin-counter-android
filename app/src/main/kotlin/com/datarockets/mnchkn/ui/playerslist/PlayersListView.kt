@@ -6,7 +6,7 @@ import com.datarockets.mnchkn.ui.base.BaseView
 interface PlayersListView : BaseView {
     fun addPlayerToList(player: Player)
     fun deletePlayerFromList(position: Int)
-    fun setPlayersList(players: List<Player>)
+    fun setPlayersList(players: MutableList<Player>)
     fun showAddNewPlayerDialog()
     fun launchDashboard()
     fun showStartContinueDialog()

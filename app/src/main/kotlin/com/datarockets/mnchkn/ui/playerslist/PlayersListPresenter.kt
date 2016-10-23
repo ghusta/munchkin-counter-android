@@ -1,9 +1,7 @@
 package com.datarockets.mnchkn.ui.playerslist
 
 import com.datarockets.mnchkn.data.DataManager
-import com.datarockets.mnchkn.data.model.Player
 import com.datarockets.mnchkn.ui.base.Presenter
-import rx.Scheduler
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -43,7 +41,7 @@ class PlayersListPresenter
         mSubscription = mDataManager.deletePlayer(id)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe({
+                .subscribe({}, {}, {
                     mPlayersListView?.deletePlayerFromList(position)
                 })
 
@@ -69,7 +67,7 @@ class PlayersListPresenter
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({ retrievedPlayers ->
-                    if (retrievedPlayers.size > 2) {
+                    if (retrievedPlayers.size >= 2) {
                         mPlayersListView?.launchDashboard()
                     } else {
                         mPlayersListView?.showWarning()
@@ -98,7 +96,6 @@ class PlayersListPresenter
         mPlayersListView = null
         mSubscription?.unsubscribe()
     }
-
 
 //    override fun checkIsEnoughPlayers() {
 //        if (mPlayersListView != null) {

@@ -9,7 +9,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ListView
 import android.widget.Toast
-import android.widget.Toast.makeText
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -39,23 +38,23 @@ class PlayersListActivity : BaseActivity(),
         activityComponent().inject(this)
         setContentView(R.layout.activity_players)
         ButterKnife.bind(this)
+        lvPlayersList.adapter = lvPlayerEditorListAdapter
         setSupportActionBar(toolbar)
-        presenter.checkIsGameStarted()
+        presenter.attachView(this)
+        presenter.apply {
+            checkIsGameStarted()
+            loadPlayers()
+        }
     }
 
     override fun onResume() {
         super.onResume()
         trackWithProperties("Current activity", "Activity name", TAG)
-        presenter.loadPlayers()
     }
 
     override fun onDestroy() {
         presenter.detachView()
         super.onDestroy()
-    }
-
-    override fun onStop() {
-        super.onStop()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -64,18 +63,18 @@ class PlayersListActivity : BaseActivity(),
     }
 
     override fun addPlayerToList(player: Player) {
-        lvPlayerEditorListAdapter.add(player)
+        lvPlayerEditorListAdapter.addPlayer(player)
         lvPlayerEditorListAdapter.notifyDataSetChanged()
     }
 
     override fun deletePlayerFromList(position: Int) {
-        lvPlayerEditorListAdapter.remove(lvPlayerEditorListAdapter.getItem(position))
+        lvPlayerEditorListAdapter.removePlayer(position)
         lvPlayerEditorListAdapter.notifyDataSetChanged()
     }
 
-    override fun setPlayersList(players: List<Player>) {
-        lvPlayerEditorListAdapter = PlayerEditorListAdapter(this)
-        lvPlayersList.adapter = lvPlayerEditorListAdapter
+    override fun setPlayersList(players: MutableList<Player>) {
+        lvPlayerEditorListAdapter.setPlayers(players)
+        lvPlayerEditorListAdapter.notifyDataSetChanged()
     }
 
     override fun showAddNewPlayerDialog() {
@@ -102,10 +101,9 @@ class PlayersListActivity : BaseActivity(),
             setNegativeButton(R.string.button_no) { dialog, which ->
                 dialog.dismiss()
             }
+            create()
+            show()
         }
-
-        alertDialog.create()
-        alertDialog.show()
         return true
     }
 
@@ -123,19 +121,20 @@ class PlayersListActivity : BaseActivity(),
             }
             setNegativeButton(R.string.button_start) { dialog, which ->
                 dialog.dismiss()
-                presenter.setGameFinished()
-                presenter.clearPlayersStats()
-                presenter.clearGameSteps()
+                presenter.apply {
+                    setGameFinished()
+                    clearPlayersStats()
+                    clearGameSteps()
+                }
             }
             setCancelable(false)
+            create()
+            show()
         }
-
-        startContinueDialog.create()
-        startContinueDialog.show()
     }
 
     override fun showWarning() {
-        makeText(this, R.string.text_player_add_warning, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, R.string.text_player_add_warning, Toast.LENGTH_SHORT).show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

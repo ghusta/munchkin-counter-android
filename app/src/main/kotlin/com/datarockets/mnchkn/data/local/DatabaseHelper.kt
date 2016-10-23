@@ -132,7 +132,7 @@ class DatabaseHelper
                 val values = ContentValues()
                 values.put(Db.PlayersTable.COLUMN_LEVEL, 1)
                 values.put(Db.PlayersTable.COLUMN_STRENGTH, 1)
-                mDb.update(Db.PlayersTable.TABLE_NAME, values, null, null)
+                mDb.update(Db.PlayersTable.TABLE_NAME, values, 3, null, null)
                 transaction.markSuccessful()
                 subscriber.onCompleted()
             } finally {
@@ -160,6 +160,7 @@ class DatabaseHelper
             try {
                 mDb.delete(Db.GameTable.TABLE_NAME, null, null)
                 transaction.markSuccessful()
+                subscriber.onCompleted()
             } finally {
                 transaction.end()
             }

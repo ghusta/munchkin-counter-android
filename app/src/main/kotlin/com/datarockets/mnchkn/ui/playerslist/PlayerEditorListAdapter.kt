@@ -22,10 +22,10 @@ import javax.inject.Inject
 class PlayerEditorListAdapter
 @Inject constructor(@ActivityContext private val mContext: Context) : ArrayAdapter<Player>(mContext, 0) {
 
-    private var mPlayersList: List<Player>
+    private var mPlayersList: MutableList<Player>
 
     init {
-        mPlayersList = ArrayList<Player>()
+        mPlayersList = mutableListOf<Player>()
     }
 
     override fun getItemId(position: Int): Long = position.toLong()
@@ -36,8 +36,16 @@ class PlayerEditorListAdapter
         return mPlayersList[position]
     }
 
-    fun setPlayers(playersList: List<Player>) {
-        mPlayersList = playersList
+    fun setPlayers(playersList: MutableList<Player>) {
+        mPlayersList.addAll(playersList)
+    }
+
+    fun addPlayer(player: Player) {
+        mPlayersList.add(player)
+    }
+
+    fun removePlayer(position: Int) {
+        mPlayersList.removeAt(position)
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
